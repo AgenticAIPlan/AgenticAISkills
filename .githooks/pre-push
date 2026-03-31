@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+if [ "${SKIP_SKILLS_GUARD:-}" = "1" ]; then
+  exit 0
+fi
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+python3 scripts/validate_skills_submission.py local

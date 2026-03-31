@@ -1,0 +1,26 @@
+name: Skills PR Guard
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  skills-pr-guard:
+    name: skills-pr-guard
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch base branch
+        run: git fetch origin "${{ github.base_ref }}" --depth=1
+
+      - name: Validate PR template and skills diff
+        run: python3 scripts/validate_skills_submission.py pr

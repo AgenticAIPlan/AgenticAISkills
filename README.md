@@ -107,6 +107,30 @@ skills/marketing-content-auditor/
 - Agent 提 PR 时，必须在 PR 模板中填写业务同学真实姓名拼音
 - 如果用户没有提供真实姓名，Agent 不应跳过该步骤直接发起 PR
 
+## 自动校验
+
+本仓库提供两层校验：
+
+- 本地 `git hook`：在推送前检查分支命名和 Skill 目录结构
+- GitHub Action：在 PR 上检查模板字段、真实姓名拼音和 Skill 改动范围
+
+本地安装命令：
+
+```bash
+bash scripts/install-hooks.sh
+```
+
+自动校验会重点检查：
+
+- 是否从独立分支发起变更
+- 分支名是否符合 `feat/<真实姓名拼音>/<skill-slug>` 或 `update/<真实姓名拼音>/<skill-slug>`
+- PR 中是否填写业务同学真实姓名与真实姓名拼音
+- Agent 辅助提交时，是否先询问过用户真实姓名
+- Skill 改动是否真正落在 `skills/<skill-slug>/` 下
+- 是否错误修改了 `skills/_template/` 或 `skills/README.md`
+
+如果不符合规范，push 前的本地 hook 会直接报错，PR 上的 GitHub Action 也会失败并阻止合入。
+
 ## 主干规则
 
 - `main` 是唯一主干分支
