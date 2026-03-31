@@ -1,0 +1,18 @@
+{
+  "name": "agentic-ai-skills",
+  "description": "Business skills library for the AgenticAIPlan training program",
+  "version": "0.1.0",
+  "author": {
+    "name": "AgenticAIPlan"
+  },
+  "homepage": "https://github.com/AgenticAIPlan/AgenticAISkills",
+  "repository": "https://github.com/AgenticAIPlan/AgenticAISkills",
+  "license": "UNLICENSED",
+  "keywords": [
+    "skills",
+    "agents",
+    "business-skills",
+    "training",
+    "bmo"
+  ]
+}
