@@ -1,0 +1,3 @@
+# PaddleOCR document parsing dependencies
+
+httpx>=0.24.0
