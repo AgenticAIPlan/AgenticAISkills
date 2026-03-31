@@ -1,15 +1,21 @@
 # Claude 接入说明
 
-本仓库为 Claude 预留了与 `superpowers` 相似的插件元数据结构。
+本目录用于承接 Claude 侧的仓库说明和安装说明，而不是存放业务 Skill 正文。
 
-相关文件位于：
+## 当前目录职责
 
-- `.claude-plugin/plugin.json`
-- `.claude-plugin/marketplace.json`
+- `.claude/INSTALL.md`：Claude 侧接入和落地说明
+- `.claude-plugin/plugin.json`：插件元数据
+- `.claude-plugin/marketplace.json`：Marketplace 元数据
 
-其中：
+## 使用原则
 
-- `plugin.json` 描述当前 Skills 插件本身
-- `marketplace.json` 描述本地或仓库级 Marketplace 元数据
+- Claude 相关的业务 Skill 内容统一放在仓库根目录的 `skills/`
+- `.claude/` 只承接说明文档，不重复存放 Skills
+- `.claude-plugin/` 作为 Claude 侧元数据入口，后续接入时直接复用
 
-如果后续需要接入 Claude 侧分发或安装流程，请以 `.claude-plugin/` 目录作为统一元数据入口，不要将 Skills 内容散落到其他目录。
+## 维护约束
+
+- 新增业务 Skill 时，只改 `skills/` 目录
+- 修改 Claude 接入方式时，优先更新 `.claude/INSTALL.md`
+- 修改插件信息时，更新 `.claude-plugin/plugin.json` 与 `.claude-plugin/marketplace.json`

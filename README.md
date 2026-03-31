@@ -16,6 +16,7 @@
 ```text
 .
 ├── .claude/
+│   ├── INSTALL.md
 │   └── README.md
 ├── .claude-plugin/
 │   ├── marketplace.json
@@ -80,6 +81,7 @@ skills/marketing-content-auditor/
 ## Agent 接入说明
 
 - Codex 侧安装说明见 [`.codex/INSTALL.md`](./.codex/INSTALL.md)
+- Claude 侧安装说明见 [`.claude/INSTALL.md`](./.claude/INSTALL.md)
 - Claude 侧插件元数据见 [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json)
 - Claude 侧仓库说明见 [`.claude/README.md`](./.claude/README.md)
 
