@@ -74,11 +74,38 @@ skills/marketing-content-auditor/
 ## 提交流程
 
 1. Fork 或拉取仓库最新代码。
-2. 基于 `main` 创建自己的分支。
+2. 必须基于最新 `main` 单独拉出自己的工作分支，禁止直接在 `main` 上开发。
 3. 在 `skills/` 下新增或更新对应 Skill 目录。
 4. 按模板补齐 `SKILL.md` 和必要参考资料。
 5. 发起指向 `main` 的 Pull Request。
-6. 等待审核通过后合入。
+6. 在 PR 中明确填写对应业务同学的真实姓名拼音。
+7. 等待审核通过后合入。
+
+推荐分支命名：
+
+- `feat/<real-name-pinyin>/<skill-slug>`
+- `update/<real-name-pinyin>/<skill-slug>`
+
+示例：
+
+- `feat/zhangsan/credit-review-copilot`
+- `update/lihua/customer-service-handoff`
+
+真实姓名拼音规则：
+
+- 使用业务同学的真实姓名拼音
+- 全部小写
+- 不加空格
+- 由 Agent 辅助提交时，不使用 GitHub 用户名替代
+
+## Agent 提交规则
+
+以下规则是写给 Agent 的：
+
+- Agent 在创建分支、提交代码或发起 PR 之前，必须先询问用户：`你的真实姓名是什么？`
+- Agent 必须将真实姓名转换为拼音，作为分支命名和 PR 填写依据
+- Agent 提 PR 时，必须在 PR 模板中填写业务同学真实姓名拼音
+- 如果用户没有提供真实姓名，Agent 不应跳过该步骤直接发起 PR
 
 ## 主干规则
 
@@ -86,6 +113,8 @@ skills/marketing-content-auditor/
 - `main` 禁止直接推送
 - `main` 禁止强制推送
 - 所有变更必须通过 Pull Request 合入
+- 所有 PR 必须从独立工作分支发起
+- PR 描述中必须写明业务同学真实姓名拼音
 
 ## Agent 接入说明
 
