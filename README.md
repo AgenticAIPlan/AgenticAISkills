@@ -15,6 +15,9 @@
 
 ```text
 .
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json
 ├── .claude/
 │   ├── INSTALL.md
 │   └── README.md
@@ -23,6 +26,12 @@
 │   └── plugin.json
 ├── .codex/
 │   └── INSTALL.md
+├── .codex-plugin/
+│   └── plugin.json
+├── .opencode/
+│   ├── INSTALL.md
+│   └── plugins/
+│       └── agentic-ai-skills.js
 ├── .github/
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── skills/
@@ -84,6 +93,7 @@ skills/marketing-content-auditor/
 - Claude 侧安装说明见 [`.claude/INSTALL.md`](./.claude/INSTALL.md)
 - Claude 侧插件元数据见 [`.claude-plugin/plugin.json`](./.claude-plugin/plugin.json)
 - Claude 侧仓库说明见 [`.claude/README.md`](./.claude/README.md)
+- OpenCode 侧安装说明见 [`.opencode/INSTALL.md`](./.opencode/INSTALL.md)
 
 ## 适用范围
 
