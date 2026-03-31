@@ -1,0 +1,40 @@
+{
+  "name": "agentic-ai-skills",
+  "version": "0.1.0",
+  "description": "Business skills library for the AgenticAIPlan training program",
+  "author": {
+    "name": "AgenticAIPlan",
+    "url": "https://github.com/AgenticAIPlan"
+  },
+  "homepage": "https://github.com/AgenticAIPlan/AgenticAISkills",
+  "repository": "https://github.com/AgenticAIPlan/AgenticAISkills",
+  "license": "UNLICENSED",
+  "keywords": [
+    "skills",
+    "agents",
+    "business-skills",
+    "training",
+    "bmo"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AgenticAISkills",
+    "shortDescription": "BMO 培养计划业务 Skills 插件包",
+    "longDescription": "统一承载 AgenticAIPlan 培养计划中产出的业务型 Skills，供 Codex 等 Agent 直接发现和使用。",
+    "developerName": "AgenticAIPlan",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/AgenticAIPlan/AgenticAISkills",
+    "privacyPolicyURL": "https://github.com/AgenticAIPlan/AgenticAISkills",
+    "termsOfServiceURL": "https://github.com/AgenticAIPlan/AgenticAISkills",
+    "defaultPrompt": [
+      "列出这个插件里的业务 skills。",
+      "帮我为一个新业务场景创建 skill 模板。",
+      "检查这个 skill 目录是否符合仓库规范。"
+    ],
+    "brandColor": "#1F6FEB"
+  }
+}
