@@ -73,15 +73,28 @@ skills/marketing-content-auditor/
 
 ## 提交流程
 
+本仓库采用两段式提交流程：
+
+- 业务同学提交：`feature branch -> dev`
+- 助教发布提交：`dev -> main`
+
+业务同学提交流程：
+
 1. Fork 或拉取仓库最新代码。
-2. 必须基于最新 `main` 单独拉出自己的工作分支，禁止直接在 `main` 上开发。
+2. 先同步最新 `dev`，必须基于 `dev` 单独拉出自己的工作分支，禁止直接在 `dev` 或 `main` 上开发。
 3. 在 `skills/` 下新增或更新对应 Skill 目录。
 4. 按模板补齐 `SKILL.md` 和必要参考资料。
-5. 发起指向 `main` 的 Pull Request。
+5. 发起指向 `dev` 的 Pull Request。
 6. 在 PR 中明确填写对应业务同学的真实姓名拼音。
-7. 等待审核通过后合入。
+7. 等待助教审核并合入 `dev`。
 
-推荐分支命名：
+助教发布流程：
+
+1. 助教在 `dev` 完成审核与汇总。
+2. 助教发起 `dev -> main` 的 Pull Request。
+3. 完成最终审核后，将 `dev` 合入 `main`。
+
+业务同学推荐分支命名：
 
 - `feat/<real-name-pinyin>/<skill-slug>`
 - `update/<real-name-pinyin>/<skill-slug>`
@@ -104,8 +117,11 @@ skills/marketing-content-auditor/
 
 - Agent 在创建分支、提交代码或发起 PR 之前，必须先询问用户：`你的真实姓名是什么？`
 - Agent 必须将真实姓名转换为拼音，作为分支命名和 PR 填写依据
+- Agent 为业务同学创建分支时，必须从 `dev` 拉分支，而不是从 `main` 拉分支
+- Agent 为业务同学提 PR 时，目标分支必须是 `dev`
 - Agent 提 PR 时，必须在 PR 模板中填写业务同学真实姓名拼音
 - 如果用户没有提供真实姓名，Agent 不应跳过该步骤直接发起 PR
+- 只有助教或仓库维护者才应发起 `dev -> main` 的发布 PR
 
 ## 自动校验
 
@@ -122,6 +138,8 @@ bash scripts/install-hooks.sh
 
 自动校验会重点检查：
 
+- 业务同学 PR 是否提交到 `dev`
+- `main` 的 PR 是否来自 `dev`
 - 是否从独立分支发起变更
 - 分支名是否符合 `feat/<真实姓名拼音>/<skill-slug>` 或 `update/<真实姓名拼音>/<skill-slug>`
 - PR 中是否填写业务同学真实姓名与真实姓名拼音
@@ -133,12 +151,14 @@ bash scripts/install-hooks.sh
 
 ## 主干规则
 
-- `main` 是唯一主干分支
+- `dev` 是业务同学提交 Skill 的集成分支
+- `main` 是最终发布主干
+- `dev` 禁止直接推送
 - `main` 禁止直接推送
-- `main` 禁止强制推送
-- 所有变更必须通过 Pull Request 合入
-- 所有 PR 必须从独立工作分支发起
-- PR 描述中必须写明业务同学真实姓名拼音
+- `dev` 和 `main` 都禁止强制推送
+- 业务同学所有变更必须通过 Pull Request 合入 `dev`
+- 助教发布必须通过 `dev -> main` 的 Pull Request 完成
+- 业务同学 PR 描述中必须写明业务同学真实姓名拼音
 
 ## Agent 接入说明
 
