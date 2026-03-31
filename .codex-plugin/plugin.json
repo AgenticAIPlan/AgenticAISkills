@@ -8,7 +8,7 @@
   },
   "homepage": "https://github.com/AgenticAIPlan/AgenticAISkills",
   "repository": "https://github.com/AgenticAIPlan/AgenticAISkills",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "keywords": [
     "skills",
     "agents",
