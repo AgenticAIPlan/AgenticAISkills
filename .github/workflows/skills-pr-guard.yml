@@ -23,4 +23,4 @@ jobs:
         run: git fetch origin "${{ github.base_ref }}" --depth=1
 
       - name: Validate PR template and skills diff
-        run: python3 scripts/validate_skills_submission.py pr
+        run: python3 scripts/validate_pr_submission.py pr

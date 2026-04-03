@@ -73,9 +73,10 @@ skills/marketing-content-auditor/
 
 ## 提交流程
 
-本仓库采用两段式提交流程：
+本仓库当前有三类提交流程：
 
 - 业务同学提交：`feature branch -> dev`
+- 仓库维护者提交：`maintenance branch -> dev`
 - 助教发布提交：`dev -> main`
 
 业务同学提交流程：
@@ -93,6 +94,12 @@ skills/marketing-content-auditor/
 1. 助教在 `dev` 完成审核与汇总。
 2. 助教发起 `dev -> main` 的 Pull Request。
 3. 完成最终审核后，将 `dev` 合入 `main`。
+
+仓库维护者提交流程：
+
+1. 先同步最新 `dev`，并基于 `dev` 拉出独立维护分支。
+2. 在 `.github/`、`scripts/`、文档或其他仓库级目录中完成维护性修改。
+3. 发起指向 `dev` 的仓库维护 Pull Request。
 
 业务同学推荐分支命名：
 
@@ -128,7 +135,7 @@ skills/marketing-content-auditor/
 本仓库提供两层校验：
 
 - 本地 `git hook`：在推送前检查分支命名和 Skill 目录结构
-- GitHub Action：在 PR 上检查模板字段、真实姓名拼音和 Skill 改动范围
+- GitHub Action：在 PR 上区分并校验业务 Skill PR、仓库维护 PR 和发布 PR
 
 本地安装命令：
 
@@ -139,6 +146,7 @@ bash scripts/install-hooks.sh
 自动校验会重点检查：
 
 - 业务同学 PR 是否提交到 `dev`
+- 仓库维护 PR 是否提交到 `dev`
 - `main` 的 PR 是否来自 `dev`
 - 是否从独立分支发起变更
 - 分支名是否符合 `feat/<真实姓名拼音>/<skill-slug>` 或 `update/<真实姓名拼音>/<skill-slug>`
@@ -146,6 +154,9 @@ bash scripts/install-hooks.sh
 - Agent 辅助提交时，是否先询问过用户真实姓名
 - Skill 改动是否真正落在 `skills/<skill-slug>/` 下
 - 是否错误修改了 `skills/_template/` 或 `skills/README.md`
+- 仓库维护 PR 是否混入业务 Skill 目录改动
+
+对于业务 Skill PR，维护者还可以手动触发 `Skill PR AI Eval`，生成一条 AI 辅助审阅评论。
 
 如果不符合规范，push 前的本地 hook 会直接报错，PR 上的 GitHub Action 也会失败并阻止合入。
 
