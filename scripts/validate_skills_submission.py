@@ -17,6 +17,7 @@ FEATURE_BRANCH_RE = re.compile(r"^(feat|update)/([a-z]+)/([a-z0-9-]+)$")
 SLUG_RE = re.compile(r"^[a-z0-9-]+$")
 PINYIN_RE = re.compile(r"^[a-z]+$")
 LOCAL_SKIP_BRANCHES = {"main", "dev"}
+ADMIN_GITHUB_LOGINS = {"lemonteeeeaa"}
 
 
 def git(*args: str) -> str:
@@ -69,6 +70,42 @@ def load_pr_context() -> Tuple[str, str, str]:
         base_ref = pull_request.get("base", {}).get("ref") or base_ref
 
     return body, head_ref, base_ref
+
+
+def current_github_login() -> str:
+    for key in ("GITHUB_ACTOR", "GH_USER", "GITHUB_USER"):
+        value = os.getenv(key, "").strip()
+        if value:
+            return value
+
+    event_path = os.getenv("GITHUB_EVENT_PATH")
+    if event_path and Path(event_path).exists():
+        payload = json.loads(Path(event_path).read_text())
+        for login in (
+            payload.get("sender", {}).get("login", ""),
+            payload.get("pull_request", {}).get("user", {}).get("login", ""),
+        ):
+            if login:
+                return login
+
+    try:
+        result = subprocess.run(
+            ["gh", "api", "user", "--jq", ".login"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        return result.stdout.strip()
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return ""
+
+
+def admin_bypass_login() -> Optional[str]:
+    login = current_github_login()
+    if login in ADMIN_GITHUB_LOGINS:
+        return login
+    return None
 
 
 def touches_business_skill(files: List[str]) -> bool:
@@ -258,6 +295,11 @@ def run_local(base_ref: str) -> int:
     branch = git("branch", "--show-current")
     files = changed_files(base_ref)
 
+    admin_login = admin_bypass_login()
+    if admin_login:
+        print(f"检测到管理员账号 `{admin_login}`，跳过校验。")
+        return 0
+
     if branch in LOCAL_SKIP_BRANCHES:
         print(f"当前分支 `{branch}` 跳过本地业务提交校验。")
         return 0
@@ -283,6 +325,11 @@ def run_local(base_ref: str) -> int:
 
 def run_pr() -> int:
     body, branch, base_ref = load_pr_context()
+
+    admin_login = admin_bypass_login()
+    if admin_login:
+        print(f"检测到管理员账号 `{admin_login}`，跳过校验。")
+        return 0
 
     try:
         git("fetch", "origin", base_ref, "--depth=1")
