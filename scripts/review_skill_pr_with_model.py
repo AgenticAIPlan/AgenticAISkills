@@ -15,6 +15,7 @@ MAX_FILE_CHARS = 18_000
 MAX_TOTAL_CHARS = 90_000
 MAX_FILES = 40
 MAX_REPO_REFERENCE_CHARS = 12_000
+MAX_MODEL_PARSE_ATTEMPTS = 2
 TEXT_SUFFIXES = {
     ".md",
     ".txt",
@@ -448,6 +449,36 @@ def validate_review(review: Dict[str, object]) -> Dict[str, object]:
     return review
 
 
+def parse_model_review_output(model_output: str) -> Dict[str, object]:
+    return validate_review(json.loads(extract_json_object(model_output)))
+
+
+def review_with_retry(model: str, user_prompt: str) -> Dict[str, object]:
+    last_error: Exception | None = None
+    last_output_preview = ""
+
+    for attempt in range(1, MAX_MODEL_PARSE_ATTEMPTS + 1):
+        model_output = post_chat_completion(model, SYSTEM_PROMPT, user_prompt)
+        try:
+            return parse_model_review_output(model_output)
+        except (json.JSONDecodeError, RuntimeError) as exc:
+            last_error = exc
+            last_output_preview = strip_code_fence(model_output).strip().replace("\n", " ")[:500]
+            if attempt == MAX_MODEL_PARSE_ATTEMPTS:
+                break
+            print(
+                f"Model review output was not valid on attempt {attempt}/{MAX_MODEL_PARSE_ATTEMPTS}, retrying once...",
+                file=sys.stderr,
+            )
+
+    detail = str(last_error) if last_error else "unknown error"
+    if last_output_preview:
+        detail += f" | last_output_preview: {last_output_preview}"
+    raise RuntimeError(
+        f"Failed to produce a valid structured review after {MAX_MODEL_PARSE_ATTEMPTS} attempts: {detail}"
+    )
+
+
 def main() -> int:
     args = parse_args()
     repo_root = Path.cwd()
@@ -468,8 +499,7 @@ def main() -> int:
         notes,
         repo_references,
     )
-    model_output = post_chat_completion(args.model, SYSTEM_PROMPT, user_prompt)
-    review = validate_review(json.loads(extract_json_object(model_output)))
+    review = review_with_retry(args.model, user_prompt)
 
     review["review_scope"] = {
         "included_files": [
