@@ -40,7 +40,8 @@ def run_gh(args: List[str], repo: str | None = None) -> str:
 def ensure_gh(repo: str | None) -> None:
     if not shutil.which("gh"):
         raise RuntimeError("未找到 gh CLI，请先安装 GitHub CLI。")
-    run_gh(["auth", "status"], repo=repo)
+    del repo
+    run_gh(["auth", "status"])
 
 
 def extract_skill_paths(files: List[Dict[str, Any]]) -> Dict[str, List[str]]:
