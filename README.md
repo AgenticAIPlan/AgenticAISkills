@@ -73,9 +73,10 @@ skills/marketing-content-auditor/
 
 ## 提交流程
 
-本仓库采用两段式提交流程：
+本仓库当前有三类提交流程：
 
 - 业务同学提交：`feature branch -> dev`
+- 仓库维护者提交：`maintenance branch -> dev`
 - 助教发布提交：`dev -> main`
 
 业务同学提交流程：
@@ -85,7 +86,7 @@ skills/marketing-content-auditor/
 3. 在 `skills/` 下新增或更新对应 Skill 目录。
 4. 按模板补齐 `SKILL.md` 和必要参考资料。
 5. 发起指向 `dev` 的 Pull Request。
-6. 在 PR 中明确填写对应业务同学的真实姓名拼音。
+6. 在 PR 中明确填写 `Skill 名称`、`Skill 路径` 和业务场景摘要。
 7. 等待助教审核并合入 `dev`。
 
 助教发布流程：
@@ -94,33 +95,30 @@ skills/marketing-content-auditor/
 2. 助教发起 `dev -> main` 的 Pull Request。
 3. 完成最终审核后，将 `dev` 合入 `main`。
 
+仓库维护者提交流程：
+
+1. 先同步最新 `dev`，并基于 `dev` 拉出独立维护分支。
+2. 在 `.github/`、`scripts/`、文档或其他仓库级目录中完成维护性修改。
+3. 发起指向 `dev` 的仓库维护 Pull Request。
+
 业务同学推荐分支命名：
 
-- `feat/<real-name-pinyin>/<skill-slug>`
-- `update/<real-name-pinyin>/<skill-slug>`
+- `feat/<skill-slug>`
+- `update/<skill-slug>`
 
 示例：
 
-- `feat/zhangsan/credit-review-copilot`
-- `update/lihua/customer-service-handoff`
-
-真实姓名拼音规则：
-
-- 使用业务同学的真实姓名拼音
-- 全部小写
-- 不加空格
-- 由 Agent 辅助提交时，不使用 GitHub 用户名替代
+- `feat/credit-review-copilot`
+- `update/customer-service-handoff`
 
 ## Agent 提交规则
 
 以下规则是写给 Agent 的：
 
-- Agent 在创建分支、提交代码或发起 PR 之前，必须先询问用户：`你的真实姓名是什么？`
-- Agent 必须将真实姓名转换为拼音，作为分支命名和 PR 填写依据
 - Agent 为业务同学创建分支时，必须从 `dev` 拉分支，而不是从 `main` 拉分支
 - Agent 为业务同学提 PR 时，目标分支必须是 `dev`
-- Agent 提 PR 时，必须在 PR 模板中填写业务同学真实姓名拼音
-- 如果用户没有提供真实姓名，Agent 不应跳过该步骤直接发起 PR
+- Agent 提 PR 时，必须在 PR 模板中填写 `Skill 名称`、`Skill 路径` 和业务场景摘要
+- 公开仓库中不得在分支名、PR 描述或 Skill 内容里提交任何个人身份信息
 - 只有助教或仓库维护者才应发起 `dev -> main` 的发布 PR
 
 ## 自动校验
@@ -128,7 +126,7 @@ skills/marketing-content-auditor/
 本仓库提供两层校验：
 
 - 本地 `git hook`：在推送前检查分支命名和 Skill 目录结构
-- GitHub Action：在 PR 上检查模板字段、真实姓名拼音和 Skill 改动范围
+- GitHub Action：在 PR 上区分并校验业务 Skill PR、仓库维护 PR 和发布 PR
 
 本地安装命令：
 
@@ -139,13 +137,19 @@ bash scripts/install-hooks.sh
 自动校验会重点检查：
 
 - 业务同学 PR 是否提交到 `dev`
+- 仓库维护 PR 是否提交到 `dev`
 - `main` 的 PR 是否来自 `dev`
 - 是否从独立分支发起变更
-- 分支名是否符合 `feat/<真实姓名拼音>/<skill-slug>` 或 `update/<真实姓名拼音>/<skill-slug>`
-- PR 中是否填写业务同学真实姓名与真实姓名拼音
-- Agent 辅助提交时，是否先询问过用户真实姓名
+- 分支名是否符合 `feat/<skill-slug>` 或 `update/<skill-slug>`
+- PR 中是否填写 `Skill 名称`、`Skill 路径` 和业务场景摘要
 - Skill 改动是否真正落在 `skills/<skill-slug>/` 下
 - 是否错误修改了 `skills/_template/` 或 `skills/README.md`
+- 仓库维护 PR 是否混入业务 Skill 目录改动
+- 是否在公开仓库中提交了个人身份信息
+
+对于来自 Fork 的业务 Skill PR，Guard 会走一条只读的安全校验路径，自动读取 PR 元数据和改动文件列表完成校验，不要求仓库维护者先手动批准 workflow 再开始执行。
+
+对于业务 Skill PR，维护者还可以手动触发 `Skill PR AI Eval`，生成一条 AI 辅助审阅评论。
 
 如果不符合规范，push 前的本地 hook 会直接报错，PR 上的 GitHub Action 也会失败并阻止合入。
 
@@ -158,7 +162,7 @@ bash scripts/install-hooks.sh
 - `dev` 和 `main` 都禁止强制推送
 - 业务同学所有变更必须通过 Pull Request 合入 `dev`
 - 助教发布必须通过 `dev -> main` 的 Pull Request 完成
-- 业务同学 PR 描述中必须写明业务同学真实姓名拼音
+- 业务同学 PR 描述中必须写明 `Skill 名称`、`Skill 路径` 和业务场景摘要
 
 ## Agent 接入说明
 
