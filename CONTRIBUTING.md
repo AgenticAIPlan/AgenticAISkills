@@ -15,8 +15,9 @@
 2. 新建或修改 `skills/<skill-slug>/`。
 3. 对照 `skills/_template/SKILL.md` 完成内容。
 4. 自查语义是否清晰、边界是否明确、输出要求是否可执行。
-5. 发起指向 `dev` 的 Pull Request，并按模板填写业务同学真实姓名、真实姓名拼音、Skill 路径和分支信息。
-6. 等待助教审核并合入 `dev`。
+5. 发起指向 `dev` 的 Pull Request，并按模板填写 `Skill 名称`、`Skill 路径` 和业务场景摘要。
+6. 公开仓库中不要在分支名、PR 描述或 Skill 内容里提交任何个人身份信息。
+7. 等待助教审核并合入 `dev`。
 
 ## Skill 编写建议
 
