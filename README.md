@@ -147,6 +147,8 @@ bash scripts/install-hooks.sh
 - 仓库维护 PR 是否混入业务 Skill 目录改动
 - 是否在公开仓库中提交了个人身份信息
 
+对于来自 Fork 的业务 Skill PR，Guard 会走一条只读的安全校验路径，自动读取 PR 元数据和改动文件列表完成校验，不要求仓库维护者先手动批准 workflow 再开始执行。
+
 对于业务 Skill PR，维护者还可以手动触发 `Skill PR AI Eval`，生成一条 AI 辅助审阅评论。
 
 如果不符合规范，push 前的本地 hook 会直接报错，PR 上的 GitHub Action 也会失败并阻止合入。
