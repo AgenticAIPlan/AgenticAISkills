@@ -8,4 +8,4 @@ fi
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 
-python3 scripts/validate_skills_submission.py local
+python3 scripts/validate_pr_submission.py local
