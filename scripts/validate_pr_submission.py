@@ -42,12 +42,23 @@ def parse_template_fields(body: str) -> Dict[str, str]:
         if not line.startswith("- ") or ":" not in line:
             continue
         key, value = line[2:].split(":", 1)
-        fields[key.strip()] = value.strip()
+        fields[key.strip()] = normalize_template_value(value)
     return fields
 
 
 def normalize(value: str) -> str:
     return value.strip().lower()
+
+
+def normalize_template_value(value: str) -> str:
+    normalized = value.strip()
+
+    # Accept common Markdown inline-code formatting in PR templates,
+    # e.g. `dev` or ``skills/my-skill``.
+    while len(normalized) >= 2 and normalized[0] == normalized[-1] == "`":
+        normalized = normalized[1:-1].strip()
+
+    return normalized
 
 
 def load_pr_context() -> Tuple[str, str, str]:
