@@ -165,6 +165,27 @@ def split_repo_full_name(full_name: str) -> Tuple[str, str]:
     return owner, repo
 
 
+def skill_file_exists_after_pr(
+    skill_md_path: str,
+    pr_files: List[Dict[str, Any]],
+    *,
+    base_exists: bool,
+    head_exists: bool,
+) -> bool:
+    for item in pr_files:
+        filename = item.get("filename")
+        previous_filename = item.get("previous_filename")
+        status = item.get("status")
+
+        if filename == skill_md_path:
+            return status != "removed"
+
+        if previous_filename == skill_md_path:
+            return False
+
+    return base_exists or head_exists
+
+
 def touches_business_skill(files: List[str]) -> bool:
     return any(
         path.startswith(f"{SKILLS_ROOT}/")
@@ -511,24 +532,28 @@ def run_pr_target() -> int:
         )
         if changed_skill_dir:
             skill_md_path = f"{SKILLS_ROOT}/{changed_skill_dir}/SKILL.md"
-            changed_skill_md = any(
-                item.get("filename") == skill_md_path and item.get("status") != "removed"
-                for item in pr_files
-            )
-            if changed_skill_md:
-                skill_md_exists = True
-            else:
-                try:
-                    head_owner, head_repo = split_repo_full_name(head_repo_full_name)
-                    skill_md_exists = path_exists_in_repo(
-                        head_owner,
-                        head_repo,
-                        skill_md_path,
-                        head_sha,
-                        token,
-                    )
-                except RuntimeError as exc:
-                    errors.append(str(exc))
+            base_skill_md_exists = Path(skill_md_path).exists()
+            head_skill_md_exists = False
+
+            try:
+                head_owner, head_repo = split_repo_full_name(head_repo_full_name)
+                head_skill_md_exists = path_exists_in_repo(
+                    head_owner,
+                    head_repo,
+                    skill_md_path,
+                    head_sha,
+                    token,
+                )
+            except RuntimeError as exc:
+                errors.append(str(exc))
+
+            if not errors:
+                skill_md_exists = skill_file_exists_after_pr(
+                    skill_md_path,
+                    pr_files,
+                    base_exists=base_skill_md_exists,
+                    head_exists=head_skill_md_exists,
+                )
 
     if not errors:
         validate_contributor_pr(

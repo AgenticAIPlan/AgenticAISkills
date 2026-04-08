@@ -10,6 +10,7 @@ from scripts import validate_pr_submission
 from scripts.validate_pr_submission import (
     parse_template_fields,
     run_pr_target,
+    skill_file_exists_after_pr,
     validate_contributor_pr,
 )
 
@@ -40,7 +41,8 @@ class ValidatePrSubmissionTests(unittest.TestCase):
         payload: dict,
         pr_files: list[dict],
         *,
-        skill_md_exists: bool = False,
+        base_skill_md_exists: bool = False,
+        head_skill_md_exists: bool = False,
     ) -> int:
         with tempfile.TemporaryDirectory() as temp_dir:
             event_path = Path(temp_dir) / "event.json"
@@ -48,6 +50,12 @@ class ValidatePrSubmissionTests(unittest.TestCase):
                 json.dumps(payload, ensure_ascii=False),
                 encoding="utf-8",
             )
+            original_cwd = Path.cwd()
+
+            if base_skill_md_exists:
+                skill_dir = Path(temp_dir) / "skills" / payload["pull_request"]["head"]["ref"].split("/", 1)[1]
+                skill_dir.mkdir(parents=True, exist_ok=True)
+                (skill_dir / "SKILL.md").write_text("# base skill\n", encoding="utf-8")
 
             with patch.dict(
                 os.environ,
@@ -64,10 +72,14 @@ class ValidatePrSubmissionTests(unittest.TestCase):
                 ), patch.object(
                     validate_pr_submission,
                     "path_exists_in_repo",
-                    return_value=skill_md_exists,
+                    return_value=head_skill_md_exists,
                 ):
-                    with patch("sys.stdout", new=io.StringIO()):
-                        return run_pr_target()
+                    os.chdir(temp_dir)
+                    try:
+                        with patch("sys.stdout", new=io.StringIO()):
+                            return run_pr_target()
+                    finally:
+                        os.chdir(original_cwd)
 
     def test_parse_template_fields_strips_markdown_code_ticks(self) -> None:
         body = """
@@ -166,7 +178,36 @@ class ValidatePrSubmissionTests(unittest.TestCase):
                     "status": "modified",
                 }
             ],
-            skill_md_exists=True,
+            head_skill_md_exists=True,
+        )
+
+        self.assertEqual(exit_code, 0)
+
+    def test_run_pr_target_accepts_stale_fork_when_base_already_has_skill_md(self) -> None:
+        payload = self.make_fork_pr_payload(
+            body="""
+- PR 类型: `业务同学提交到 dev`
+- 目标分支: `dev`
+- 源分支: `update/existing-skill`
+- Skill 名称: `existing-skill`
+- Skill 路径: `skills/existing-skill`
+- 业务场景: `补充已有 Skill 的参考资料`
+- 分支名: `update/existing-skill`
+- 本次是否由 Agent 辅助提交: `否`
+""",
+            head_ref="update/existing-skill",
+        )
+
+        exit_code = self.run_pr_target_with_payload(
+            payload,
+            [
+                {
+                    "filename": "skills/existing-skill/references/README.md",
+                    "status": "modified",
+                }
+            ],
+            base_skill_md_exists=True,
+            head_skill_md_exists=False,
         )
 
         self.assertEqual(exit_code, 0)
@@ -188,6 +229,21 @@ class ValidatePrSubmissionTests(unittest.TestCase):
         )
 
         self.assertEqual(exit_code, 1)
+
+    def test_skill_file_exists_after_pr_rejects_removed_skill_md_even_if_base_has_it(self) -> None:
+        self.assertFalse(
+            skill_file_exists_after_pr(
+                "skills/example-skill/SKILL.md",
+                [
+                    {
+                        "filename": "skills/example-skill/SKILL.md",
+                        "status": "removed",
+                    }
+                ],
+                base_exists=True,
+                head_exists=False,
+            )
+        )
 
     def test_run_pr_target_rejects_skill_pr_with_non_skill_files(self) -> None:
         payload = self.make_fork_pr_payload(
