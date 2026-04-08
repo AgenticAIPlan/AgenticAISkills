@@ -7,20 +7,55 @@ on:
       - edited
       - reopened
       - synchronize
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+  pull-requests: read
 
 jobs:
   skills-pr-guard:
     name: skills-pr-guard
     runs-on: ubuntu-latest
+    if: >
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository) ||
+      (github.event_name == 'pull_request_target' &&
+      github.event.pull_request.head.repo.full_name != github.repository)
 
     steps:
-      - name: Checkout repository
+      - name: Resolve guard mode
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
+            echo "GUARD_MODE=pr-target" >> "$GITHUB_ENV"
+          else
+            echo "GUARD_MODE=pr" >> "$GITHUB_ENV"
+          fi
+
+      - name: Checkout trusted base branch for fork PR
+        if: github.event_name == 'pull_request_target'
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 1
+
+      - name: Checkout PR head for same-repo PR
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
-      - name: Fetch base branch
+      - name: Fetch base branch for same-repo PR
+        if: github.event_name == 'pull_request'
         run: git fetch origin "${{ github.base_ref }}" --depth=1
 
       - name: Validate PR template and skills diff
-        run: python3 scripts/validate_skills_submission.py pr
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/validate_pr_submission.py "$GUARD_MODE"
