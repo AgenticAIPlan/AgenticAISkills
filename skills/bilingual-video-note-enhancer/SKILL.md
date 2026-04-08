@@ -1,7 +1,6 @@
 ---
 name: bilingual-video-note-enhancer
 description: Enhance existing English Obsidian video notes, transcript notes, timestamped study notes, or article-like notes into compact bilingual study notes. Make sure to use this skill whenever the user wants an existing note enhanced with a Chinese TL;DR near the top, Chinese translations directly below English source blocks, or clearer timestamp screenshots and visual inserts. Trigger for requests such as “双语笔记”, “中英对照”, “中文 TL;DR”, “逐段翻译”, “英文笔记增强”, or “把截图换清晰”, even if the user does not explicitly mention YouTube or screenshots, as long as the task is to upgrade an existing note rather than draft a brand-new note from scratch.
-compatibility: Best in Codex or Claude Code with local filesystem access. Screenshot upgrading depends on local video handling with yt-dlp and ffmpeg; TL;DR and translation-only enhancement can still run without screenshot tooling.
 ---
 
 # Bilingual Video Note Enhancer
@@ -41,6 +40,15 @@ Mode rules:
 - If the task can be completed well with TL;DR + translation only, stop there.
 - Do not invent screenshot work for article-like notes.
 - Do not convert an existing note into a brand-new layout unless the user explicitly asks for a larger rewrite.
+
+## Minimum Inputs
+
+Choose the lightest path that the available materials can actually support.
+
+- **Translation-only mode** and **Article-note mode** require only the target note path or note content. Existing screenshots, video URLs, or local clips are optional and should not be requested just because timestamps are present.
+- **Screenshot-refresh mode** requires the target note plus at least one reusable visual source that covers the needed timestamps: the original video URL, a local video file path, or an existing local clip or asset directory.
+- If the note has timestamps but no accessible video URL, local video file, or reusable clip assets, do not start the screenshot workflow. Stay in Translation-only mode or Fallback mode and preserve the existing embeds.
+- If the user explicitly wants screenshot upgrades but cannot provide a usable visual source, say the screenshot path is blocked and still complete the bilingual enhancement without fabricating new frames.
 
 ## Add Chinese TL;DR
 
@@ -91,7 +99,7 @@ Use this section only when the note has timestamp screenshots or the user explic
 
 Before starting screenshot work, check these preconditions:
 - The note actually contains screenshot embeds or clearly needs visual inserts.
-- Local video handling is possible with `yt-dlp` and `ffmpeg`, or there is already a usable local source video.
+- A reusable visual source is available: `yt-dlp` against the source URL works, a local video file exists, or an existing local clip or asset directory can be reused for the target timestamps.
 - There is enough support to review candidate frames well. Prefer parallel subagents when available, but do not block the whole task if they are unavailable.
 
 Default screenshot workflow:
