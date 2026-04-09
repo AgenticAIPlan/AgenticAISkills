@@ -1,0 +1,7 @@
+interface:
+  display_name: "Cloud Instance Ops"
+  short_description: "Manage cloud instances safely across agents"
+  default_prompt: "Use $cloud-instance-ops to inspect, operate, and troubleshoot a cloud instance within the current access constraints."
+
+policy:
+  allow_implicit_invocation: true
