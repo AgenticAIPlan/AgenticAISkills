@@ -3,9 +3,9 @@ name: business-archives-full
 description: This skill should be used when the user wants to create a comprehensive company profile archive following a structured 7-section workflow. Triggers include phrases like "帮我制作企业档案", "生成完整企业档案", "制作【公司名称】的企业档案". The skill follows a detailed SOP to generate a company profile with: basic info (from web search), main products, founder info, product introduction, AI scenarios, benchmark customers, company development history, and enterprise news.
 ---
 
-# 企业档案制作 Skill（完整版）
+# Enterprise Profile Builder
 
-This skill generates a comprehensive company profile following the 7-section SOP workflow.
+This skill generates a comprehensive company profile following the 8-section SOP workflow.
 
 ## Workflow Overview
 
