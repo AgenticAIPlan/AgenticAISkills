@@ -161,10 +161,34 @@ Prefer one environment per task (`venv` or `conda`). If isolation is impossible:
 
 ## Password SSH guidance
 Password SSH is common in exam or public-IP environments. Use it carefully:
-- prefer secrets from environment variables, local temp files, or secure prompts
+- choose the narrowest password source that the **current tool process can actually read**
+- password source priority for Codex-style tool execution:
+  1. password explicitly provided by the user in the current chat turn
+  2. a user-provided local temp file path
+  3. an environment variable that has been **verified visible** to the current tool process
+- before asking the user to `export` a password variable, run a tiny visibility check first; if the current tool process still cannot read it, do **not** ask the user to repeat the export—switch to a temp file or one-shot wrapper instead
+- if the user already provided the password in chat for the current task, it is acceptable to use it in a one-shot local wrapper or helper invocation, as long as it is not written to the repo, shell history, or final response
 - never write passwords into the repo, shell history, or final logs
 - distinguish network failure, host key issues, wrong password, and server-side auth restrictions
-- when automation is needed, use the smallest possible `expect` or similar wrapper and keep logs password-free
+- prefer a reusable helper script over ad-hoc multi-layer quoting when automation is needed
+- when `expect` or a similar wrapper is still required, keep the wrapper as small as possible and keep logs password-free
+
+Recommended visibility check before relying on an env var:
+
+```bash
+if [ -n "$CLOUD_INSTANCE_PASSWORD" ]; then echo set; else echo missing; fi
+```
+
+Recommended helper usage:
+
+```bash
+python3 scripts/password_ssh.py \
+  --host 10.0.0.8 \
+  --user root \
+  --port 22 \
+  --password-file /tmp/cloud_instance_password \
+  --remote-command "hostname && whoami"
+```
 
 ## Interrupted run recovery
 When the task was interrupted, never restart blindly. First check:
@@ -216,6 +240,7 @@ Load only the reference relevant to the current task:
 ## Scripts
 - `scripts/preflight.py`: local preflight checks and initial status classification
 - `scripts/ssh_probe.py`: non-destructive SSH connectivity/auth probe with optional bastion
+- `scripts/password_ssh.py`: reusable password-based SSH wrapper that prefers direct password input or temp files over fragile ad-hoc `expect` snippets
 - `scripts/normalize_result.py`: normalize command outcomes into the shared status contract
 - `scripts/remote_port_owner.py`: inspect which local process is listening on a port
 - `scripts/artifact_check.py`: verify output artifacts exist and look reasonable
