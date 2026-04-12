@@ -46,6 +46,8 @@ description: 通过 LaTeX 生成面向客户交付的「企业大模型技术方
 - `assets/techdoc-template.tex`：LaTeX 模板（`ctexart` + 企业文档结构）
 - `assets/sample-input.json`：可跑通的示例数据
 - `scripts/generate_techdoc.py`：JSON → `.tex` 渲染，并可选用 `tectonic` / `xelatex` / `pdflatex` 编译
+- `output/`：可选示例生成物（`.tex` / `.preview.txt`）；PDF 需本地编译或 `--preview` 生成，默认不纳入版本库（见 `.gitignore`）
+- `references/`：补充资料占位，可按项目追加说明
 
 ### 依赖说明（Python 标准库）
 
