@@ -1,0 +1,189 @@
+% Enterprise LLM TechDoc LaTeX Template (ctexart)
+\documentclass[UTF8,a4paper,11pt,fontset=fandol]{ctexart}
+
+% === Core packages ===
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.misc,shapes.geometric}
+
+\geometry{a4paper, top=2.3cm, bottom=2.3cm, left=2.2cm, right=2.2cm}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{2em}
+\renewcommand{\arraystretch}{1.25}
+
+% === Colors ===
+\definecolor{Primary}{HTML}{1A1A2E}
+\definecolor{Accent}{HTML}{1F6FEB}
+\definecolor{Muted}{HTML}{6B7280}
+\definecolor{BoxBg}{HTML}{F8FAFC}
+
+% === Hyperref ===
+\hypersetup{
+  colorlinks=true,
+  linkcolor=Accent,
+  urlcolor=Accent,
+  citecolor=Accent,
+  pdftitle={<<DOC_TITLE>>},
+  pdfauthor={<<DOC_AUTHOR>>}
+}
+
+% === Header / Footer ===
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{Muted}{<<DOC_CUSTOMER>>}}
+\rhead{\textcolor{Muted}{<<DOC_VERSION>>}}
+\cfoot{\textcolor{Muted}{\thepage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% === Boxes ===
+\newtcolorbox{infobox}[1]{
+  colback=BoxBg,
+  colframe=Accent!45,
+  title=\textbf{#1},
+  boxrule=0.6pt,
+  arc=2pt,
+  left=6pt,right=6pt,top=6pt,bottom=6pt
+}
+
+% === Helpers ===
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{\textbf{<<DOC_TITLE>>}\\[6pt]\large\textcolor{Muted}{<<DOC_SUBTITLE>>}}
+\author{<<DOC_AUTHOR>>}
+\date{<<DOC_DATE>>}
+
+\begin{document}
+\maketitle
+
+\begin{infobox}{文档控制信息}
+\begin{tabularx}{\linewidth}{L{3.2cm}Y L{3.0cm}Y}
+\toprule
+客户名称 & <<DOC_CUSTOMER>> & 行业 & <<DOC_INDUSTRY>> \\
+版本 & <<DOC_VERSION>> & 日期 & <<DOC_DATE>> \\
+作者 & <<DOC_AUTHOR>> & 审阅 & <<DOC_REVIEWER>> \\
+保密级别 & <<DOC_CONF>> &  &  \\
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\vspace{0.5em}
+\tableofcontents
+\newpage
+
+\section{概述}
+\subsection{目标与范围}
+本文档用于描述\textbf{目标大模型服务（以合同与实际接入平台为准）}能力与客户现有产品/系统的结合方式，输出可交付的技术方案结构（排版与内容为模板样例）。对任何具体能力、指标与 SLA 的承诺以合同与实际开通能力为准。
+
+\subsection{术语与约束}
+\begin{itemize}[leftmargin=2.2em]
+  \item 大模型能力范围：仅覆盖已开通/已采购能力；不确定项标记“待确认”。
+  \item 数据合规：遵循数据分级分类、最小权限、脱敏与审计要求。
+  \item 输出边界：本模板强调“能力—系统—场景—KPI”的可追溯关系，避免泛化营销表述。
+\end{itemize}
+
+\section{客户现有产品与集成切入点}
+\begin{infobox}{现有产品清单（示例）}
+\begin{tabularx}{\linewidth}{L{3.5cm} L{2.7cm} Y}
+\toprule
+产品/系统 & 责任部门 & 现状与说明 \\
+\midrule
+<<CURRENT_PRODUCTS_TABLE>>
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\section{大模型能力描述（按可交付能力组织）}
+\begin{infobox}{能力清单（示例，具体以实际开通为准）}
+\begin{tabularx}{\linewidth}{L{5.2cm} Y}
+\toprule
+能力 & 说明与典型用途 \\
+\midrule
+<<LLM_CAP_TABLE>>
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\section{能力与现有产品结合分析（映射与收益）}
+\subsection{映射方法}
+建议采用“\textbf{场景}→\textbf{能力}→\textbf{集成点}→\textbf{收益}→\textbf{KPI}”的结构化映射，便于后续验收与运营复盘。
+
+\subsection{能力—系统—场景映射表（模板）}
+\begin{infobox}{映射表（示例）}
+\begin{tabularx}{\linewidth}{L{3.3cm} L{3.2cm} L{3.4cm} Y}
+\toprule
+场景 & 大模型能力 & 集成系统/接口 & 预期收益与KPI \\
+\midrule
+<<MAPPING_TABLE>>
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\section{业务场景方案与优势（按场景输出）}
+<<SCENARIO_SECTIONS>>
+
+\section{总体架构（示意）}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=12mm and 12mm,
+  box/.style={draw=Primary!40, rounded corners=2pt, fill=BoxBg, align=left, inner sep=6pt},
+  svc/.style={draw=Accent!60, rounded corners=2pt, fill=Accent!6, align=left, inner sep=6pt},
+  arr/.style={-Latex, draw=Primary!55, line width=0.7pt}
+]
+  \node[box] (user) {用户/员工\\(APP/小程序/坐席)};
+  \node[box, right=of user] (entry) {业务入口\\(客服工作台/IM/门户)};
+  \node[svc, right=of entry] (orchestrator) {编排层\\(提示词/路由/工具调用)};
+  \node[svc, below=of orchestrator] (llm) {大模型推理服务\\(对话/理解/生成)};
+  \node[box, right=of orchestrator] (systems) {客户系统\\(工单/CRM/订单/知识库)};
+  \node[box, below=of systems] (kb) {知识库与数据源\\(文档/FAQ/日志)};
+
+  \draw[arr] (user) -- (entry);
+  \draw[arr] (entry) -- (orchestrator);
+  \draw[arr] (orchestrator) -- node[above,sloped]{调用} (systems);
+  \draw[arr] (orchestrator) -- node[right]{推理/生成} (llm);
+  \draw[arr] (kb) -- node[below,sloped]{检索增强} (orchestrator);
+  \draw[arr] (systems) -- node[right]{事件/结果} (orchestrator);
+\end{tikzpicture}
+\caption{大模型能力与客户系统集成总体架构示意（模板）}
+\label{fig:arch}
+\end{figure}
+
+\section{部署、安全与运维要点（模板）}
+\subsection{部署模式与数据范围}
+\begin{itemize}[leftmargin=2.2em]
+  \item 部署模式：<<DEPLOY_MODE>>
+  \item 主要数据源：<<DEPLOY_DATA_SOURCES>>
+  \item 安全与合规：<<DEPLOY_SECURITY>>
+\end{itemize}
+
+\subsection{运维与运营指标}
+\begin{itemize}[leftmargin=2.2em]
+  \item SLA：<<OPS_SLA>>
+  \item 监控项：<<OPS_MONITORING>>
+  \item 成本模型：<<OPS_COST>>
+\end{itemize}
+
+\section{验收建议（模板）}
+\begin{infobox}{建议的验收维度}
+\begin{itemize}[leftmargin=2.2em]
+  \item 功能验收：场景覆盖、工具调用链路、权限与审计、引用溯源（RAG）。
+  \item 指标验收：自助解决率、时延、人工转接率、准确率（按业务定义）。
+  \item 合规验收：敏感信息处理、越权防护、日志留存、数据出境（如适用）。
+\end{itemize}
+\end{infobox}
+
+\end{document}
