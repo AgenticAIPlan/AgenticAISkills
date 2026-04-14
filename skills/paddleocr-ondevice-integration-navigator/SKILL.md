@@ -9,7 +9,7 @@ allowed-tools: AskUserQuestion
 
 # PaddleOCR 端侧集成导航
 
-为 PaddleOCR 的 PP-OCR 端侧集成提供提供路线判断、集成路径收敛和 PoC 约束梳理。
+为 PaddleOCR 的 PP-OCR 系列模型端侧集成提供提供路线判断、集成路径收敛和 PoC 约束梳理。
 
 ## 适用场景
 
