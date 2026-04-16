@@ -19,8 +19,8 @@ SEARCH_KEYWORDS = ["ERNIE-Image"]
 # ERNIE-Image 发布日期（2026-04-14），仅收录此日期及之后的内容
 SINCE_DATE = "2026-04-14"
 
-# 内容相关性关键词：标题或摘要必须包含其中至少一个
-ERNIE_IMAGE_TERMS = ["ernie-image", "ernie image"]
+# 内容相关性关键词：标题、正文、评论、标签中包含任一即视为相关
+ERNIE_IMAGE_TERMS = ["ernie-image", "ernie-image-turbo", "ernie_image"]
 
 
 # ── OpenCLI 调用 ──────────────────────────────────────────────
@@ -50,9 +50,18 @@ def _make_item(platform, account, title, content_snippet, url, published_at=""):
     }
 
 
-def is_ernie_image_relevant(title: str, snippet: str = "") -> bool:
-    """判断内容是否与 ERNIE-Image 直接相关（排除其他模型的无关内容）"""
-    text = (title + " " + snippet).lower()
+def is_ernie_image_relevant(title: str, snippet: str = "",
+                             tags: list = None, comments: list = None) -> bool:
+    """
+    判断内容是否与 ERNIE-Image 直接相关。
+    检查范围：标题、正文摘要、标签、评论——任一字段包含关键词即通过。
+    """
+    parts = [title, snippet]
+    if tags:
+        parts += [t if isinstance(t, str) else str(t) for t in tags]
+    if comments:
+        parts += [c if isinstance(c, str) else str(c) for c in comments]
+    text = " ".join(parts).lower()
     return any(term in text for term in ERNIE_IMAGE_TERMS)
 
 
@@ -111,8 +120,10 @@ def fetch_zhihu(limit: int = 20) -> list[dict]:
             if url in seen_urls:
                 continue
             pub = item.get("created_time", item.get("published_at", ""))
-            # 过滤：必须与 ERNIE-Image 直接相关
-            if not is_ernie_image_relevant(title):
+            tags = item.get("tags", []) or []
+            comments = item.get("comments", []) or []
+            # 过滤：标题、正文、标签、评论中任一含关键词
+            if not is_ernie_image_relevant(title, title, tags, comments):
                 continue
             # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
             if not is_after_release_date(pub):
@@ -141,8 +152,10 @@ def fetch_xiaohongshu(limit: int = 20) -> list[dict]:
                 continue
             title = item.get("title", "")
             pub = item.get("published_at", "")
-            # 过滤：必须与 ERNIE-Image 直接相关
-            if not is_ernie_image_relevant(title):
+            tags = item.get("tags", []) or []
+            comments = item.get("comments", []) or []
+            # 过滤：标题、正文、标签、评论中任一含关键词
+            if not is_ernie_image_relevant(title, title, tags, comments):
                 continue
             # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
             if not is_after_release_date(pub):
@@ -176,8 +189,9 @@ def fetch_weixin_via_google(limit: int = 10) -> list[dict]:
             snippet = item.get("snippet", "")
             title = item.get("title", "")
             pub = _extract_date_from_snippet(snippet)
-            # 过滤：必须与 ERNIE-Image 直接相关
-            if not is_ernie_image_relevant(title, snippet):
+            tags = item.get("tags", []) or []
+            # 过滤：标题、摘要、标签中任一含关键词
+            if not is_ernie_image_relevant(title, snippet, tags):
                 continue
             # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
             if not is_after_release_date(pub):
@@ -220,8 +234,9 @@ def fetch_baidu(limit: int = 20) -> list[dict]:
             snippet = item.get("snippet", "")
             title = item.get("title", "")
             pub = _extract_date_from_snippet(snippet)
-            # 过滤：必须与 ERNIE-Image 直接相关
-            if not is_ernie_image_relevant(title, snippet):
+            tags = item.get("tags", []) or []
+            # 过滤：标题、摘要、标签中任一含关键词
+            if not is_ernie_image_relevant(title, snippet, tags):
                 continue
             # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
             if not is_after_release_date(pub):
