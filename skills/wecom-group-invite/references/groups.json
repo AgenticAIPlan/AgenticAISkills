@@ -1,0 +1,22 @@
+{
+  "OCR": {
+    "name": "OCR 技术交流群",
+    "invite": "https://work.weixin.qq.com/gm/example-ocr",
+    "reply_template": "欢迎加入 OCR 技术交流群～点此进群：https://work.weixin.qq.com/gm/example-ocr"
+  },
+  "LLM": {
+    "name": "大模型应用交流群",
+    "invite": "https://work.weixin.qq.com/gm/example-llm",
+    "reply_template": "欢迎～大模型应用交流群入口：https://work.weixin.qq.com/gm/example-llm"
+  },
+  "RAG": {
+    "name": "RAG 实践交流群",
+    "invite": "./assets/rag-qrcode.png",
+    "reply_template": "RAG 实践群活码见附图，7 天内有效，请尽快扫码。"
+  },
+  "AGENT": {
+    "name": "Agent 研发交流群",
+    "invite": "https://work.weixin.qq.com/gm/example-agent",
+    "reply_template": "欢迎加入 Agent 研发交流群：https://work.weixin.qq.com/gm/example-agent"
+  }
+}
