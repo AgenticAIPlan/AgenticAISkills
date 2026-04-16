@@ -171,10 +171,8 @@ python3 {baseDir}/scripts/generate.py \
 
 > **`{baseDir}` 说明**：本 `SKILL.md` 所在目录的绝对路径。执行生图命令前，先确认路径：
 > ```bash
-> # 示例：skill 安装在全局
-> # {baseDir} = ~/.codex/skills/xinghe-image
-> # 示例：符号链接
-> # {baseDir} = /path/to/xinghe-image（链接源目录）
+> # 示例：全局安装
+> # {baseDir} = ~/.claude/skills/xinghe-image
 > ```
 > 不确定时，运行 `find ~ -name "SKILL.md" -path "*/xinghe-image/*"` 定位。
 
