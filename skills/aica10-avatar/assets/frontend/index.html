@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AICA 第十期 · 头像生成器</title>
+<style>
+  :root {
+    --blue-dark: #0A2C8C;
+    --blue-mid:  #1565C0;
+    --blue-light:#1E88E5;
+    --bg:        #F0F4FF;
+    --card:      #FFFFFF;
+    --text:      #1a2340;
+    --muted:     #6b7a99;
+    --radius:    16px;
+    --shadow:    0 8px 32px rgba(21,101,192,.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ─── Header ─── */
+  header {
+    width: 100%;
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+    padding: 28px 0 24px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(10,44,140,.3);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,.08) 0%, transparent 60%);
+  }
+  header h1 {
+    font-size: 26px; font-weight: 800; letter-spacing: 3px;
+    position: relative;
+  }
+  header p {
+    font-size: 13px; opacity: .8; margin-top: 6px; letter-spacing: 1px;
+    position: relative;
+  }
+
+  /* ─── Main layout ─── */
+  main {
+    width: 100%; max-width: 900px;
+    padding: 36px 20px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 640px) {
+    main { grid-template-columns: 1fr; padding: 24px 16px 48px; }
+  }
+
+  /* ─── Card ─── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px;
+  }
+  .card h2 {
+    font-size: 15px; font-weight: 700; color: var(--blue-mid);
+    margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+  }
+  .card h2 .badge {
+    background: var(--blue-mid); color: white;
+    border-radius: 50%; width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* ─── Upload zone ─── */
+  .upload-zone {
+    border: 2px dashed #c2d0ee;
+    border-radius: 12px;
+    padding: 36px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    background: #f7f9ff;
+    position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--blue-mid);
+    background: #eef2ff;
+  }
+  .upload-zone input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+  }
+  .upload-icon {
+    font-size: 40px; margin-bottom: 12px;
+  }
+  .upload-zone p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .upload-zone strong { color: var(--blue-mid); }
+
+  /* ─── Controls ─── */
+  .control-group { margin-top: 18px; }
+  .control-group label {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--muted); margin-bottom: 8px;
+  }
+  .control-group label span { font-weight: 600; color: var(--text); }
+  input[type=range] {
+    width: 100%; height: 6px; border-radius: 3px;
+    -webkit-appearance: none; appearance: none;
+    background: linear-gradient(to right, var(--blue-mid) 0%, var(--blue-mid) 50%, #dde4f5 50%);
+    outline: none; cursor: pointer; transition: background .1s;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px;
+    border-radius: 50%; background: var(--blue-mid);
+    border: 3px solid white; box-shadow: 0 2px 6px rgba(21,101,192,.35);
+    cursor: pointer;
+  }
+
+  /* ─── Action button ─── */
+  .btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+    color: white; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 700; letter-spacing: 1px;
+    cursor: pointer; margin-top: 20px;
+    transition: opacity .2s, transform .15s;
+    box-shadow: 0 4px 14px rgba(21,101,192,.35);
+  }
+  .btn:hover { opacity: .92; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--blue-mid);
+    color: var(--blue-mid);
+    box-shadow: none;
+  }
+  .btn-outline:hover { background: #eef2ff; }
+
+  /* ─── Preview panel ─── */
+  .preview-wrap {
+    position: relative; display: flex;
+    justify-content: center; align-items: center;
+    min-height: 300px;
+  }
+  #canvas {
+    border-radius: 50%; width: 100%; max-width: 320px;
+    box-shadow: 0 8px 32px rgba(21,101,192,.2);
+    display: block;
+  }
+  .placeholder {
+    width: 280px; height: 280px; border-radius: 50%;
+    background: linear-gradient(135deg, #e8eeff, #d0dcf8);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px; text-align: center;
+    border: 2px dashed #c2d0ee;
+    gap: 10px;
+  }
+  .placeholder span { font-size: 48px; }
+
+  /* ─── Tips ─── */
+  .tip {
+    background: #eef2ff; border-left: 3px solid var(--blue-mid);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px; font-size: 13px; color: var(--muted);
+    margin-top: 16px; line-height: 1.6;
+  }
+  .tip strong { color: var(--blue-mid); }
+
+  /* ─── How to replace frame ─── */
+  .replace-guide {
+    background: #f7f9ff; border-radius: 10px;
+    padding: 16px; font-size: 13px; margin-top: 18px;
+    color: var(--muted); line-height: 1.8;
+  }
+  .replace-guide h3 { font-size: 13px; color: var(--blue-mid); margin-bottom: 8px; font-weight: 700; }
+  .replace-guide code {
+    background: #e0e8f7; color: var(--blue-dark);
+    padding: 1px 6px; border-radius: 4px; font-family: monospace; font-size: 12px;
+  }
+
+  footer {
+    width: 100%; text-align: center;
+    padding: 20px; color: var(--muted); font-size: 12px;
+    border-top: 1px solid #e0e8f7;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AICA 第十期 · 头像生成器</h1>
+  <p>上传照片，一键生成带专属头像框的头像</p>
+</header>
+
+<main>
+  <!-- 左：操作区 -->
+  <div class="card">
+    <h2><span class="badge">1</span>上传照片</h2>
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="fileInput" accept="image/*"/>
+      <div class="upload-icon">📷</div>
+      <p><strong>点击选择</strong> 或拖拽图片到此处</p>
+      <p style="margin-top:6px;font-size:12px;">支持 JPG / PNG / WEBP，建议正方形人像</p>
+    </div>
+
+    <div class="control-group" style="margin-top:22px;">
+      <h2 style="margin-bottom:14px;"><span class="badge">2</span>调整照片</h2>
+      <label>缩放 <span id="scaleVal">100%</span></label>
+      <input type="range" id="scaleRange" min="50" max="200" value="100"/>
+
+      <label style="margin-top:14px;">水平位置 <span id="xVal">0</span></label>
+      <input type="range" id="xRange" min="-150" max="150" value="0"/>
+
+      <label style="margin-top:14px;">垂直位置 <span id="yVal">0</span></label>
+      <input type="range" id="yRange" min="-150" max="150" value="0"/>
+    </div>
+
+    <button class="btn" id="downloadBtn" disabled>⬇ 下载头像</button>
+    <button class="btn btn-outline" id="resetBtn" style="margin-top:10px;">重置</button>
+
+    <div class="tip">
+      <strong>💡 小提示：</strong>建议使用正方形人像照片效果最佳。下载后可直接设置为微信、企业微信头像。
+    </div>
+  </div>
+
+  <!-- 右：预览区 -->
+  <div class="card">
+    <h2><span class="badge">3</span>预览效果</h2>
+    <div class="preview-wrap" id="previewWrap">
+      <div class="placeholder" id="placeholder">
+        <span>🖼️</span>
+        <div>上传照片后<br/>在此预览效果</div>
+      </div>
+      <canvas id="canvas" width="500" height="500" style="display:none;"></canvas>
+    </div>
+
+    <div class="replace-guide">
+      <h3>🎨 关于头像框</h3>
+      本头像框由 <strong>ERNIE-Image</strong> 创作生成，专为 AICA 第十期定制设计。
+    </div>
+  </div>
+</main>
+
+<footer>AICA 第十期 · 头像生成器 &nbsp;|&nbsp; 纯前端运行，照片不会上传到任何服务器 &nbsp;|&nbsp; 头像框由 ERNIE-Image 创作</footer>
+
+<script>
+// ─── 配置区 ────────────────────────────────────────────────────────────────
+const FRAME_URL     = 'frame/frame.png';
+const OUTPUT_SIZE   = 500;
+const INNER_R_RATIO = 0.36;   // 照片内圆半径比例，调小=框更厚
+const BG_TOLERANCE  = 45;     // 泛洪去背景容差（Manhattan距离），越大去得越多
+// ──────────────────────────────────────────────────────────────────────────
+
+const canvas      = document.getElementById('canvas');
+const ctx         = canvas.getContext('2d');
+const fileInput   = document.getElementById('fileInput');
+const uploadZone  = document.getElementById('uploadZone');
+const placeholder = document.getElementById('placeholder');
+const downloadBtn = document.getElementById('downloadBtn');
+const resetBtn    = document.getElementById('resetBtn');
+
+const scaleRange  = document.getElementById('scaleRange');
+const xRange      = document.getElementById('xRange');
+const yRange      = document.getElementById('yRange');
+const scaleVal    = document.getElementById('scaleVal');
+const xVal        = document.getElementById('xVal');
+const yVal        = document.getElementById('yVal');
+
+let userImage      = null;
+let processedFrame = null;  // 背景已去除的头像框离屏 Canvas
+
+// ─── 泛洪填充去背景 ────────────────────────────────────────────────────────
+// 两路泛洪：① 从四条边去掉外部背景；② 从画布中心去掉内圆背景
+// 蓝色圆环/丝带/星星与背景色差大，自然形成挡墙，完整保留
+function buildProcessedFrame(img) {
+  const S = OUTPUT_SIZE;
+  const off = document.createElement('canvas');
+  off.width = off.height = S;
+  const octx = off.getContext('2d');
+  octx.drawImage(img, 0, 0, S, S);
+
+  const imageData = octx.getImageData(0, 0, S, S);
+  const data = imageData.data;
+
+  function flood(seeds, refPi, tol) {
+    const rR = data[refPi], rG = data[refPi+1], rB = data[refPi+2];
+    const dist = pi =>
+      Math.abs(data[pi]-rR) + Math.abs(data[pi+1]-rG) + Math.abs(data[pi+2]-rB);
+    const visited = new Uint8Array(S * S);
+    const stack = [];
+    for (const i of seeds) {
+      if (!visited[i] && dist(i*4) < tol) { visited[i]=1; stack.push(i); }
+    }
+    while (stack.length > 0) {
+      const idx = stack.pop();
+      data[idx*4+3] = 0;
+      const x = idx%S, y = (idx/S)|0;
+      for (const ni of [idx-1, idx+1, idx-S, idx+S]) {
+        if (ni < 0 || ni >= S*S) continue;
+        if (Math.abs((ni%S)-x) + Math.abs(((ni/S)|0)-y) !== 1) continue;
+        if (!visited[ni] && dist(ni*4) < tol) { visited[ni]=1; stack.push(ni); }
+      }
+    }
+  }
+
+  // ① 外部背景：从四条边入栈，以左上角像素为参考色
+  const edgeSeeds = [];
+  for (let x = 0; x < S; x++) { edgeSeeds.push(x, (S-1)*S+x); }
+  for (let y = 1; y < S-1; y++) { edgeSeeds.push(y*S, y*S+S-1); }
+  flood(edgeSeeds, 0, BG_TOLERANCE);
+
+  // ② 内圆背景：从画布中心入栈，以中心像素为参考色（内圈通常为白/浅色）
+  const cx = (S/2)|0, cy = (S/2)|0;
+  const ci  = cy*S+cx;
+  const innerSeeds = [ci, ci-20, ci+20, ci-S*20, ci+S*20];
+  flood(innerSeeds, ci*4, BG_TOLERANCE + 15);
+
+  octx.putImageData(imageData, 0, 0);
+  return off;
+}
+
+// 预加载并预处理头像框（只做一次）
+const frameImg = new Image();
+frameImg.onload  = () => { processedFrame = buildProcessedFrame(frameImg); renderIfReady(); };
+frameImg.onerror = () => console.warn('头像框加载失败，请检查 frame/ 目录');
+frameImg.src = FRAME_URL;
+
+// ─── 文件上传 ──────────────────────────────────────────────────────────────
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) loadFile(file);
+});
+
+function loadFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => { userImage = img; showCanvas(); renderIfReady(); };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ─── 滑块实时更新 ──────────────────────────────────────────────────────────
+function updateSliderBackground(el) {
+  const pct = ((+el.value - +el.min) / (+el.max - +el.min)) * 100;
+  el.style.background =
+    `linear-gradient(to right, #1565C0 0%, #1565C0 ${pct}%, #dde4f5 ${pct}%)`;
+}
+
+[scaleRange, xRange, yRange].forEach(el => {
+  el.addEventListener('input', () => { syncLabels(); renderIfReady(); updateSliderBackground(el); });
+  updateSliderBackground(el);
+});
+
+function syncLabels() {
+  scaleVal.textContent = scaleRange.value + '%';
+  xVal.textContent     = xRange.value;
+  yVal.textContent     = yRange.value;
+}
+
+// ─── 核心渲染 ──────────────────────────────────────────────────────────────
+function renderIfReady() {
+  if (!userImage) return;
+  const S  = OUTPUT_SIZE;
+  const cx = S / 2, cy = S / 2;
+  const R  = S * INNER_R_RATIO;
+  const scale  = +scaleRange.value / 100;
+  const dx = +xRange.value, dy = +yRange.value;
+
+  ctx.clearRect(0, 0, S, S);
+
+  // 1. 照片：裁成内圆
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, 0, Math.PI * 2);
+  ctx.clip();
+  const aspect   = userImage.naturalWidth / userImage.naturalHeight;
+  const drawSize = R * 2 * scale;
+  const dw = aspect >= 1 ? drawSize * aspect : drawSize;
+  const dh = aspect >= 1 ? drawSize          : drawSize / aspect;
+  ctx.drawImage(userImage, cx - dw / 2 + dx, cy - dh / 2 + dy, dw, dh);
+  ctx.restore();
+
+  // 2. 头像框：直接叠加（背景已由泛洪填充去除，丝带/文字完整保留）
+  if (processedFrame) {
+    ctx.drawImage(processedFrame, 0, 0);
+  }
+}
+
+// ─── 显示 / 隐藏 Canvas ────────────────────────────────────────────────────
+function showCanvas() {
+  placeholder.style.display = 'none';
+  canvas.style.display      = 'block';
+  downloadBtn.disabled      = false;
+}
+
+// ─── 下载 ─────────────────────────────────────────────────────────────────
+downloadBtn.addEventListener('click', () => {
+  renderIfReady();
+  const link = document.createElement('a');
+  link.download = 'AICA10_avatar.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+
+// ─── 重置 ─────────────────────────────────────────────────────────────────
+resetBtn.addEventListener('click', () => {
+  userImage = null;
+  fileInput.value = '';
+  scaleRange.value = 100; xRange.value = 0; yRange.value = 0;
+  syncLabels();
+  [scaleRange, xRange, yRange].forEach(updateSliderBackground);
+  canvas.style.display      = 'none';
+  placeholder.style.display = 'flex';
+  downloadBtn.disabled      = true;
+  ctx.clearRect(0, 0, OUTPUT_SIZE, OUTPUT_SIZE);
+});
+</script>
+</body>
+</html>
