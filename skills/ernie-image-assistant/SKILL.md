@@ -1,5 +1,5 @@
 ---
-name: reverse-prompt
+name: ernie-image-assistant
 description: |
     图片逆向提示词助手。当用户需要从图片反推文生图 prompt、逆向提示词、复现图片、分析图片风格时使用此 skill。
     接收用户粘贴的图片路径，调用文心多模态大模型（ERNIE-4.5）进行深度视觉分析，
@@ -8,7 +8,7 @@ description: |
     重点擅长动漫、胶片、插画等艺术风格图片的逆向分析。
 ---
 
-# 图片逆向提示词 Skill
+# ERNIE-Image Assistant: Enter Prompt, Auto-Generate
 
 ## 使用场景
 
