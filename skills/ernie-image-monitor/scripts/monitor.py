@@ -16,6 +16,16 @@ from pathlib import Path
 OPENCLI = str(Path.home() / ".local/bin/opencli")
 SEARCH_KEYWORDS = ["ERNIE-Image", "文心图像", "百度文心图像生成"]
 
+# ERNIE-Image 发布日期（2026-04-14），仅收录此日期及之后的内容
+SINCE_DATE = "2026-04-14"
+
+# 内容相关性关键词：标题或摘要必须包含其中至少一个
+ERNIE_IMAGE_TERMS = [
+    "ernie-image", "ernie image", "ernie_image",
+    "ernie-vilg", "ernie vilg",
+    "文心图像", "文心文生图", "文心生图", "文心一格",
+]
+
 
 # ── OpenCLI 调用 ──────────────────────────────────────────────
 def run_opencli(args: list[str]) -> list[dict]:
@@ -42,6 +52,38 @@ def _make_item(platform, account, title, content_snippet, url, published_at=""):
         "sentiment": "",
         "url": url,
     }
+
+
+def is_ernie_image_relevant(title: str, snippet: str = "") -> bool:
+    """判断内容是否与 ERNIE-Image 直接相关（排除其他模型的无关内容）"""
+    text = (title + " " + snippet).lower()
+    return any(term in text for term in ERNIE_IMAGE_TERMS)
+
+
+def _parse_date(date_str: str) -> str:
+    """将各种日期格式统一转换为 YYYY-MM-DD，解析失败返回空字符串"""
+    if not date_str:
+        return ""
+    # 已是 ISO 格式
+    if re.match(r"^\d{4}-\d{2}-\d{2}", date_str):
+        return date_str[:10]
+    # 中文格式：2026年4月14日
+    m = re.match(r"(\d{4})年(\d{1,2})月(\d{1,2})日", date_str)
+    if m:
+        return f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+    # YYYY/MM/DD
+    m = re.match(r"(\d{4})/(\d{2})/(\d{2})", date_str)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    return ""
+
+
+def is_after_release_date(published_at: str) -> bool:
+    """仅保留 SINCE_DATE（含）之后的内容；无法解析日期时默认保留"""
+    parsed = _parse_date(published_at)
+    if not parsed:
+        return True   # 日期未知则保留，由 Claude 二次判断
+    return parsed >= SINCE_DATE
 
 
 def _extract_date_from_snippet(snippet: str) -> str:
@@ -72,7 +114,12 @@ def fetch_zhihu(limit: int = 20) -> list[dict]:
             url = item.get("url", "")
             if url in seen_urls:
                 continue
-            if not any(k.lower() in title.lower() for k in ["ernie", "文心"]):
+            pub = item.get("created_time", item.get("published_at", ""))
+            # 过滤：必须与 ERNIE-Image 直接相关
+            if not is_ernie_image_relevant(title):
+                continue
+            # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
+            if not is_after_release_date(pub):
                 continue
             seen_urls.add(url)
             results.append(_make_item(
@@ -81,7 +128,7 @@ def fetch_zhihu(limit: int = 20) -> list[dict]:
                 title=title,
                 content_snippet=title,
                 url=url,
-                published_at=item.get("created_time", item.get("published_at", "")),
+                published_at=pub,
             ))
     return results
 
@@ -96,14 +143,22 @@ def fetch_xiaohongshu(limit: int = 20) -> list[dict]:
             url = item.get("url", "")
             if url in seen_urls:
                 continue
+            title = item.get("title", "")
+            pub = item.get("published_at", "")
+            # 过滤：必须与 ERNIE-Image 直接相关
+            if not is_ernie_image_relevant(title):
+                continue
+            # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
+            if not is_after_release_date(pub):
+                continue
             seen_urls.add(url)
             results.append(_make_item(
                 platform="小红书",
                 account=item.get("author", "未知"),
-                title=item.get("title", ""),
-                content_snippet=item.get("title", ""),
+                title=title,
+                content_snippet=title,
                 url=url,
-                published_at=item.get("published_at", ""),
+                published_at=pub,
             ))
     return results
 
@@ -122,15 +177,23 @@ def fetch_weixin_via_google(limit: int = 10) -> list[dict]:
                 continue
             if "mp.weixin.qq.com" not in url and "weixin" not in url.lower():
                 continue
-            seen_urls.add(url)
             snippet = item.get("snippet", "")
+            title = item.get("title", "")
+            pub = _extract_date_from_snippet(snippet)
+            # 过滤：必须与 ERNIE-Image 直接相关
+            if not is_ernie_image_relevant(title, snippet):
+                continue
+            # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
+            if not is_after_release_date(pub):
+                continue
+            seen_urls.add(url)
             results.append(_make_item(
                 platform="微信公众号",
                 account=_extract_wechat_account(snippet),
-                title=item.get("title", ""),
+                title=title,
                 content_snippet=snippet[:200],
                 url=url,
-                published_at=_extract_date_from_snippet(snippet),
+                published_at=pub,
             ))
     return results
 
@@ -158,15 +221,23 @@ def fetch_baidu(limit: int = 20) -> list[dict]:
             baidu_domains = ["baidu.com", "baijiahao", "zhidao", "tieba"]
             if not any(d in url for d in baidu_domains):
                 continue
-            seen_urls.add(url)
             snippet = item.get("snippet", "")
+            title = item.get("title", "")
+            pub = _extract_date_from_snippet(snippet)
+            # 过滤：必须与 ERNIE-Image 直接相关
+            if not is_ernie_image_relevant(title, snippet):
+                continue
+            # 过滤：仅保留发布日期 >= SINCE_DATE 的内容
+            if not is_after_release_date(pub):
+                continue
+            seen_urls.add(url)
             results.append(_make_item(
                 platform="百度搜索",
                 account=_extract_site_name(url),
-                title=item.get("title", ""),
+                title=title,
                 content_snippet=snippet[:200],
                 url=url,
-                published_at=_extract_date_from_snippet(snippet),
+                published_at=pub,
             ))
     return results
 
