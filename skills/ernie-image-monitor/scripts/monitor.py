@@ -14,17 +14,13 @@ from datetime import datetime
 from pathlib import Path
 
 OPENCLI = str(Path.home() / ".local/bin/opencli")
-SEARCH_KEYWORDS = ["ERNIE-Image", "文心图像", "百度文心图像生成"]
+SEARCH_KEYWORDS = ["ERNIE-Image"]
 
 # ERNIE-Image 发布日期（2026-04-14），仅收录此日期及之后的内容
 SINCE_DATE = "2026-04-14"
 
 # 内容相关性关键词：标题或摘要必须包含其中至少一个
-ERNIE_IMAGE_TERMS = [
-    "ernie-image", "ernie image", "ernie_image",
-    "ernie-vilg", "ernie vilg",
-    "文心图像", "文心文生图", "文心生图", "文心一格",
-]
+ERNIE_IMAGE_TERMS = ["ernie-image", "ernie image"]
 
 
 # ── OpenCLI 调用 ──────────────────────────────────────────────
