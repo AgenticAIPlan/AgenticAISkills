@@ -1,0 +1,5 @@
+# 本地生成；勿提交 PDF/二进制引擎
+output/*.pdf
+*.pdf
+tools/tectonic/tectonic
+tools/tectonic/*.exe
