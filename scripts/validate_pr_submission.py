@@ -285,6 +285,13 @@ def validate_changed_skill_files(
     return skill_dir
 
 
+def check_no_pii(body: str, errors: List[str]) -> None:
+    if "业务同学真实姓名" in body:
+        errors.append(
+            "PR 描述中不得包含个人身份信息（检测到 `业务同学真实姓名` 字样）。请删除后重新提交。"
+        )
+
+
 def require_fields(fields: Dict[str, str], names: List[str], errors: List[str]) -> None:
     for field in names:
         if not fields.get(field):
@@ -446,6 +453,8 @@ def run_pr() -> int:
     files = changed_files(f"origin/{base_ref}")
     errors: List[str] = []
 
+    check_no_pii(body, errors)
+
     if base_ref == "dev":
         if touches_business_skill(files):
             validate_contributor_pr(body, branch, base_ref, files, errors)
@@ -511,6 +520,8 @@ def run_pr_target() -> int:
         return 1
 
     files = [item.get("filename", "") for item in pr_files if item.get("filename")]
+
+    check_no_pii(body, errors)
 
     if base_ref != "dev":
         errors.append("来自 Fork 的 PR 只支持业务 Skill 提交到 `dev`。")
