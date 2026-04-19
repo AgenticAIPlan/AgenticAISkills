@@ -1,0 +1,22 @@
+{
+  "OCR": {
+    "name": "OCR 技术交流群",
+    "invite": "<PRIVATE_INVITE_LINK_OR_QR_CODE_PATH>",
+    "reply_template": "欢迎加入 OCR 技术交流群，请使用运营提供的真实入群链接或活码。"
+  },
+  "LLM": {
+    "name": "大模型应用交流群",
+    "invite": "<PRIVATE_INVITE_LINK_OR_QR_CODE_PATH>",
+    "reply_template": "欢迎加入大模型应用交流群，请使用运营提供的真实入群链接或活码。"
+  },
+  "RAG": {
+    "name": "RAG 实践交流群",
+    "invite": "<PRIVATE_INVITE_LINK_OR_QR_CODE_PATH>",
+    "reply_template": "欢迎加入 RAG 实践交流群，请使用运营提供的真实入群链接或活码。"
+  },
+  "AGENT": {
+    "name": "Agent 研发交流群",
+    "invite": "<PRIVATE_INVITE_LINK_OR_QR_CODE_PATH>",
+    "reply_template": "欢迎加入 Agent 研发交流群，请使用运营提供的真实入群链接或活码。"
+  }
+}
