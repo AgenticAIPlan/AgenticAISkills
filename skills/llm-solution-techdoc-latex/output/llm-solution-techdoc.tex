@@ -1,0 +1,233 @@
+% Enterprise LLM TechDoc LaTeX Template (ctexart)
+\documentclass[UTF8,a4paper,11pt,fontset=fandol]{ctexart}
+
+% === Core packages ===
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.misc,shapes.geometric}
+
+\geometry{a4paper, top=2.3cm, bottom=2.3cm, left=2.2cm, right=2.2cm}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{2em}
+\renewcommand{\arraystretch}{1.25}
+
+% === Colors ===
+\definecolor{Primary}{HTML}{1A1A2E}
+\definecolor{Accent}{HTML}{1F6FEB}
+\definecolor{Muted}{HTML}{6B7280}
+\definecolor{BoxBg}{HTML}{F8FAFC}
+
+% === Hyperref ===
+\hypersetup{
+  colorlinks=true,
+  linkcolor=Accent,
+  urlcolor=Accent,
+  citecolor=Accent,
+  pdftitle={大模型能力与现有产品结合技术方案（模板样例）},
+  pdfauthor={解决方案团队（示例）}
+}
+
+% === Header / Footer ===
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{Muted}{某某客户（示例）}}
+\rhead{\textcolor{Muted}{V0.1}}
+\cfoot{\textcolor{Muted}{\thepage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% === Boxes ===
+\newtcolorbox{infobox}[1]{
+  colback=BoxBg,
+  colframe=Accent!45,
+  title=\textbf{#1},
+  boxrule=0.6pt,
+  arc=2pt,
+  left=6pt,right=6pt,top=6pt,bottom=6pt
+}
+
+% === Helpers ===
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{\textbf{大模型能力与现有产品结合技术方案（模板样例）}\\[6pt]\large\textcolor{Muted}{客户技术文档（用于校验排版与结构）}}
+\author{解决方案团队（示例）}
+\date{2026-04-13}
+
+\begin{document}
+\maketitle
+
+\begin{infobox}{文档控制信息}
+\begin{tabularx}{\linewidth}{L{3.2cm}Y L{3.0cm}Y}
+\toprule
+客户名称 & 某某客户（示例） & 行业 & 零售/电商（示例） \\
+版本 & V0.1 & 日期 & 2026-04-13 \\
+作者 & 解决方案团队（示例） & 审阅 & 交付/安全（示例） \\
+保密级别 & 内部/客户专用（示例） &  &  \\
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\vspace{0.5em}
+\tableofcontents
+\newpage
+
+\section{概述}
+\subsection{目标与范围}
+本文档用于描述\textbf{目标大模型服务（以合同与实际接入平台为准）}能力与客户现有产品/系统的结合方式，输出可交付的技术方案结构（排版与内容为模板样例）。对任何具体能力、指标与 SLA 的承诺以合同与实际开通能力为准。
+
+\subsection{术语与约束}
+\begin{itemize}[leftmargin=2.2em]
+  \item 大模型能力范围：仅覆盖已开通/已采购能力；不确定项标记“待确认”。
+  \item 数据合规：遵循数据分级分类、最小权限、脱敏与审计要求。
+  \item 输出边界：本模板强调“能力—系统—场景—KPI”的可追溯关系，避免泛化营销表述。
+\end{itemize}
+
+\section{客户现有产品与集成切入点}
+\begin{infobox}{现有产品清单（示例）}
+\begin{tabularx}{\linewidth}{L{3.5cm} L{2.7cm} Y}
+\toprule
+产品/系统 & 责任部门 & 现状与说明 \\
+\midrule
+客服工单系统 & 客服中心 & 工单流转、知识库查询、质检 \\
+企业知识库/文档平台 & 技术/运营 & 制度、FAQ、产品说明 \\
+CRM/会员系统 & 销售/运营 & 客户画像、标签、活动触达 \\
+APP/小程序 & 产品 & 用户自助服务入口 \\
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\section{大模型能力描述（按可交付能力组织）}
+\begin{infobox}{能力清单（示例，具体以实际开通为准）}
+\begin{tabularx}{\linewidth}{L{5.2cm} Y}
+\toprule
+能力 & 说明与典型用途 \\
+\midrule
+对话式问答与多轮交互 & 用于客服、自助服务、员工助手 \\
+长文理解与摘要/要点提取 & 用于工单归因、会议纪要、制度解读 \\
+知识检索增强生成（RAG） & 基于企业知识库的可追溯回答 \\
+信息抽取与结构化 & 从工单/聊天中抽取字段、意图、情绪 \\
+内容生成与改写 & 营销文案、话术、公告模板（需合规审核） \\
+工具调用/流程编排（Agent） & 调用工单、CRM、知识库检索、订单查询等 \\
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\section{能力与现有产品结合分析（映射与收益）}
+\subsection{映射方法}
+建议采用“\textbf{场景}→\textbf{能力}→\textbf{集成点}→\textbf{收益}→\textbf{KPI}”的结构化映射，便于后续验收与运营复盘。
+
+\subsection{能力—系统—场景映射表（模板）}
+\begin{infobox}{映射表（示例）}
+\begin{tabularx}{\linewidth}{L{3.3cm} L{3.2cm} L{3.4cm} Y}
+\toprule
+场景 & 大模型能力 & 集成系统/接口 & 预期收益与KPI \\
+\midrule
+场景A：智能客服与工单自动化 & （示例）见能力清单 & 工单系统API、知识库检索、订单/物流查询接口、客服坐席工作台 & 提升自助解决率，降低人工接入量、提升工单分类一致性与质检覆盖率；KPI：自助解决率、平均响应时长、人工转接率、工单一次分类准确率 \\
+场景B：员工知识助手（制度/产品/流程） & （示例）见能力清单 & 文档平台/知识库、权限系统（SSO/LDAP）、企业IM/门户 & 提升信息获取效率、降低重复咨询与培训成本；KPI：平均检索耗时、员工满意度、重复咨询量 \\
+\bottomrule
+\end{tabularx}
+\end{infobox}
+
+\section{业务场景方案与优势（按场景输出）}
+\subsection{场景A：智能客服与工单自动化}
+\begin{infobox}{痛点}
+\begin{itemize}[leftmargin=2.2em]
+  \item 人工响应压力大，重复问题占比高
+  \item 工单分类不一致，质检与复盘成本高
+\end{itemize}
+\end{infobox}
+\begin{infobox}{方案要点}
+以对话式大模型 + RAG 为核心，通过工具调用对接工单系统与订单查询，实现自助解答、自动建单、自动分类与质检辅助。
+\end{infobox}
+\begin{infobox}{集成与指标}
+\begin{itemize}[leftmargin=2.2em]
+  \item 集成点：工单系统API、知识库检索、订单/物流查询接口、客服坐席工作台
+  \item 预期收益：提升自助解决率，降低人工接入量、提升工单分类一致性与质检覆盖率
+  \item KPI：自助解决率、平均响应时长、人工转接率、工单一次分类准确率
+\end{itemize}
+\end{infobox}
+
+\subsection{场景B：员工知识助手（制度/产品/流程）}
+\begin{infobox}{痛点}
+\begin{itemize}[leftmargin=2.2em]
+  \item 制度分散、更新频繁，新员工学习成本高
+  \item 跨部门协作时信息检索耗时
+\end{itemize}
+\end{infobox}
+\begin{infobox}{方案要点}
+将企业知识库接入 RAG，提供可引用来源的问答，并结合摘要与要点提取输出「结论 + 依据」。
+\end{infobox}
+\begin{infobox}{集成与指标}
+\begin{itemize}[leftmargin=2.2em]
+  \item 集成点：文档平台/知识库、权限系统（SSO/LDAP）、企业IM/门户
+  \item 预期收益：提升信息获取效率、降低重复咨询与培训成本
+  \item KPI：平均检索耗时、员工满意度、重复咨询量
+\end{itemize}
+\end{infobox}
+
+
+\section{总体架构（示意）}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=12mm and 12mm,
+  box/.style={draw=Primary!40, rounded corners=2pt, fill=BoxBg, align=left, inner sep=6pt},
+  svc/.style={draw=Accent!60, rounded corners=2pt, fill=Accent!6, align=left, inner sep=6pt},
+  arr/.style={-Latex, draw=Primary!55, line width=0.7pt}
+]
+  \node[box] (user) {用户/员工\\(APP/小程序/坐席)};
+  \node[box, right=of user] (entry) {业务入口\\(客服工作台/IM/门户)};
+  \node[svc, right=of entry] (orchestrator) {编排层\\(提示词/路由/工具调用)};
+  \node[svc, below=of orchestrator] (llm) {大模型推理服务\\(对话/理解/生成)};
+  \node[box, right=of orchestrator] (systems) {客户系统\\(工单/CRM/订单/知识库)};
+  \node[box, below=of systems] (kb) {知识库与数据源\\(文档/FAQ/日志)};
+
+  \draw[arr] (user) -- (entry);
+  \draw[arr] (entry) -- (orchestrator);
+  \draw[arr] (orchestrator) -- node[above,sloped]{调用} (systems);
+  \draw[arr] (orchestrator) -- node[right]{推理/生成} (llm);
+  \draw[arr] (kb) -- node[below,sloped]{检索增强} (orchestrator);
+  \draw[arr] (systems) -- node[right]{事件/结果} (orchestrator);
+\end{tikzpicture}
+\caption{大模型能力与客户系统集成总体架构示意（模板）}
+\label{fig:arch}
+\end{figure}
+
+\section{部署、安全与运维要点（模板）}
+\subsection{部署模式与数据范围}
+\begin{itemize}[leftmargin=2.2em]
+  \item 部署模式：公有云API/专有化（按实际选择，示例为「混合」）
+  \item 主要数据源：知识库文档、工单文本、客服对话记录（脱敏后）
+  \item 安全与合规：数据分级分类、脱敏与审计、权限隔离、日志留存
+\end{itemize}
+
+\subsection{运维与运营指标}
+\begin{itemize}[leftmargin=2.2em]
+  \item SLA：待确认（示例：7x24，关键链路可用性 99.9\%）
+  \item 监控项：调用量/时延、错误率、命中率/引用率、越权/敏感词拦截
+  \item 成本模型：按调用量/并发/部署资源计费（以合同为准）
+\end{itemize}
+
+\section{验收建议（模板）}
+\begin{infobox}{建议的验收维度}
+\begin{itemize}[leftmargin=2.2em]
+  \item 功能验收：场景覆盖、工具调用链路、权限与审计、引用溯源（RAG）。
+  \item 指标验收：自助解决率、时延、人工转接率、准确率（按业务定义）。
+  \item 合规验收：敏感信息处理、越权防护、日志留存、数据出境（如适用）。
+\end{itemize}
+\end{infobox}
+
+\end{document}
