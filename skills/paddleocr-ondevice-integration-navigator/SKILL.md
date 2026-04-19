@@ -4,12 +4,11 @@ description: >
   当用户询问 PaddleOCR 的 PP-OCR 系列模型在原生移动、嵌入式 Linux、浏览器或跨端框架中的集成路径时使用。
   适用于端侧部署路线判断、集成路径收敛和 PoC 约束梳理等。
   不适用于纯服务器部署、模型训练，或 PP-Structure / PaddleOCR-VL 一类非纯 OCR 产线。
-allowed-tools: AskUserQuestion
 ---
 
 # PaddleOCR 端侧集成导航
 
-为 PaddleOCR 的 PP-OCR 系列模型端侧集成提供提供路线判断、集成路径收敛和 PoC 约束梳理。
+为 PaddleOCR 的 PP-OCR 系列模型端侧集成提供路线判断、集成路径收敛和 PoC 约束梳理。
 
 ## 适用场景
 
@@ -148,7 +147,7 @@ allowed-tools: AskUserQuestion
 - 不要承诺上游文档没有明确发布的能力。
 - 当遇到不确定的概念或细节时，始终查阅 PaddleOCR 官方文档，并引用来源。
 - 对于 PaddleOCR，始终只阅读和引用 version 3.x 的文档，不考虑 version 2.x 的文档。
-- 当前 PaddleOCR 官方的 [端侧部署文档](https://www.paddleocr.ai/latest/version3.x/deployment/on_device_deployment.html) 已经过时，不要提供给用户参考。
+- 回答前核对 version 3.x 最新官方文档；若端侧部署页与最新发布能力、模型说明或安装说明不一致，以官方最新发布页和模型说明为准，并在输出中标注差异。
 
 ## 官方文档
 
