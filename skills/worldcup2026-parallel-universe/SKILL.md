@@ -43,25 +43,39 @@ export AISTUDIO_API_KEY="your-api-key"
 
 | 配置项 | 值 |
 |--------|-----|
-| **API 端点** | `https://aistudio.baidu.com/llm/lmapi/v3/chat/completions` |
+| **API Base URL** | `https://aistudio.baidu.com/llm/lmapi/v3` |
 | **创作模型** | `ernie-5.0-thinking-preview`（原生全模态大模型） |
 | **目标生图模型** | `ernie-image-turbo`（通过星河社区调用） |
 | **最大输出Token** | `65536` |
 
-### API 调用示例
+### API 调用示例 (OpenAI SDK)
 
-```bash
-curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/chat/completions' \n--header 'Authorization: Bearer YOUR_API_KEY' \n--header 'Content-Type: application/json' \n--data '{
-    "model": "ernie-5.0-thinking-preview",
-    "messages": [{"role": "user", "content": "你的问题"}],
-    "stream": true,
-    "extra_body": {
-        "web_search": {
-            "enable": true
-        }
-    },
-    "max_completion_tokens": 65536
-}'
+**文本生成 API**：
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_API_KEY",
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",
+)
+
+# 流式调用
+chat_completion = client.chat.completions.create(
+    model="ernie-5.0-thinking-preview",
+    messages=[{"role": "user", "content": "你的问题"}],
+    stream=True,
+    extra_body={"web_search": {"enable": True}},
+    max_completion_tokens=65536
+)
+
+for chunk in chat_completion:
+    if not chunk.choices or len(chunk.choices) == 0:
+        continue
+    # 处理推理内容 (thinking)
+    if hasattr(chunk.choices[0].delta, "reasoning_content") and chunk.choices[0].delta.reasoning_content:
+        print(chunk.choices[0].delta.reasoning_content, end="", flush=True)
+    else:
+        print(chunk.choices[0].delta.content, end="", flush=True)
 ```
 
 **关键参数说明**：
@@ -73,6 +87,12 @@ curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/chat/completions' \n--h
 | `stream` | boolean | 是否流式输出，推荐 `true` |
 | `extra_body.web_search.enable` | boolean | 是否启用联网搜索 |
 | `max_completion_tokens` | integer | 最大输出Token数，默认 `65536` |
+
+### 依赖
+
+```bash
+pip install openai
+```
 
 ### 依赖 Skills
 
@@ -401,19 +421,38 @@ minimalist layout, high contrast, editorial quality,
 
 **模型调用**：`ernie-image-turbo`（目标生图模型）
 
-**API 调用方式**：
-```bash
-curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations' \n    --header 'Authorization: Bearer YOUR_API_KEY' \n    --header 'Content-Type: application/json' \n    --data '{
-        "model": "ernie-image-turbo",
-        "prompt": "图片描述提示词",
-        "n": 1,
-        "response_format": "url",
-        "size": "1024x1024",
+**API 调用方式 (OpenAI SDK)**：
+```python
+import base64
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_API_KEY",
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",
+)
+
+response = client.images.generate(
+    model="ernie-image-turbo",
+    prompt="图片描述提示词",
+    n=1,
+    response_format="url",  # 或 "b64_json"
+    size="1024x1024",
+    extra_body={
         "seed": 42,
-        "use_pe": true,
+        "use_pe": True,
         "num_inference_steps": 8,
         "guidance_scale": 1.0
-    }'
+    }
+)
+
+# 获取图片 URL
+image_url = response.data[0].url
+
+# 或保存 base64 图片
+if hasattr(response.data[0], 'b64_json') and response.data[0].b64_json:
+    image_bytes = base64.b64decode(response.data[0].b64_json)
+    with open("output.png", "wb") as f:
+        f.write(image_bytes)
 ```
 
 **图片生成参数说明**：
@@ -422,33 +461,23 @@ curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations' \n 
 |------|------|------|--------|
 | `model` | string | 模型名称 | `ernie-image-turbo` |
 | `prompt` | string | 图片描述提示词 | 来自 Step 9 的提示词 |
-| `n` | integer | 生成图片数量 | `1` |
+| `n` | integer | 生成图片数量 (1-4) | `1` |
 | `response_format` | string | 返回格式 | `url` 或 `b64_json` |
-| `size` | string | 图片尺寸 | `1024x1024` 或 `1024x1820` |
+| `size` | string | 图片尺寸 | 见下方支持列表 |
 | `seed` | integer | 随机种子 | `42` |
 | `use_pe` | boolean | 使用 Prompt Enhancement | `true` |
 | `num_inference_steps` | integer | 推理步数 | `8` |
 | `guidance_scale` | float | 引导系数 | `1.0` |
 
-**Python 调用示例**：
-```python
-# 调用星河社区图片生成API
-response = requests.post(
-    "https://aistudio.baidu.com/llm/lmapi/v3/images/generations",
-    headers={"Authorization": f"Bearer {AISTUDIO_API_KEY}"},
-    json={
-        "model": "ernie-image-turbo",
-        "prompt": image_prompt,  # 来自 Step 9 的图片提示词
-        "n": 1,
-        "response_format": "url",
-        "size": "1024x1024",  # 方图；长图使用 "1024x1820"
-        "seed": 42,
-        "use_pe": True,
-        "num_inference_steps": 8,
-        "guidance_scale": 1.0
-    }
-)
-```
+**支持的图片尺寸**：
+- `1024x1024` - 方图 (1:1)
+- `1376x768` - 横版 (16:9)
+- `1264x848` - 横版 (3:2)
+- `1200x896` - 横版 (4:3)
+- `896x1200` - 竖版 (3:4)
+- `848x1264` - 竖版 (2:3)
+- `768x1376` - 竖版 (9:16)
+- `1024x1820` - 长图 (9:16)
 
 **最终输出格式**：
 ```json
