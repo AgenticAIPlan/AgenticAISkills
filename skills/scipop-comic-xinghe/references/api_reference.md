@@ -33,55 +33,78 @@ Authorization: Bearer $AISTUDIO_API_KEY
 
 ### 请求格式
 
-```json
-{
-  "model": "ernie-5.0-thinking-preview",
-  "messages": [
-    {"role": "system", "content": "..."},
-    {"role": "user", "content": "..."}
-  ],
-  "stream": true,
-  "response_format": {"type": "json_object"},
-  "max_completion_tokens": 65536,
-  "extra_body": {
-    "web_search": {
-      "enable": true
-    }
-  }
-}
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-api-key",
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3"
+)
+
+response = client.chat.completions.create(
+    model="ernie-5.0-thinking-preview",
+    messages=[
+        {"role": "system", "content": "..."},
+        {"role": "user", "content": "..."}
+    ],
+    stream=True,
+    extra_body={
+        "web_search": {
+            "enable": True
+        }
+    },
+    max_completion_tokens=65536
+)
 ```
 
 **关键参数说明**：
 
 | 参数 | 说明 |
 |-----|------|
-| `stream` | 是否流式返回，默认 `true` |
+| `stream` | 是否流式返回，默认 `true`（推荐） |
 | `max_completion_tokens` | 最大输出token数，支持高达 65536 |
 | `extra_body.web_search.enable` | 是否启用联网搜索增强 |
 
 ### 多模态请求（图片+文本）
 
-```json
-{
-  "model": "ernie-5.0-thinking-preview",
-  "messages": [
-    {
-      "role": "user",
-      "content": [
+```python
+response = client.chat.completions.create(
+    model="ernie-5.0-thinking-preview",
+    messages=[
         {
-          "type": "image_url",
-          "image_url": {"url": "data:image/png;base64,..."}
-        },
-        {
-          "type": "text",
-          "text": "分析这张图片..."
+            "role": "user",
+            "content": [
+                {
+                    "type": "image_url",
+                    "image_url": {"url": "data:image/png;base64,..."}
+                },
+                {
+                    "type": "text",
+                    "text": "分析这张图片..."
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "stream": true,
-  "max_completion_tokens": 65536
-}
+    ],
+    stream=True,
+    max_completion_tokens=65536
+)
+```
+
+### 流式响应解析
+
+> ⚠️ **思考模型特性**: `ernie-5.0-thinking-preview` 会先输出思考过程，再输出最终回答。
+
+```python
+for chunk in response:
+    if not chunk.choices or len(chunk.choices) == 0:
+        continue
+    # 思考过程（reasoning_content）
+    if hasattr(chunk.choices[0].delta, "reasoning_content") and chunk.choices[0].delta.reasoning_content:
+        # 可选：打印思考过程
+        print(chunk.choices[0].delta.reasoning_content, end="", flush=True)
+    # 最终回答（content）
+    if hasattr(chunk.choices[0].delta, "content") and chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="", flush=True)
 ```
 
 ### 返回格式
@@ -101,7 +124,42 @@ Authorization: Bearer $AISTUDIO_API_KEY
 
 ## 图像生成 API
 
-### 请求格式
+### 推荐方式：使用 OpenAI SDK
+
+```python
+import base64
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-api-key",
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3"
+)
+
+# 生成图像
+response = client.images.generate(
+    model="ernie-image-turbo",
+    prompt="一只可爱的猫咪坐在窗台上",
+    n=1,                            # 可选：1、2、3、4
+    response_format="b64_json",     # 可选：b64_json、url
+    size="1024x1024",               # 见下方支持尺寸列表
+    extra_body={
+        "seed": 42,
+        "use_pe": True,
+        "num_inference_steps": 8,
+        "guidance_scale": 1.0
+    }
+)
+
+# 保存图像（b64_json 格式）
+image_bytes = base64.b64decode(response.data[0].b64_json)
+with open("output.png", "wb") as f:
+    f.write(image_bytes)
+
+# 或获取 URL（url 格式）
+# image_url = response.data[0].url
+```
+
+### 方式二：使用 cURL
 
 ```bash
 curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations' \n    --header 'Authorization: Bearer $AISTUDIO_API_KEY' \n    --header 'Content-Type: application/json' \n    --data '{
@@ -123,13 +181,25 @@ curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations' \n 
 |-----|------|------|------|
 | `model` | string | 是 | 模型名称：`ernie-image-turbo` |
 | `prompt` | string | 是 | 中文图像描述，支持中文 Prompt |
-| `n` | integer | 否 | 生成图片数量，默认 1 |
+| `n` | integer | 否 | 生成图片数量，默认 1，支持 1-4 |
 | `response_format` | string | 否 | 返回格式：`url`（图片URL）或 `b64_json`（base64） |
-| `size` | string | 否 | 图片尺寸，默认 `1024x1024` |
+| `size` | string | 否 | 图片尺寸，见下方尺寸列表 |
 | `seed` | integer | 否 | 随机种子，用于复现结果 |
 | `use_pe` | boolean | 否 | 是否使用优先增强，默认 `true` |
 | `num_inference_steps` | integer | 否 | 推理步数，默认 8，范围 1-50 |
 | `guidance_scale` | float | 否 | 引导比例，默认 1.0，范围 0-20 |
+
+### 支持尺寸
+
+| 尺寸 | 适用场景 |
+|-----|---------|
+| `1024x1024` | 单个 Panel（正方形） |
+| `1376x768` | 全局大图（横向长条） |
+| `768x1376` | 全局大图（竖向长条） |
+| `1264x848` | 横向矩形 |
+| `1200x896` | 横向矩形 |
+| `896x1200` | 竖向矩形 |
+| `848x1264` | 竖向矩形 |
 
 ### 返回格式
 
@@ -154,13 +224,6 @@ curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations' \n 
   }]
 }
 ```
-
-### 尺寸参数
-
-| 尺寸 | 用途 |
-|-----|------|
-| `1024x1024` | 单个 Panel |
-| `2048x2048` | 全局大图 |
 
 ---
 

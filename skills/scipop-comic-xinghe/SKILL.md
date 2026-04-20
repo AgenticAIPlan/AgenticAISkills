@@ -25,7 +25,8 @@ description: |
 | 项目 | 要求 |
 |------|------|
 | **API Key** | 星河社区 API Key，环境变量 `AISTUDIO_API_KEY` |
-| **API 端点** | `https://aistudio.baidu.com/llm/lmapi/v3/chat/completions` |
+| **API 端点** | `https://aistudio.baidu.com/llm/lmapi/v3` |
+| **SDK** | `pip install openai` |
 | **分析模型** | `ernie-5.0-thinking-preview`（原生全模态大模型） |
 | **生图模型** | `ernie-image-turbo`（图像生成 API） |
 
@@ -35,8 +36,23 @@ description: |
 # 设置 API Key
 export AISTUDIO_API_KEY="your-key"
 
-# 验证连通性
-curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content-Type: application/json" \n  -H "Authorization: Bearer $AISTUDIO_API_KEY" \n  -d '{"model": "ernie-5.0-thinking-preview", "messages": [{"role": "user", "content": "ping"}], "stream": true, "max_completion_tokens": 100}'
+# 安装依赖
+pip install openai
+
+# 验证连通性（Python）
+python -c "
+from openai import OpenAI
+client = OpenAI(
+    api_key='$AISTUDIO_API_KEY',
+    base_url='https://aistudio.baidu.com/llm/lmapi/v3'
+)
+response = client.chat.completions.create(
+    model='ernie-5.0-thinking-preview',
+    messages=[{'role': 'user', 'content': 'ping'}],
+    max_completion_tokens=10
+)
+print('API 连接成功:', response.choices[0].message.content[:20])
+"
 ```
 
 ---
@@ -108,23 +124,45 @@ curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content
 
 **API 调用模板**:
 
-```bash
-curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content-Type: application/json" \n  -H "Authorization: Bearer $AISTUDIO_API_KEY" \n  -d '{
-    "model": "ernie-5.0-thinking-preview",
-    "messages": [
-      {
-        "role": "system",
-        "content": "你是一位科普连环画脚本编写专家。分析文章并根据内容的丰富程度和结构确定最合适的 Panel 数量（4-6个）。输出一个 JSON 对象，包含四个字段："recommended_panels"（整数，4-6），"recommendation_reason"（一句话中文解释为什么这个 Panel 数量适合该文章），"style_seed"（简短的中文风格描述，在所有 Panel 中复用），"panels"（与推荐数量匹配的对象数组，每个对象包含 "id"、"scene" 中文场景描述、"image_prompt" 中文图像生成提示）。仅输出原始 JSON，不要使用 markdown 代码块。"
-      },
-      {
-        "role": "user",
-        "content": "【科普文章全文】"
-      }
+> 💡 **思考模型特性**: `ernie-5.0-thinking-preview` 会先输出思考过程（`reasoning_content`），再输出最终回答（`content`）。
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-api-key",
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3"
+)
+
+response = client.chat.completions.create(
+    model="ernie-5.0-thinking-preview",
+    messages=[
+        {
+            "role": "system",
+            "content": "你是一位科普连环画脚本编写专家。分析文章并根据内容的丰富程度和结构确定最合适的 Panel 数量（4-6个）。输出一个 JSON 对象，包含四个字段："recommended_panels"（整数，4-6），"recommendation_reason"（一句话中文解释为什么这个 Panel 数量适合该文章），"style_seed"（简短的中文风格描述，在所有 Panel 中复用），"panels"（与推荐数量匹配的对象数组，每个对象包含 "id"、"scene" 中文场景描述、"caption" 中文科普旁白（20字以内，简洁有力）、"image_prompt" 中文图像生成提示）。仅输出原始 JSON，不要使用 markdown 代码块。"
+        },
+        {
+            "role": "user",
+            "content": "【科普文章全文】"
+        }
     ],
-    "stream": true,
-    "response_format": {"type": "json_object"},
-    "max_completion_tokens": 65536
-  }'
+    stream=True,
+    extra_body={
+        "web_search": {"enable": True}  # 可选：启用联网搜索增强
+    },
+    max_completion_tokens=65536
+)
+
+# 解析流式响应 - 分别处理思考过程和最终回答
+for chunk in response:
+    if not chunk.choices or len(chunk.choices) == 0:
+        continue
+    # 思考过程（可选打印）
+    if hasattr(chunk.choices[0].delta, "reasoning_content") and chunk.choices[0].delta.reasoning_content:
+        pass  # print(chunk.choices[0].delta.reasoning_content, end="", flush=True)
+    # 最终回答
+    if hasattr(chunk.choices[0].delta, "content") and chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="", flush=True)
 ```
 
 **返回结构**:
@@ -138,11 +176,21 @@ curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content
     {
       "id": 1,
       "scene": "场景描述",
+      "caption": "科普旁白，20字以内",
       "image_prompt": "中文图像生成提示，描述画面内容、风格、构图等"
     }
   ]
 }
 ```
+
+**字段说明**:
+
+| 字段 | 说明 |
+|-----|------|
+| `id` | Panel 编号（从 1 开始） |
+| `scene` | 场景描述，用于理解上下文 |
+| `caption` | **科普旁白**，中文，20字以内，简洁有力，用于展示在图像中或作为配文 |
+| `image_prompt` | 图像生成提示词 |
 
 **用户确认**: 展示 `recommended_panels` 与 `recommendation_reason`，询问用户是否采用。若不同意，询问期望数量（4-6），调整 `panels` 数组。
 
@@ -174,36 +222,46 @@ curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content
 
 > 📖 详细 API 参数参见 [references/api_reference.md](references/api_reference.md#图像生成-api)
 
-```bash
-curl -s https://aistudio.baidu.com/llm/lmapi/v3/images/generations \n  -H "Content-Type: application/json" \n  -H "Authorization: Bearer $AISTUDIO_API_KEY" \n  -d '{
-    "model": "ernie-image-turbo",
-    "prompt": "【拼接后的完整Prompt】",
-    "n": 1,
-    "response_format": "b64_json",
-    "size": "1024x1024",
-    "use_pe": true,
-    "num_inference_steps": 8,
-    "guidance_scale": 1.0
-  }'
+**推荐方式：使用 OpenAI SDK**
+
+```python
+import base64
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-api-key",
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3"
+)
+
+# 生成图像
+response = client.images.generate(
+    model="ernie-image-turbo",
+    prompt="【拼接后的完整Prompt】",
+    n=1,
+    response_format="b64_json",  # 或 "url"
+    size="1024x1024",
+    extra_body={
+        "seed": 42,
+        "use_pe": True,
+        "num_inference_steps": 8,
+        "guidance_scale": 1.0
+    }
+)
+
+# 保存图像
+image_bytes = base64.b64decode(response.data[0].b64_json)
+with open("panel_01.png", "wb") as f:
+    f.write(image_bytes)
 ```
 
-**返回格式**: 图像以 base64 编码返回。
+**支持尺寸**:
 
-```json
-{
-  "created": 1234567890,
-  "data": [{
-    "b64_json": "iVBORw0KGgoAAAANSUhEUgA..."
-  }]
-}
-```
-
-**保存图像**:
-
-```bash
-# 从 JSON 提取 base64 并保存
-echo "iVBORw0KGgoAAAANSUhEUgA..." | base64 -d > panel_01.png
-```
+| 尺寸 | 适用场景 |
+|-----|---------|
+| `1024x1024` | 单个 Panel（正方形） |
+| `1376x768` | 全局大图（横向长条） |
+| `768x1376` | 全局大图（竖向长条） |
+| `1264x848`, `1200x896`, `896x1200`, `848x1264` | 其他比例 |
 
 #### Phase 2b: 多模态反馈迭代
 
@@ -238,6 +296,8 @@ curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content
 
 **迭代循环**: 用改进后的 Prompt 重新执行 Phase 2a，直至用户满意。
 
+> ⚠️ **重要**: 保留用户满意的最终 Prompt，用于 Phase 3 全局合成。
+
 ---
 
 ### Phase 3: N×N 全局合成
@@ -264,32 +324,69 @@ curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content
 
 #### Phase 3b: 全局 Prompt 构建
 
+> ⚠️ **关键**: 使用 **Phase 2b 迭代后用户满意的最终 Prompt**，而非 Phase 1 原始 Prompt。
+
+**合并规则**:
+1. 收集所有 Panel 用户满意的最终 `image_prompt`
+2. 添加连环画结构指令：`{grid} 格连环画，共 {num_panels} 格`
+3. 添加风格种子：`{style_seed}`
+4. 添加分隔要求：`每格之间用粗黑边框清晰分隔，按阅读顺序排列`
+5. 按顺序排列各 Panel 的最终 prompt
+
 **提示词长度建议**: 全局合成以 200-400 中文字符为宜。
 
 ```
 {grid} 格连环画，共 {num_panels} 格，{style_seed}，
 每格之间用粗黑边框清晰分隔，按阅读顺序排列：
-第1格：{panel_1_image_prompt}
-第2格：{panel_2_image_prompt}
+第1格：{panel_1_final_image_prompt}
+第2格：{panel_2_final_image_prompt}
 ...
-第N格：{panel_N_image_prompt}
+第N格：{panel_N_final_image_prompt}
 ```
 
 若有空余格，末尾追加"剩余格子留白"。
 
+**示例**（假设 Panel 1 经过迭代优化后）:
+
+```
+# 原始 Prompt (Phase 1):
+一位科学家在实验室中，扁平插画风格
+
+# 迭代后最终 Prompt (Phase 2b 满意结果):
+一位戴眼镜的女科学家，穿着白色实验服，正激动地指着屏幕，现代实验室背景有显微镜和电脑，屏幕上显示橙红色的黑洞光环图像，扁平插画风格，清晰轮廓，科学配色，高质量
+
+# Phase 3 合并时使用迭代后的最终 Prompt
+```
+
 #### Phase 3c: 大图生成
 
-```bash
-curl -s https://aistudio.baidu.com/llm/lmapi/v3/images/generations \n  -H "Content-Type: application/json" \n  -H "Authorization: Bearer $AISTUDIO_API_KEY" \n  -d '{
-    "model": "ernie-image-turbo",
-    "prompt": "【全局Prompt】",
-    "n": 1,
-    "response_format": "b64_json",
-    "size": "2048x2048",
-    "use_pe": true,
-    "num_inference_steps": 8,
-    "guidance_scale": 1.0
-  }'
+> ⚠️ **尺寸注意**: `ernie-image-turbo` 最大支持 `1376x768`，不支持 `2048x2048`。
+
+```python
+import base64
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-api-key",
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3"
+)
+
+response = client.images.generate(
+    model="ernie-image-turbo",
+    prompt="【全局Prompt】",
+    n=1,
+    response_format="b64_json",
+    size="1376x768",  # 最大横向尺寸
+    extra_body={
+        "use_pe": True,
+        "num_inference_steps": 8,
+        "guidance_scale": 1.0
+    }
+)
+
+image_bytes = base64.b64decode(response.data[0].b64_json)
+with open("global_comic.png", "wb") as f:
+    f.write(image_bytes)
 ```
 
 #### Phase 3d: 大图反馈迭代（可选）
