@@ -1,0 +1,101 @@
+# ================================
+# ERNIE Image 云端配置模板（便于分享 / 跨机器复用）
+# ================================
+#
+# 别人拿到后怎么用（最简单版本）：
+#
+# 1) 先把下面这行改成自己的云端接口地址：
+#    base_url: https://你的服务地址
+#
+# 2) 在自己电脑上设置 API Key 环境变量：
+#    export ERNIE_IMAGE_API_KEY='你的key'
+#
+# 3) 如果想把生成图片保存到指定目录，再额外设置：
+#    export ERNIE_IMAGE_ARTIFACT_DIR='/你想保存图片的目录'
+#
+# 4) 然后直接运行：
+#    python3 scripts/health_check.py --config cloud-config.portable.cn.yaml
+#    python3 scripts/generate_image.py --config cloud-config.portable.cn.yaml --prompt '一只可爱的橘猫表情包'
+#
+# 说明：
+# - 这个文件不包含任何真实密钥
+# - 这个文件不依赖某台电脑的固定绝对路径
+# - 如果你只是调远程服务，weight_tar_path 可以留空
+
+# 调用模式：
+# - openai_compatible：默认推荐，调用 /v1/images/generations
+# - native_generate：兼容原生 /generate 接口
+mode: openai_compatible
+
+# 你的 ERNIE Image 服务根地址
+# 示例：
+# - https://your-ernie-image-domain.example.com
+# - http://127.0.0.1:8188
+base_url: https://your-ernie-image-domain.example.com
+
+# 模型名
+model: ernie-image
+
+# 这里填“环境变量名”，不是 API Key 本身
+# 默认会读取：export ERNIE_IMAGE_API_KEY='你的key'
+auth_token_env: ERNIE_IMAGE_API_KEY
+
+# OpenAI 兼容接口路径
+openai_path: /v1/images/generations
+
+# 原生接口路径
+native_path: /generate
+
+# 健康检查接口路径
+health_path: /health
+
+# 服务端模型目录
+# 这个字段主要用于记录部署上下文，通常不需要改
+model_dir: /opt/ernie-image/model/ERNIE-Image
+
+# 模型权重 tar 路径
+# - 如果你只是调用远程服务，可以留空
+# - 如果你在本地或别的机器上也保留了权重，可以通过环境变量传入
+# 例如：
+#   export ERNIE_IMAGE_WEIGHT_TAR_PATH='/data/models/ERNIE-Image.tar'
+weight_tar_path: ${ERNIE_IMAGE_WEIGHT_TAR_PATH:-}
+
+# HTTP 请求超时时间（秒）
+request_timeout_sec: 180
+
+defaults:
+  # 默认图片宽度
+  width: 1024
+
+  # 默认图片高度
+  height: 1024
+
+  # 默认采样步数
+  # 建议：
+  # - 快速测试：8~16
+  # - 正式出图：20~40
+  num_inference_steps: 8
+
+  # 文本引导强度
+  # 一般 4.5 ~ 6.5 都比较常用
+  guidance_scale: 5.0
+
+  # 返回格式：
+  # - b64_json：最稳，脚本会直接解码并落盘
+  # - url：服务返回图片 URL，脚本再下载落盘
+  response_format: b64_json
+
+output:
+  # 输出目录
+  #
+  # 推荐写法：使用环境变量 + 相对默认值
+  # - 如果设置了 ERNIE_IMAGE_ARTIFACT_DIR，就保存到该目录
+  # - 如果没设置，默认保存到“当前配置文件旁边的 achievement/”
+  artifact_dir: ${ERNIE_IMAGE_ARTIFACT_DIR:-./achievement}
+
+  # 是否同时保存 metadata JSON
+  # metadata 会记录 prompt、seed、尺寸、steps、响应摘要等
+  save_metadata: true
+
+  # 输出文件名前缀
+  filename_prefix: ernie-image-share
