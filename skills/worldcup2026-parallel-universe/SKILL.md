@@ -438,24 +438,41 @@ pip install openai
 
 **模型调用**：`ernie-5.0-thinking-preview`（生成图片提示词）
 
-**1:1 方图 (1024×1024)**：
+**重要提示**：`ernie-image-turbo` 对中文理解能力更强，**所有图片提示词必须使用中文撰写**。
+
+**参考文档**：撰写提示词时请参考 [image_prompt_guide.md](references/image_prompt_guide.md)，确保提示词清晰、优质、符合文生图最佳实践。
+
+#### 1:1 方图 (1024×1024)
 - 社媒方图，朋友圈/Instagram
-- 文字占据70%画布
-- 背景纹理作为辅助
+- 背景纹理为主，传达情绪氛围
+- 不嵌入文字，纯视觉呈现
 
-**9:16 竖版长图 (1024×1820)**：
+#### 9:16 竖版长图 (1024×1820)
 - 微博/小红书/Story
-- 充足行间距
-- 底部元数据标注
+- **必须嵌入微小说原文**（完整300字）
+- 文字排版要求：
+  - 从顶部开始，留有适当边距
+  - 行间距 1.5-2.0 倍
+  - 字体清晰可读，与背景形成对比
+  - 底部保留空间标注元数据
+- 背景与文字形成层次感
 
-**图片生成提示词结构**：
+**图片生成提示词结构（中文）**：
 ```
-A [aspect_ratio] poster, [dominant_color] background, [secondary_color] accent,
-[font_weight] Chinese typography as the dominant visual element,
-[landscape_base] as subtle background texture,
-minimalist layout, high contrast, editorial quality,
-2026 FIFA World Cup atmosphere
+[纵横比]尺寸的海报，[主色调]背景，[辅助色]点缀，
+[字体粗细]的中文字体作为主要视觉元素，
+[微小说原文]完整呈现在画面中央，
+[背景描述]作为微妙的背景纹理，
+极简布局，高对比度，编辑品质，
+2026年世界杯氛围
 ```
+
+**提示词撰写要点**：
+1. 明确描述画面主体和背景
+2. 指定色彩基调（主色、辅助色）
+3. 说明文字排版方式（仅长图）
+4. 情绪关键词（如"热血"、"诗意"、"疏离"）
+5. 风格关键词（如"极简"、"editorial"、"电影感"）
 
 ### Step 10 — 最终多模态交付 (MultiModal_Publisher)
 
