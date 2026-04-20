@@ -298,7 +298,7 @@ class SciPopComicGenerator:
         """Phase 2: 生成所有Panel
 
         Returns:
-            (panel_paths, final_prompts): 图像路径列表和最终使用的prompt字典
+            (panel_paths, final_prompts, captions): 图像路径列表、最终使用的prompt字典、旁白字典
         """
         print("=" * 50)
         print("Phase 2: 生成Panel图像...")
@@ -350,14 +350,137 @@ class SciPopComicGenerator:
         prompts_path.write_text(json.dumps(final_prompts, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"  最终 Prompts 已保存: {prompts_path}")
 
-        return panel_paths, final_prompts
+        return panel_paths, final_prompts, captions
 
-    def phase3_generate_global(self, style_seed: str, final_prompts: dict, layout: str, output_dir: Path) -> str:
+    def _add_captions_to_global_comic(self, image_bytes: bytes, captions: dict, layout: str) -> bytes:
+        """在全局大图的每个格子底部居中添加科普旁白
+
+        Args:
+            image_bytes: 原始全局大图字节
+            captions: Panel ID -> 旁白文字 的映射
+            layout: 布局（如 "2x2", "2x3"）
+
+        Returns:
+            添加旁白后的图像字节
+        """
+        # 打开图像
+        image = Image.open(BytesIO(image_bytes))
+        width, height = image.size
+
+        # 解析布局
+        rows, cols = map(int, layout.lower().split('x'))
+        cell_width = width // cols
+        cell_height = height // rows
+
+        # 转换为 RGBA 模式以支持半透明
+        if image.mode != 'RGBA':
+            image = image.convert('RGBA')
+
+        # 根据格子大小调整字体
+        # 字体大小约为格子高度的 8%
+        font_size = max(16, min(32, int(cell_height * 0.08)))
+
+        # 加载中文字体
+        font = None
+        font_paths = [
+            "/System/Library/Fonts/PingFang.ttc",  # macOS
+            "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
+            "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf",  # Linux
+            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux
+            "C:\Windows\Fonts\msyh.ttc",  # Windows 微软雅黑
+        ]
+
+        for font_path in font_paths:
+            if os.path.exists(font_path):
+                try:
+                    font = ImageFont.truetype(font_path, font_size)
+                    break
+                except Exception:
+                    continue
+
+        if font is None:
+            try:
+                font = ImageFont.truetype("arial.ttf", font_size)
+            except Exception:
+                font = ImageFont.load_default()
+
+        # 创建绘图对象
+        draw = ImageDraw.Draw(image)
+
+        # 按阅读顺序处理每个格子（从左到右、从上到下）
+        for panel_id in sorted(captions.keys()):
+            caption = captions[panel_id]
+            if not caption:
+                continue
+
+            # 计算格子位置（panel_id 从 1 开始）
+            idx = panel_id - 1
+            row = idx // cols
+            col = idx % cols
+
+            # 格子边界
+            cell_x1 = col * cell_width
+            cell_y1 = row * cell_height
+            cell_x2 = cell_x1 + cell_width
+            cell_y2 = cell_y1 + cell_height
+
+            # 计算文字尺寸
+            bbox = draw.textbbox((0, 0), caption, font=font)
+            text_width = bbox[2] - bbox[0]
+            text_height = bbox[3] - bbox[1]
+
+            # 文字位置（格子底部居中）
+            padding = 8
+            text_x = cell_x1 + (cell_width - text_width) // 2
+            text_y = cell_y2 - text_height - padding - 5
+
+            # 绘制半透明背景
+            overlay = Image.new('RGBA', image.size, (0, 0, 0, 0))
+            overlay_draw = ImageDraw.Draw(overlay)
+
+            bg_margin = 5
+            bg_x1 = text_x - bg_margin
+            bg_y1 = text_y - bg_margin
+            bg_x2 = text_x + text_width + bg_margin
+            bg_y2 = text_y + text_height + bg_margin
+
+            # 圆角矩形背景
+            corner_radius = 4
+            overlay_draw.rounded_rectangle(
+                [bg_x1, bg_y1, bg_x2, bg_y2],
+                radius=corner_radius,
+                fill=(0, 0, 0, 180)
+            )
+
+            # 合并背景
+            image = Image.alpha_composite(image, overlay)
+            draw = ImageDraw.Draw(image)
+
+            # 描边
+            outline_color = (0, 0, 0, 255)
+            for adj_x in [-1, 0, 1]:
+                for adj_y in [-1, 0, 1]:
+                    if adj_x != 0 or adj_y != 0:
+                        draw.text((text_x + adj_x, text_y + adj_y), caption, font=font, fill=outline_color)
+
+            # 主文字（白色）
+            draw.text((text_x, text_y), caption, font=font, fill=(255, 255, 255, 255))
+
+        # 转回 RGB 并保存
+        output = BytesIO()
+        image_rgb = Image.new('RGB', image.size, (255, 255, 255))
+        image_rgb.paste(image, mask=image.split()[3])
+        image_rgb.save(output, format='PNG')
+
+        return output.getvalue()
+
+    def phase3_generate_global(self, style_seed: str, final_prompts: dict, captions: dict, layout: str, output_dir: Path) -> str:
         """Phase 3: 生成全局大图
 
         Args:
             style_seed: 风格种子
             final_prompts: Panel ID -> 最终 image_prompt 的映射（来自 Phase 2 迭代后的满意结果）
+            captions: Panel ID -> 旁白文字 的映射
             layout: 布局（如 2x2, 2x3）
             output_dir: 输出目录
 
@@ -383,6 +506,11 @@ class SciPopComicGenerator:
 
         # 注意：ernie-image-turbo 最大支持 1376x768，这里用最大的横向尺寸
         image_bytes = self._generate_image(global_prompt, size="1376x768")
+
+        # 在全局大图的每个格子底部居中添加科普旁白
+        if captions:
+            print(f"  为 {len(captions)} 个格子添加旁白...")
+            image_bytes = self._add_captions_to_global_comic(image_bytes, captions, layout)
 
         # 保存大图
         global_path = output_dir / "global_comic.png"
@@ -436,12 +564,12 @@ def main():
     layout = args.layout or layout_recommendations.get(num_panels, "2x3")
     print(f"\n使用布局: {layout}")
 
-    # Phase 2: 生成所有 Panel，返回图像路径和最终 prompts
-    panel_paths, final_prompts = generator.phase2_generate_all(phase1_result, output_dir)
+    # Phase 2: 生成所有 Panel，返回图像路径、最终 prompts 和旁白
+    panel_paths, final_prompts, captions = generator.phase2_generate_all(phase1_result, output_dir)
 
-    # Phase 3: 使用最终 prompts 生成全局大图
+    # Phase 3: 使用最终 prompts 和旁白生成全局大图
     style_seed = phase1_result["style_seed"]
-    global_path = generator.phase3_generate_global(style_seed, final_prompts, layout, output_dir)
+    global_path = generator.phase3_generate_global(style_seed, final_prompts, captions, layout, output_dir)
 
     print("\n" + "=" * 50)
     print("✅ 连环画生成完成!")
