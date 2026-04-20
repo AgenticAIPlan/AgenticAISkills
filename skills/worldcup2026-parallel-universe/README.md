@@ -208,14 +208,11 @@ python scripts/run_pipeline.py --entity "梅西" --event_type "绝杀进球" --e
 
 ### API 配置
 
-使用本 skill 前需配置百度星河社区 API：
-
-```bash
-# 设置环境变量
-export AISTUDIO_API_KEY="your-api-key"
-```
+使用本 skill 需要百度星河社区 API Key。
 
 **获取 API Key**：访问 [百度星河社区](https://aistudio.baidu.com/) 注册并获取 API Key
+
+> 💡 **提示**：执行 Skill 时会自动检查 API Key，如未配置会引导您设置。您只需告知 API Key，系统会自动为您配置，无需手动设置环境变量。
 
 ### API 端点
 

@@ -8,6 +8,51 @@ description: |
   触发场景：用户提到"世界杯微小说"、"足球叙事"、"平行宇宙故事"、"绝杀进球故事"、"点球大战叙事"、"球员故事创作"等；用户提供(entity, event_type, emotion_intensity)三元组格式；用户想要将体育赛事转化为创意文学内容。
 ---
 
+## ⚠️ 前置检查
+
+**执行本 Skill 前必须检查环境变量 `AISTUDIO_API_KEY` 是否已配置。**
+
+### 检查流程
+
+```
+Step 1: 检查 AISTUDIO_API_KEY 环境变量
+   ↓
+未配置 → Step 2: 引导用户获取并告知 API Key
+   ↓
+Step 3: 自动为用户配置 AISTUDIO_API_KEY
+   ↓
+已配置 → Step 4: 开始执行创作任务
+```
+
+### 未配置时的处理
+
+如果 `AISTUDIO_API_KEY` 未配置或为空，**必须停止执行并引导用户**：
+
+> ❌ **API Key 未配置**
+>
+> 本 Skill 需要百度星河社区 API Key 才能运行。
+>
+> 请按以下步骤操作：
+> 1. 访问 [百度星河社区](https://aistudio.baidu.com/) 注册账号
+> 2. 在个人中心获取 API Key
+> 3. 告知我您的 API Key，我将为您自动配置
+>
+> **注意**：您无需在终端手动设置环境变量，直接告诉我 API Key 即可。
+
+### 用户告知 API Key 后的处理
+
+用户告知 API Key 后，**自动为其配置环境变量**：
+
+```bash
+export AISTUDIO_API_KEY="用户提供的key"
+```
+
+配置完成后确认：
+
+> ✅ API Key 已配置成功，开始执行创作任务...
+
+---
+
 # WorldCup 2026 Parallel Universe Agent (WP26_PUA)
 
 > 三元组意图驱动 × 实时联网检索 × 深度创意写作 × 多模态长图渲染
@@ -30,14 +75,11 @@ description: |
 
 ### API 配置
 
-使用本 skill 前需配置百度星河社区 API：
-
-```bash
-# 设置环境变量
-export AISTUDIO_API_KEY="your-api-key"
-```
+使用本 skill 需要百度星河社区 API Key。
 
 **获取 API Key**：访问 [百度星河社区](https://aistudio.baidu.com/) 注册并获取 API Key
+
+> 💡 **提示**：执行 Skill 时会自动检查 API Key，如未配置会引导您设置。
 
 ### API 端点
 
