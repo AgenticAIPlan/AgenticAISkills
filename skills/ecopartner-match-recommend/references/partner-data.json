@@ -1,0 +1,4033 @@
+[
+  {
+    "company": "Partner_C98175",
+    "product": "益模PDF图纸识别工具",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "机械",
+    "industry2": "机械-研发设计支持",
+    "tech": "飞桨",
+    "product_intro": "产品使用PP-OCRv5，应用于图纸识别场景，打造了益模PDF图纸识别工具，增加了PDF 工程图纸的智能OCR识别功能(核心功能)、增加了文字框自动检测和定位功能、增加了多角度文字自动纠正功能、增加了尺寸标注和公差的智能识别功能、增加了批量识别和批量处理功能、增加了识别结果的可视化编辑功能，效率提升约4倍，错误率降低至0.5%。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "3万元/套",
+    "customers": "Client_B11DA8",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_A85060",
+    "product": "驿宝通图片合规引擎",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-数字营销",
+    "tech": "飞桨",
+    "product_intro": "产品使用了Paddle OCR-VL模型，主要面向电商企业购物平台解决商品主图、详情图、轮播图所有图片资源全链路监管，解决违规信息漏网、活动误导频发、品牌声誉与用户信任面临持续侵蚀等问题，打造了驿宝通图片合规引擎，增加了商品图片识别功能，替代了原有付费调用OCR工具方式，节省了公司成本，同时图片风险筛查覆盖率从小于30%提升至100%，审核人力需求减少70%，客诉率下降82%。",
+    "ai_tags": [
+      "OCR",
+      "NLP"
+    ],
+    "pricing": "内部集成使用，功能后续会开放至其他平台，价格待定。",
+    "customers": "Client_7CEE03",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_259A32",
+    "product": "车贷全票据智能审核系统",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "金融",
+    "industry2": "金融-银行-信贷应用",
+    "tech": "飞桨",
+    "product_intro": "产品实现了对首付凭证（含手写与印章）、发票及银行流水等核心材料的自动化识别与实时核验 。该系统通过 PP-OCRv5 及 PaddleOCR-VL 等模型克服了手写识别难、印章多样及发票版式频繁变动等挑战，将印章识别准确率提升至 97%，发票识别准确率稳定在 99% 以上，单次推理仅需 1秒 左右 。这不仅显著缩短了放款周期，更通过自建的 AI 生产线 实现了数据的闭环迭代，有效提升了金融零售业务的处理效率与智能化水平",
+    "ai_tags": [
+      "OCR",
+      "NLP"
+    ],
+    "pricing": "暂无，企业内部系统",
+    "customers": "Client_DC3031",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8525B4",
+    "product": "企业知识中台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "企业知识中台应用ERNIE-4.5-21B-A3B、Embedding-V1、PP-OCRv5等模型，涵盖知识导入、知识解析、知识清洗、知识冲突检测、知识权限管理、知识审核、文档版本管理、知识检索、开放能力对接等功能，面向想要在内部建设AI业务智能体的企业解决了大模型在特定业务场景的适配不足（大模型幻觉问题、大模型知识时效性滞后、缺少企业关键业务知识）、各部门重复建设知识孤岛、知识权限管理混乱和缺乏权威认证的场景问题。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "CV",
+      "NLP"
+    ],
+    "pricing": "70万",
+    "customers": "Client_DC3031",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_92EA95",
+    "product": "盛天云平台的图文识别服务",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "产品使用飞桨PaddleX中通用OCR模型产线的PP-OCRv5模型，应用于图像文字识别与数字化处理场景，打造了盛天云平台的图文识别服务。通过PP-OCRv5模型的模型能力，使文字识别准确率从56%提升至88%，显著提升自动化处理效率；通过结构化文本输出，助力企业内部系统数据利用效率提升60%，节省自主研发成本。",
+    "ai_tags": [
+      "OCR",
+      "CV",
+      "NLP"
+    ],
+    "pricing": "内部使用，不对外售卖",
+    "customers": "Client_DC3031",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_435D07",
+    "product": "BOHU 伯虎光影",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐",
+    "tech": "文心",
+    "product_intro": "基于ERNIE-4.5-VL-28B-A3B打造的伯虎光影产品涵盖实时美学图像评分、构图、评价等功能，面向移动端拍摄场景提供实时美学摄影服务，解决传统修图软件实时性不足，专业性复杂，编辑难度高等移动端应用问题。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "推广期免费，正式上线前7天免费，月卡25元，年卡188元",
+    "customers": "Client_B2793A",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_3007FE",
+    "product": "法图图 - 企业出海法商融合服务平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "法律",
+    "industry2": "法律-法务-合规判别",
+    "tech": "文心",
+    "product_intro": "法图图是面向出海企业的全球法务资源智能推荐平台，应用了ERNIE-4.5-VL-424B-A47B模型，旨在解决企业全球化进程中面临的法律信息孤岛、服务对接效率低、合规风险高等核心痛点。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "基础版：8.8万/年\n企业版：18.8万/年",
+    "customers": "Client_E7318D",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_3007FE",
+    "product": "云桨智造AI中台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "基于ERNIE-4.5-21B-A3B打造的云桨 AI 智造中台是一款面向制造企业多部门（行政人事、市场营销、法务合规、生产运维等）的一站式智能应用服务平台，旨在解决企业办公及生产场景中数据查询繁琐、流程处理低效、知识获取不便、设备运维响应慢等核心痛点。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "12.8万/套",
+    "customers": "Client_7C28BA",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_04A7AD",
+    "product": "后厨管家-AI智能排菜",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "文心",
+    "product_intro": "基于ERNIE-4.5-Turbo-VL构建的AI 智能排菜系统是一款面向食堂多角色的一站式智能配餐与管理服务平台，旨在解决食堂运营中排菜效率低下、营养配比不科学、场景适配不足、食材管控不便、数据统计繁琐等核心痛点。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "3万元",
+    "customers": "Client_7F618C",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_948CC3",
+    "product": "Word-Cursor",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "文心",
+    "product_intro": "基于ERNIE-5.0-Thinking-Preview打造的Word-Cursor 产品涵盖智能文档编辑(Word)、表格预览与分析(Excel)、PPT 端到端生成与编辑、联网搜索调研、文档审查与校对等功能。产品面向办公文档生产场景下的知识工作者，通过Cursor 级别的“对话式编辑 +工具调用 +可审阅变更”能力，解决传统办公软件操作效率低下、AI辅助不可控的问题，实现“人描述意图- AI执行- 结果可审阅、可回滚”的新范式。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "当前免费使⽤，后续将会以19.9元/⽉、199元/年进⾏收费",
+    "customers": "Client_2644A2",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_DA878A",
+    "product": "oagent食品标签智能审核系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "飞桨",
+    "product_intro": "基于PP-OCRv5打造的oagent食品标签智能审核系统涵盖AI法规适配、全维度标签审核、电商宣传校验、合规报告生成等功能，面向食品生产商、电商运营方、监管机构，解决食品标签印前自查、上架合规审核、批量抽检初筛等场景问题；",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "10元/次",
+    "customers": "Client_F1EDCF",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_0BFADC",
+    "product": "货物安全实时监察系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "飞桨",
+    "product_intro": "产品涵盖货物堆叠状态监测、位置偏移识别、倾倒异常告警等功能 。面向仓储物流场景，通过pp-yoloE模型解决人工定期抽检效率低、无法实时监控的问题，保障仓库安全运营 。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "10000-15000元",
+    "customers": "Client_F912DA",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_0BFADC",
+    "product": "智仓视觉自动化盘点系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "飞桨",
+    "product_intro": "在堆垛机上搭载摄像头，采集货位图像并利用PP-YOLOE视觉算法识别托盘上货物种类及数量，并与WS库存数据比对，实现货物无须出库，即可自动完成盘点任务，解决传统人工盘点费时费力、不灵活、准确度难保障等痛点，实现货物无需出库即可自动完成全盘任务。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "180000-500000元",
+    "customers": "Client_F912DA",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_689A69",
+    "product": "AI审计信息化系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "文心",
+    "product_intro": "AI审计信息化系统应用ERNIE-4.5-21B-A3B，为大中型企业内部审计部门提供的基于信息技术构建的综合性审计管理平台，旨在通过数字化、智能化手段提升审计效率、强化风险防控、优化资源配置，推动审计从“事后监督”向“事前预警、事中监控、事后整改”全流程覆盖转型，围绕审计业务场景，划分4类智能化功能方向，覆盖“问 - 读 - 审 - 报”全流程",
+    "ai_tags": [
+      "时序",
+      "CV",
+      "LLM"
+    ],
+    "pricing": "项⽬制，根据客户规模和需求定制，报价通常在50万元⼈民币级别。",
+    "customers": "Client_C66AFB",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_9372C0",
+    "product": "水情预测智能体",
+    "city": "南宁",
+    "region": "西南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "文心",
+    "product_intro": "产品是依托飞桨与文心大模型构建的工业级智慧水文解决方案。产品通过飞桨 PaddleTS 深度学习技术实现 1-7 天入库流量的高精度时序预测；同时以 ERNIE-4.5-VL-28B-A3B-Thinking 为智能核心，构建具备自主工具调度能力的预报智能体。该系统有效攻克了传统预测对人工经验的依赖难题，能够自动化生成水情调度与发电计划建议，显著提升了水电站调度的科学性与智能化决策水平。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "目前仅内部使用，暂无对外售价",
+    "customers": "Client_00FF06",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_7703D1",
+    "product": "Tempo大模型应用及管理平台",
+    "city": "西安",
+    "region": "华中",
+    "industry1": "",
+    "industry2": null,
+    "tech": "飞桨",
+    "product_intro": "产品使用飞桨PaddleOCR-VL、通用OCR、印章文字识别等技术，应用于企业知识智能处理与行业场景智能化领域，打造了Tempo大模型应用及管理平台，实现了关键技术指标提升：质量报告审查准确率从65%提升至87%；产品功能增加：新增智能问答总结与推荐功能，支持多场景智能体构建；业务效果提升：设备故障案例问答准确率提升20%，显著提升企业知识应用效率。",
+    "ai_tags": [
+      "时序",
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "273万/套",
+    "customers": "Client_5BB70E",
+    "product_type": "软硬一体+软件平台"
+  },
+  {
+    "company": "Partner_727D76",
+    "product": "深蕾VS680 AI PI（香蕉派）",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "飞桨",
+    "product_intro": "产品使用PP-OCRv4、Paddle-detection，应用于半导体行业，边缘侧智能推理场景需求场景，打造了VS680 AI PI（香蕉派）产品，产生了芯片在智能识别场景中的性能显著增强，识别率提升了30%，识别速度提升了20%，硬件产品的任务承载能力进一步增强，可额外处理 3 个识别任务的效果。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "1800元",
+    "customers": "Client_9A4093",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_727D76",
+    "product": "AI BOX",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "飞桨",
+    "product_intro": "产品使用PP-OCRv4、Paddle-detection，应用于半导体行业，IP摄像头视频流文字识别、事件预警、无人商店等场景，打造了AI BOX（内置VS680芯片）产品，产生了智能识别场景中性能显著增强，识别准确率提升30%，识别速度提升20%，硬件产品增加可额外处理 4 个识别任务的效果。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "2000元",
+    "customers": "Client_21DC60",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F9E2B8",
+    "product": "ExperTour",
+    "city": "澳门",
+    "region": "华南",
+    "industry1": "",
+    "industry2": null,
+    "tech": "文心",
+    "product_intro": "ExperTour: i2p 是一款全流程 AI 驱动的学术研究辅助工具。涵盖灵感生成 (Ideation)、研究规划 (Planning)、研究设计、实验设计、数据分析代码生成、论文撰写及审稿改进 等 7 大核心功能。面向高校师生及科研人员，解决研究选题难、实验设计不严谨、数据分析编程门槛高、论文产出效率低 等场景问题。使用ERNIE x-1.1，采用 Agent (智能体) 协作架构 与 RAG (检索增强生成) 技术。通过结构化的 Prompt Engineering 将学术研究拆解为链式任务，结合外部学术数据库检索，实现高度专业化、规范化的内容输出。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "credit充值，每credit售0.1元",
+    "customers": "Client_5B2313",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_BE4566",
+    "product": "中文智言",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "教育",
+    "industry2": "教育-高校-ToC",
+    "tech": "文心",
+    "product_intro": "调用ERNIE4.0 API，打造中文智言，应用于知识问答、论文生成、ppt 生成，面向图书馆读者提供精准的图书检索、知识服务，图书检索精准率提升 20%。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "2000元/企业",
+    "customers": "Client_49EE24",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_0061EB",
+    "product": "一网统管",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "政务",
+    "industry2": "政务-公共管理-智慧城市-线上平台",
+    "tech": "飞桨",
+    "product_intro": "使用PaddleOCR中的 PP-OCRv4模型以及PaddlePaddle的序列模型，应用于政府、企事业单位等用户，解决城市治理中信息孤岛、反应迟缓、资源分配不均等场景，打造了一网统管，监控视频中的异常事件识别准确率从70%提升到90%，城市交通流量预测准确率提高了20%，事件上报和处理效率提高了50%，从原来的2小时缩短到1小时。",
+    "ai_tags": [
+      "OCR",
+      "时序",
+      "CV"
+    ],
+    "pricing": "220万元/平台费用+1000元/路（摄像头）-含10种通用算法",
+    "customers": "Client_5FC240",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_244E83",
+    "product": "OceanXTDP 智能文档处理平台v8",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "使用PP-OCRv4，打造OceanXIDP智能文档处理平合，用于文字识别、数据交叉验证、数据消洗、文档机器人等场景。特殊字母识别准确率提升25%（70%到95%）。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "20万元",
+    "customers": "Client_808011",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_167E4B",
+    "product": "TripAI小奇旅行",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "文旅",
+    "industry2": "文旅-TOC-AI助手",
+    "tech": "文心",
+    "product_intro": "调用ERNIE 4.0 Turbo、ERNIE 3.5的API，应用于生成旅游攻略场景，打造了tripAI 小奇旅行。可以弥补因某些城市数据不足导致的攻略粗糙问题，提升用户体验，让服务变得更加智能、贴心。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "免费",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_D49497",
+    "product": "视觉复核",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "使用PaddleDetection中的SA2Net模型，应用于药盒数量核对功能，解决视觉复核场景，打造了视觉复核产品，药盒识别准确率从98%提升到99%，业务人员审核药盒数量从500份/小时提升到600份/小时的效果。",
+    "ai_tags": [
+      "CV",
+      "NLP"
+    ],
+    "pricing": null,
+    "customers": "Client_348663",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_980F05",
+    "product": "丽芳LUJI园林智能浇灌机",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-设计辅助",
+    "tech": "飞桨",
+    "product_intro": "基于PaddleTS套件训练云端气象AI预测模型，应用于智慧园艺场景，打造了丽芳LUJI园林智能浇灌系统。，通过主机内置的多种环境传感器获取气象实时数据，飞桨模型计算并自动调节灌溉计划，避免因天气变化或人丁疏忽导致的植物枯萎或水资源浪费，有效避免因天气变化或人丁疏忽导致的植物枯萎或水资源浪费，同时减少了人工干预的频率，降低50%以上的绿化项目运维成本。",
+    "ai_tags": [
+      "时序"
+    ],
+    "pricing": "2999元/套",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_65A48C",
+    "product": "CoQi叩奇儿童陪伴终端",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-客户服务",
+    "tech": "文心",
+    "product_intro": "使用ERNIE 3.5的API，应用于儿童陪伴场景，打造了CoQi叩奇。CoQi叩奇作为独立AI陪伴智能终端，依赖多模态交互、个性化内容生成和情绪感知等先进技术，其中文心大模型技术支撑产品的核心对话功能，使得产品能够与孩子进行自然流畅的对话，满足孩子的好奇心和求知欲。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "799元/台",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_FD46A6",
+    "product": "AIWay Edge 3588S",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-安防",
+    "tech": "飞桨",
+    "product_intro": "基于PPYOLOE模型，打造AIWay Edge 3588S，在涵盖目标分类、目标检测、目标分割和文字识别4大功能以及30多种垂类模型基础上，新增有无行人和安全帽检测功能，并实现训练时间缩短24%，部署成本降低30%的效果",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "899元",
+    "customers": "Client_B11DA8",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_370ECB",
+    "product": "卓维智印",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "能源电力",
+    "industry2": "能源电力-日常办公",
+    "tech": "飞桨",
+    "product_intro": "使用PaddleOCR，应用于文档识别、文档内容比对场景，打造了「卓维智印」产品，用印文件比对效率提升70%。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "6.6万起",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_370ECB",
+    "product": "卓维AI办公助手",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "调用文心大模型4.0的API，应用于智能办公场景，打造了「卓维AI办公助手」，面向行政、运营、客服等各类办公人员，解决如会议室预约、制度条款查找、人工问答回复、业务数据统计等场景问题。基于文心能力实现会议室预约成功率提升50%、查询制度效率提升70%。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "15万起",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_289186",
+    "product": "知不知AI实验云平台",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-高校-教学辅助",
+    "tech": "文心",
+    "product_intro": "调用ERNIE-4.0-8K，落地教学场景，打造知不知AI实验云平台，增加智能写作、文本语音互转功能",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "12万/年",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_846026",
+    "product": "五育积分平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-智慧校园",
+    "tech": "文心",
+    "product_intro": "调用ERNIE speed API，落地学生积分管理场景，打造五育积分平台，基于学生表现对学生生成个性化评语。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "20-30w一套",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_82964E",
+    "product": "齐物志学习地图",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "营销-用户运营",
+    "tech": "文心",
+    "product_intro": "齐物志产品涵盖本地知识问答、AI绘本、AI社群、后台内容生产等功能，面向教育、文旅等产业解决学生研学、普通游客学习旅游等场景问题。基于ERNIE 4.5实现本地知识问答、社群AI运营助手、绘本文案生成、知识图谱生成、知识摘要生成、答卷生成、辅助用户问答等功能。本地知识问答准确率从70%提升到85%；AI客服问答准确率60%提升到83%，社群客服人工回答用户问题的时间节省80%；PGC内容生产时间节省50%；",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "1) C端市场：实践课程29元-189元；探究清单、语音解读、绘本阅读等功能9.9元-29元；2) B端G端市场：公共服务平台100万 - 300万；",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_5ECF8D",
+    "product": "银歌AI无感结算门",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "基于PaddleX中的PP-YOLOE和PP-ShiTuV2_rec_CLIP_vit_large模型，银歌AI无感结算门分别将高精度目标检测和特征提取能力整合进软硬一体的多品类识别算法中，采用端云协同的部署方式，服务化部署+端侧部署 瑞芯微RK3566/RK3568/RK3576/RK3588 NPU，构建了覆盖零售餐饮、食堂团餐等场景的无感结算门。面向零售，餐饮及团餐解决了结算效率低，体验差，错乱记账等场景问题，识别准确率达到99.8%，在零售收银场景内业务效果显著提升，从多个收银员降低到无收银员，帮助客户降低人力成本支出。目前已服务沃尔玛、香港City Super等商超客户。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "68000元/套",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D6C224",
+    "product": "标规千问",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-内容营销",
+    "tech": "文心",
+    "product_intro": "调用ERNIE Speed，针对规划、建筑、景观设计师在查阅标准时遇到的资料付费、资料不全、耗时长等痛点开发，囊括1000+标准知识库，具备知识库检索、网络检索、AI问答三种模式，旨在提高设计规范与标准检索效率，帮助设计师快速获取所需知识，为设计师的创意设计提供坚实的规范支撑，问答与文档检索归纳准确率提升10%以上，查询效率提升40%。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "月度价：49元；季度价：148元；年度价：588元（价格未对外公布，仅作参考，客户咨询报价时需单独确认）",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_D6C224",
+    "product": "BDSD",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-内容营销",
+    "tech": "文心",
+    "product_intro": "调用ERNIE Speed，集图像生成、渲染及局部重绘功能于一身，调用快速实现高质量图像输出，助力规划、建筑、景观设计师在前期灵感找寻和中期效果图渲染阶段轻松完成创意表达，推动设计创作迈向新高，工作效率提升30%以上。",
+    "ai_tags": [
+      "CV",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "月度价：69元；季度价：199元；年度价：799元。（价格未对外公布，仅作参考，客户咨询报价时需单独确认）",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_04A7DE",
+    "product": "PA巡边机",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "PA巡边机涵盖晶圆巡边定位，OCR字符检测识别功能等功能，面向半导体市场解决晶圆定位和读码的问题。使用PP-OCRv4后字符识别的准确率由80％提升至95％。OCR字符识别的准确率由80%提升至95%。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "6～8万",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_B5B442",
+    "product": "自主焊接机器人",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-设计辅助",
+    "tech": "飞桨",
+    "product_intro": "面向船舶制造、重型机械等离散型工业场景，解决复杂曲面焊接依赖人工经验、实时感知精度不足、边缘端部署延迟高及模型更新效率低等核心痛点。通过飞桨强化学习框架（PARL）实现焊接路径动态规划，结合Paddle3D点云处理引擎提升焊缝三维坐标提取精度，并依托Paddle Lite轻量化推理引擎完成视觉模型本地化部署，确保机械臂控制器等边缘端实时响应。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "20万元",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1E4697",
+    "product": "人工智能实验箱",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-设计辅助",
+    "tech": "飞桨",
+    "product_intro": "U2-A AIOT 实验箱搭载瑞芯微 RK3588 芯片及 GD32F4 嵌入式芯片、U2-A（OH）鸿蒙实验箱基于RK3588+GD32F4硬件架构，集成飞桨PaddlePaddle框架构建AI实验模块。在人工智能实验设计中，采用PPYOLOE实现高精度目标检测（如物料分类场景准确率达96.3%），通过PPTracking实现多目标动态追踪（追踪时延低至28ms），通过PPOCRv4实现工业元件字符识别（识别速度提升2.3倍），结合PPSeg实现精密部件分割（分割精度达94.7%）落地智能制造实训场景，使实验数据与工业场景匹配度提升40%。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "CV"
+    ],
+    "pricing": "2-3万",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1E4697",
+    "product": "人工智能实验台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "S1-E 电子元器件检测实训台、S1-R 抓取机器人智能创新实训平台集成飞桨视觉技术体系，采用PPYOLOE、PPSeg模型用于电子元器件分类、芯片缺陷检测等实验教学。在质检实训中，实现芯片引脚缺陷检测漏检率<0.2%。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "5-18万",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1E4697",
+    "product": "智慧交通实训系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "政务",
+    "industry2": "政务-智慧城市",
+    "tech": "飞桨",
+    "product_intro": "智慧交通实训系统搭载瑞芯微 RK3588 人工智能芯片以及 GD32F4 系列嵌入式芯片，采用PPYOLOE实现交通标志识别（识别范围扩展至300米），通过PPTracking实现多车辆轨迹预测（预测准确率达91.3%），落地智能网联汽车教学，使复杂交通场景模拟真实度提升60%。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "5-60万",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1E4697",
+    "product": "嵌入式智慧小屋/车",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-设计辅助",
+    "tech": "飞桨",
+    "product_intro": "1）S1-C 智能小车，搭载飞桨轻量化推理引擎，通过PID+PPTracking实现精准循迹控制（路径跟踪误差<0.8cm）；2）S1-H 智慧小屋，在智能家居场景中，通过PPYOLOE实现32类家居设备识别（mAP@0.5达92.1%）。",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "0.1-0.8万",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_342949",
+    "product": "梦笔生花AI回忆录",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "营销",
+    "industry2": "营销-内容营销",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-X1-32k（调用API），应用于电子出版场景，打造了梦笔生花AI回忆录，文心技术使用后的收益：1）关键技术指标提升：使用模型后生成效率提高40% 2）产品功能增加：增加文章撰写功能 3）业务效果提升：1.释放人员精力，录音文件进行理解和关键信息拆解时间缩短为原先三分之一；2.成文撰写时间缩短为原先一半",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "公测使用阶段，暂无定价",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_E86CFB",
+    "product": "积木智能分类分拣机",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-设计辅助",
+    "tech": "飞桨",
+    "product_intro": "产品使用飞桨PaddleX图像分类产线专用的PP-HGNetV2-B4模型，精准识别重叠料、透明料、相似料及极小料等复杂场景，最终由气动控制系统完成自动分拣，打造了积木智能分类分拣机，已完成8款积木的分拣；每小时分拣效率7200个；准确率99.4%，高效地将不同类型的积木进行分类，不仅提高了分拣效率，还避免了手动分拣时可能出现的错误。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "350000元/套",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_E86CFB",
+    "product": "积木智能全检机",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "飞桨PaddleX产线专用的RT-DETR-L目标检测模型，实现玩具无物料表面微小瑕疵的精准识别，打造了积木智能全检机，识别判断瑕疵件每小时质检效率7200个，准确率99.2%，单次请求响应时间控制在50ms以内，满足产线120件/分钟的高速检测需求。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "370000元/套",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_E86CFB",
+    "product": "玩具包装智能核验设备",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "产品使用飞桨PaddleX目标检测产线的RT-DETR-L模型，应用于包装袋类型精准识别与包装数量精确核验场景，打造了玩具包装智能核验设备，包装袋类型识别准确率达到 98%，支持包装袋类别数量50+类，检测速度从人工核验的200件/小时提升至1200件/小时，产能提高500%。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "300000元/套",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F2463D",
+    "product": "影像式智能扫描平台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "产品使用飞桨Paddle X工具的PP-OCRv4模型，应用于产品条码、产品标签、商品二维码、以及身份证、护照 ID等的字符识别功能，面向终端客户解决物品中附带的条码、字符串等信息数据采集需求场景，打造了影像式智能扫描平台产品，OCR识别信息准确率达到 95%，拓宽影像式智能扫描平台在数据采集的应用场景。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "1000-1200元/台",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_A9116D",
+    "product": "AI智习室与智慧课堂",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-教学辅助",
+    "tech": "文心",
+    "product_intro": "基于文心大模型（Ernie4.5 Turbo）和飞桨深度学习框架，打造了AI智习室与智慧课堂，可实现教学全流程数字化：智能备课预习，课堂互动反馈，课后个性作业批改，智能引导答疑及人工辅导。文心技术使用后的收益：1）4.5T-128k处理速度比3.5提升3倍，2）数据输出格式遵循情况达到100%",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "定制化开发",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_E77EC1",
+    "product": "司小宣·普法政务一体机",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "法律",
+    "industry2": "法律-TOB/TOG-法律咨询",
+    "tech": "文心",
+    "product_intro": "产品采用多模型融合范式（Multi-Agent + RAG），全链路深度结合文心大模型（ERNIE 4.5系列）完成推理，叠加Web搜索增强、知识库问答（RAG）、知识图谱（Knowledge graph）、图文多模态理解等模块，通过模块化封装提升响应能力和场景适配能力。产品中文心作为基座模型，配合语义理解与推理能力提升，使问答质量显著提高，特别是在复杂法律问答场景中表现稳定。目前该一体机（云端部署版本）已服务蓝田县司法局、西安市司法局、陕西省司法厅。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "10-30w",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_1B3FDD",
+    "product": "石材智能检测系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "基于PP-YOLO、PP-CLAS打造“石材智能检测系统”涵盖瑕疵识别、瑕疵定位、瑕疵分类以及质量评级四大核心功能，旨在解决石材加工过程中因人工检测效率低、主观性强、漏检率高等问题导致的产品质量不稳定和市场竞争力下降的场景问题。系统能够自动、高效地检测石材表面的裂纹、色差、孔洞、划痕等瑕疵，为企业提供全面的质量检测解决方案。飞桨技术使用后的收益：1)关键技术指标提升：A.瑕疵检测准确率从人工检测的70%提升到95%以上。B.漏检率从30%降低到5%以下，显著提高了产品质量。2)产品功能增加：A.增加了瑕疵定位功能，能够精确标注出瑕疵在石材表面的位置。B.增加了质量评级功能，为企业提供更全面的质量信息。3)业务效果提升：A.检测效率大幅提升，单块石材的检测时间从几分钟缩短到几秒钟。B.降低了人工检测成本，提高了企业的生产效率和产品质量。C.提高了客户满意度，增强了企业的市场竞争力。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "基础版售价约为10万元/年",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1B3FDD",
+    "product": "鲨鱼哥智能客服",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-智能客服",
+    "tech": "文心",
+    "product_intro": "为助力外贸企业突破售后服务瓶颈，实现客户服务体验与运营效率的双重跃升，依托百度文心大模型（ERNIE4.5Turbo）打造了一款集多语言支持、多模态交互、智能决策与数据分析于一体的智能客服解决方案。该产品以AI技术为核心，深度融合机械工程专业知识与行业服务经验，为企业构建起高效、精准、个性化的客户服务体系，全方位赋能企业全球化服务能力。\n文心技术使用后的收益：1）关键技术指标提升：通过深度融合文心大模型与机械工程专业知识，对意图识别与语义解析算法进行深度优化，客服问答准确率从原本的 60%大幅提升至90%，有效减少了因误解用户意图而导致的错误应答情况，显著提升了服务响应的专业性与精准度。2）产品功能增加a.问答内容摘要功能b.实时语音翻译功能c.智能预测服务功能3）业务效果提升：智能客服产品上线后，有效提升了客户问题的解决率和客户满意度，使原有专职客服人员由8人降低至3人。",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "时序",
+      "NLP"
+    ],
+    "pricing": "定制化开发，40万元左右",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_07D379",
+    "product": "熔池质量实时评价系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleSeg中的OCRNet模型，在视频中分割出熔池传输到分类模型，并基于PaddleDetection的PP-YOLOE模型实现了熔池的自动分类，打造了熔池质量实时评价系统，使得熔池双椭球模型耦合度从84%提升到93%，熔池质量问题提前发现，减少返工成本，及时发现工艺问题，减少企业损失。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "熔池监测系统：9.8万元一套（一路监测+边缘计算）\n熔池监测系统+云平台质量分析：38万元一套（含3路监测综合布线工作）",
+    "customers": null,
+    "product_type": "软硬一体+软件平台"
+  },
+  {
+    "company": "Partner_1C664A",
+    "product": "算力魔方AIPC",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "算力魔方是一款可以DIY的迷你主机，采用了抽屉式设计，后续组装、升级、维护只需要拔插模块。通过选择不同算力的计算模块，再搭配不同的 IO 模块可以组成丰富的配置，适应不同场景。算力魔方现基于PaddleOCR 3.0中的PP-OCRv5模型、Intel OpenVINO™，打造一套智能文档解决方案，实现端云协同架构部署（敏感数据本地处理，复杂分析云端执行），可完成多模态文档解析（文字、表格、印章语义等）、结构化数据输出（JSON/XML）任务，可用于解决政务、金融、司法、医疗等行业文档处理面临数据安全、效率低下、大模型输入不准确等问题。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "含软件方案50000+，单主机5000+",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_988516",
+    "product": "赛博地平线",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "文旅",
+    "industry2": "文旅-潮玩IP",
+    "tech": "文心",
+    "product_intro": "“赛博地平线”AI智能潮玩伴侣是一款智能玩偶底座，由文心优选级技术伙伴深圳启明云端科技有限公司开发。产品搭载乐鑫ESP32-S3芯片，与百度文心千帆AppBuilder平台打通，基于文心大模型，一声呼唤即刻开启跨次元对话，多轮对话连续回复自然，可以实现动态角色矩阵、海量音色随心切换，支持声纹克隆，用户可基于该产品自由定制专属IP。",
+    "ai_tags": [
+      "语音",
+      "LLM"
+    ],
+    "pricing": "219元/个",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_70CD1A",
+    "product": "碧兴物联大模型应用平台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业",
+    "industry2": "企业-大模型平台",
+    "tech": "文心",
+    "product_intro": "产品基于文心大模型4.5及4.5Turbo系列模型开发，平台集成了大模型管理、应用及数据处理的整体框架功能，实现快速响应市场变化，提升业务智能化水平。通过高度集成与灵活配置，支持对接各个业务系统、数据接口，配置公网大模型以及自研垂直大模型。可以兼容Chat、Workflow、Agent等多种形式。为各个业务板块提供高效、稳定、可扩展的大模型生态系统。支持发布智能体链接给到各个相关管理平台进行集成。目前已支持人事流程助手、农业种植助手、平台数字人、安全检测助手、站房管理助手、故障智能诊断、公司展厅助手等功能。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "本地部署10万/套，按年10%收取运维服务费用；分享知识问答提供集成服务：智能问数 6万/年 知识库问答 3万/年 微调大模型 定制服务；配套相关平台一起售卖提升平台服务价值。",
+    "customers": null,
+    "product_type": null
+  },
+  {
+    "company": "Partner_1443C7",
+    "product": "YQ系列AI智能相机",
+    "city": "长沙",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-智能检测",
+    "tech": "飞桨",
+    "product_intro": "产品基于百度飞桨PP-OCRv5，内置神经网络运算单元性能高、速度快，全面引入AI算法、识别能力强，支持PC、手机、平板直连操作，支持集中监控。在半自动组装设备中，智能相机可以为操作员提供视觉辅助，帮助他们更准确地完成组装任务。通过智能相机的引导和检测，可以减少人为操作中的错误，提高产品一致性。相机视觉处理软件在满足OCR场景开箱即用的基础上，采用三十余种智能算法（高斯滤波、中值滤波、边缘增强、灰度拉伸、极坐标变换、斑点分析、角度测量等）和预设数十种检测工具（如读取OCR、高度OCR、二维码读取、颜色检测、亮度识别、轮廓匹配、角度测量、焊点检测等）及多种场景分类器（如重张、连号、溯源等场景），用户通过拖拽式编程，即可完成新功能的逻辑搭建，支持自定义功能开发，无需等待厂家开发，满足用户快速工程设计与交付。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "1万元以上/台",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_FF60D7",
+    "product": "千寻Alpha Seek",
+    "city": "香港",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-智慧校园",
+    "tech": "飞桨",
+    "product_intro": "千寻Alpha Seek智能教学系统由香港企业智湾人工智能与智慧门联合开发，是一个100%基于飞桨模型开发的面向香港中小学的多端问答系统，其中题目智能分类和试卷题目识别功能分别使用了PaddleNLP中的语义检索功能和PP-OCRv5模型。该系统支持学生上传/录入/语音输入问题，教师端实时追踪学生动态，管理员端可配置操作规则。具备完整自适应题库与RAG知识库，核心流程为学生问题上传/展示/选择，教师实时查看，管理员参数配置，生成高级批改统计与分析表，从而释放香港本地传统师资人力，帮助学校降本增效。",
+    "ai_tags": [
+      "OCR",
+      "语音",
+      "CV",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "整套SaaS系统50w港币起，按学期续费",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_135770",
+    "product": "金融NLP建模方案-DSML",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "金融",
+    "industry2": "金融-银行",
+    "tech": "飞桨",
+    "product_intro": "产品涵盖处罚文书信息抽取、征信报告信息抽取、指标推荐以及文档内条目比对功能，面向银行授信审批业务，基于PaddleNLP中的UIE模型实现征信报告、处罚文书的自动信息抽取，助力金融行业数字化、智能化转型。目前已服务浙农商银行等单位。",
+    "ai_tags": [
+      "时序",
+      "NLP"
+    ],
+    "pricing": "无标准定价，根据项目场景复杂度by case评估",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_E56E14",
+    "product": "智能法律文档解析平台",
+    "city": "香港",
+    "region": "华南",
+    "industry1": "法律",
+    "industry2": "法律-文档解析",
+    "tech": "飞桨",
+    "product_intro": "析提加法律智能文档平台基于PaddleOCR套件实现法律合同的结构化解析与语义检索，解决非结构化PDF文档搜索效率低、双语混杂语境断层等问题，其中在文档版面分析模块‌使用飞桨PP-DocLayout-L检测标题、段落、表格区域；在多语言文本识别模块‌基于PP-OCRv4实现英语、法语混合文本高精度识别；在结构化处理模块‌通过微调飞桨预训练模型，精准识别多级条款编号与特殊符号；在表格识别模块‌基于飞桨表格识别模型完成跨页表格续接与数据关联。目前已应用于加拿大高校法律研究场景，支持跨文档精准搜索和条款动态趋势分析。",
+    "ai_tags": [
+      "OCR",
+      "时序",
+      "CV",
+      "NLP"
+    ],
+    "pricing": "无标准定价，根据项目场景复杂度by case评估",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_543166",
+    "product": "小字符喷码机OCR检测相机",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-智能检测",
+    "tech": "飞桨",
+    "product_intro": "使用PaddleX中通用OCR模型产线的PP-OCRv4模型\n，应用于高速相机图片检测场景，打造了小字符喷码机OCR检测相机，小字符喷码机OCR检测相机涵盖高速成像、OCR检测、图片和检测结果实时输出等功能，面向产品包装、元器件及PVC管材喷印等众多行业，及时发现各种喷墨打印错误并纠正，避免工厂因为大批量打印错误造成的资金损失。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "5000人民币左右",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F594C1",
+    "product": "润云智教",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-教学辅助",
+    "tech": "文心",
+    "product_intro": "产品调用ERNIE 4的API，支持教师通过自然语言交互快速获取教学资源、生成教案、解答学科难题，响应速度低于1秒，准确率达92%（行业平均80%），打造了润云智教，系统问答准确率从75%→92%（对比旧版基于规则的系统），备课资料生成时间从30分钟缩短至5分钟，教师日均使用频次提升至8次，付费转化率提高25%，试点校管理效率提升40%（通过自动化报表功能）。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "8.8万元",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_58A5DE",
+    "product": "AIWS大模型推理工作站",
+    "city": "苏州",
+    "region": "华南",
+    "industry1": "企业",
+    "industry2": "企业-大模型平台",
+    "tech": "文心",
+    "product_intro": "AIWS-8650作为全自主可控的大模型推理工作站，成功部署ERNIE-4.5模型，开创国产硬件实时推理新标杆。硬件端搭载华为鲲鹏+昇腾双引擎，软件端采用OpenEuler国产操作系统，实现从芯片到系统的全栈自主可控。基于华为鲲鹏920S处理器（32核/128GB内存）与双Atlas 300I Duo算力卡架构，双卡协同提供560TOPS算力与192GB超大显存，500GB NVMe+4TB HDD存储体系保障数据高速存取。产品静音设计采用智能散热系统，满载噪音低于45dB，完美适配办公及实验室场景。产品具备自主可控、灵活部署和开放定制三大核心亮点，支持模块化设计和高度定制，适用于企业级AI推理任务，提升推理效率和灵活性。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "98000元/套",
+    "customers": null,
+    "product_type": null
+  },
+  {
+    "company": "Partner_BA4BFC",
+    "product": "银歌AI晨检机",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-健康检测",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleX中的PP-YOLOE，用于人脸检测和手部检测；特征提取使用PaddleX中的PP-ShiTuV2_rec_CLIP_vit_large模型，用于人脸特征提取和识别。产品采用非接触式AI检测方式，能够自动完成健康证有效检测、身份核验、体温检测、手部识别和健康状况询问等多项检测任务。适用于学校、企业、餐厅等场景，解决传统晨检效率低、人工成本高、数据记录易出错等问题，为用户提供便捷、准确、智能的健康筛查解决方案。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "4500元/台",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_6B6E6F",
+    "product": "智能语音鼠标",
+    "city": "合肥",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE 4.0、ERNIE Speed、ERNIE-ViLG，应用于智能办公、智慧教育等特定场景，打造了智慧物联综合解决方案的C端产品《智能语音鼠标》和《智能录音笔》，转写准确率提升至98%，用户留存率提高40%，云端推理成本降低30%，响应速度优化至1秒内。",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "时序"
+    ],
+    "pricing": "70元/个",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_6B6E6F",
+    "product": "智能录音笔",
+    "city": "合肥",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE 4.0、ERNIE Speed、ERNIE-ViLG，应用于智能办公、智慧教育等特定场景，打造了智慧物联综合解决方案的C端产品《智能语音鼠标》和《智能录音笔》，转写准确率提升至98%，用户留存率提高40%，云端推理成本降低30%，响应速度优化至1秒内。",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "时序"
+    ],
+    "pricing": "100元/支",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_435BCB",
+    "product": "AI字符识别系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-服装-智能识别",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleX中通用OCR模型产线的PP-StuctureV3模型，应用于服装场景中吊牌识别，打造了AI字符识别系统，产生了通过OCR识别模型提取字符，文心模型进行字符总结回传给系统平台进行信息匹配的功能，使关键技术指标提升：识别效率提高20%，产品功能增加：增加了信息归纳总结，业务效果提升：单工位减少1人",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "50000元/单位",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_AA9C92",
+    "product": "地理调查智能平台",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "营销",
+    "industry2": "营销-地理-内容营销",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-0.3B和ernie-4.5-turbo-128k，融合RAG与大模型技术，构建地理领域专业知识问答系统，结合知识图谱与空间分析，为地理调查研究提供智能支持。系统功能涵盖专业/通用知识问答、数据监控、知识抽取与图谱构建、地质数据库构建与分析等模块，针对知识库使用本地部署大模型（ERNIE-4.5-0.3B）对知识库内容进行检索问答，同时产品支持调用云端大模型进行通用知识问答。接入文心后，平台智能回答准确率从65%提升至85%，产品功能增加基于本地知识库的智能问答，企业人员使用的满意度提升。",
+    "ai_tags": [
+      "CV",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "10w/客户",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_F0CA5B",
+    "product": "极思AI大模型知识管理平台",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "能源电力",
+    "industry2": "能源电力-通信-客户服务",
+    "tech": "文心",
+    "product_intro": "产品使用了ERNIE-3.5-8K ，ERNIE-4-8K，PaddleNLP，应用于极思AI大模型知识管理平台，以业务知识为核心，基于搜索、推荐、大模型等能力，构建一站式企业知识管理闭环，打造了信通186客服客服系统问答助手、内部工单填报知识精准推荐功能、内部人员业务知识能力考核功能，产生了使客服问答准确率提升至85%，客服响应速度加快10%的效果，同时增加了问答内容摘要、数据抽取提报等功能。",
+    "ai_tags": [
+      "时序",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "30万元/套",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_E77EC1",
+    "product": "“文章”端侧智能体系统",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "“文章”端侧智能体系统涵盖角色化Agent、私有RAG知识库、流程自动化编排等功能，以端侧AI盒为硬件（RISC-V/ARM SoC + NPU 的一体化设备），部署ERNIE 4.5-0.3B模型，作为面向政企与行业组织的“端侧智能体系统”，以“岗位AI核心”为最小交付单元，为会计、法务、审计、客服等岗位提供随身安全的“数字员工”。解决内网敏感数据处理与云-端协同场景问题，兼顾能力、隐私、时效三要素——端侧本地运行，数据不出内网，响应更迅速。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "硬件+软件订阅，按算力档位与部署规模定价（面议）",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_36453F",
+    "product": "潮AI拍",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-内容营销",
+    "tech": "飞桨",
+    "product_intro": "专注于为多元场景提供 AI创作→精美生图→产品落地的解决方案。用户上传一张照片，可生成各种卡通图片，并可制作成多种多样的文创周边。产品图生图模块（上传自己照片生成动漫风格图片）基于PaddleMIX套件FLUX多模态生成模型开发实现。飞桨技术使用后的收益：1)关键技术指标提升：推理速度每张图提升0.4s。2)产品功能增加：增加了图生图功能。3)业务效果提升：客户对图片的满意度提升。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "8800元",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_3B7645",
+    "product": "AI教育辅助平台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-教学辅助",
+    "tech": "飞桨",
+    "product_intro": "AI辅助教学平台是一款专门面向中小学校，基于学校数据隐私，私有化部署的创新型教学平台。其核心目标是利用先进的人工智能技术，为学校教育教学全生命周期活动提供全方位的支持，助力提升教学质量与效率。教学平台中的试卷批阅场景用了PaddleX中通用OCR模型产线的PP-OCRv5模型对学生作业内容进行识别。采用私有化部署，显卡采用国产显卡。型号：kunpeng920-5250(32g)*8。",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "按项目评估定价",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_C25A8D",
+    "product": "AI隐患识别系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "建筑",
+    "industry2": "建筑-施工-安全管控",
+    "tech": "飞桨",
+    "product_intro": "AI隐患识别系统基于图像智能识别技术，可识别施工现场常见安全隐患，提升发现效率和汇报及时率。结合内置的法规依据库，系统可智能匹配相关法律条款及整改建议，辅助用户快速生成有据可依的隐患报告，实现隐患闭环管理智能化、规范化。飞桨技术应用在产品法律法规知识库构建中，使用PaddleOCR中的PP-OCRv5及PP-StructureV3模型产线对大量纸质及PDF格式的法规文件进行内容提取。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "CV"
+    ],
+    "pricing": "暂未定价",
+    "customers": null,
+    "product_type": "Web、手机APP、Jetson嵌入式设备"
+  },
+  {
+    "company": "Partner_2F8CC8",
+    "product": "榴莲智慧果园果实成长监测系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "农业",
+    "industry2": "农业-TOB(种植业)-作物种植管理",
+    "tech": "飞桨",
+    "product_intro": "系统推出AI榴莲拍照技术，果农仅需用手机全景模式拍摄20~40米高榴莲树，5秒内即可生成单棵树的“花果清单”，将传统人工300秒清点约200个果实的工作效率提升至“60倍速”。该技术通过全景照片区域切割与AI识别，可抵抗热带强光、在树叶遮挡率50%以下时，能以95%的准确率精准统计挂果数量, 解决了困扰马来西亚10年以来的农业难题。解放了人工肉眼统计，有效缓解了马来西亚农业劳动力不足的社会问题。该技术填补了马来西亚榴莲产业远距果实识别技术的空白，是全球首个榴莲果实智能识别系统。系统目标检测模块使用了PaddleX中目标检测产线中的PP-YOLO模型来检测树上的榴莲，分辨是榴莲果实还是树叶，并进行计数。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "定制化开发",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_E08BE6",
+    "product": "X射线片的骨龄智能判读平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-诊断辅助",
+    "tech": "飞桨",
+    "product_intro": "产品为基于TW3-RUS标准的儿童骨龄智能评估系统，涵盖手部关键点定位、骨骼区域裁剪与分割、骨龄分期预测三大核心功能，面向儿科放射科、内分泌科、体检机构等场景，解决传统骨龄评估主观性强、效率低、标准化差的问题。其中基于PaddlePose的PP-TinyPose模型应用于视觉检测模块，用于手部X光图像中17个关键点的精准定位；基于PaddleSeg的PP-LiteSeg模型应用于实例分割模块，用于13个骨骼区域的边缘提取与ROI裁剪；· 基于PaddleClas的PP-HGNet模型应用于分类预测模块，实现每个骨骼区域的TW3发育等级分期预测。",
+    "ai_tags": [
+      "CV",
+      "时序"
+    ],
+    "pricing": "按检测次数收费，面向渠道展开代理合作，代理对外红线价（120元/次）",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_9B9177",
+    "product": "智理高企版小程序",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "基于ERNIE-4.5-0.3B-PT打造智理高企版，功能含智能问答、专利分析等功能，面向高新技术企业、研发机构及知识产权管理部门，旨在提升企业创新管理效率与专利运营能力的专业化智能平台。文心技术使用后的收益：1）技术指标提升：文本校验功能提升代理师工作效率，工作效率从40%提升到60%；2）产品功能：智能问答功能，提升员工的问题解决能力与团队协作效率。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "小程序免费，私有化部署50万+",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_577AB2",
+    "product": "灵境启智·AI Agent驱动的自适应教育游戏引擎",
+    "city": "四川",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOC",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-0.3B（微调部署）融合3D游戏引擎，构建人工智能驱动的教育元宇宙，学习者通过高精度数字分身，在动态生成的3D学科场景中与具备自主决策能力的AI Agent协同探索，如破解数学谜城、重建物理实验宇宙等，经实测，该平台使知识迁移效率提升58%。该产品基于NPC问答对以及特定学科场景文案对ERNIE-4.5-0.3B进行微调，实现了元宇宙场景中的NPC回答、环境信息生成等，接入文心后，AI-NPC回答的准确度从50%提升到85%、NPC回复速度提升30%，产品功能增加增加了AI-NPC智能问答、环境信息生成、谜题生成等，院校教师的满意度提升、学生学习积极性提高。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "10w/客户",
+    "customers": "Client_4C1C03",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_ADA033",
+    "product": "AI智能招投标助手",
+    "city": "陕西",
+    "region": "华中",
+    "industry1": "政务",
+    "industry2": "政务-政务办公",
+    "tech": "飞桨",
+    "product_intro": "AI智能招投标产品覆盖招标文件解析、评分要点分析总结，投标文件解析，投标文件符合性审查，投标文件方案审核等功能，解决招采部门在评标过程中人力不足的问题，可通过AI辅助提高招采部门的评标效率。其文档视觉分析模块利用PaddleOCR模型做图片中文字内容识别。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "CV",
+      "NLP"
+    ],
+    "pricing": "75-100万",
+    "customers": "Client_3E4A0F",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_CD75F2",
+    "product": "悦拍美食",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-健康管理",
+    "tech": "文心",
+    "product_intro": "基于ERNIE-4.5-VL-424B-A47B。通过饮食拍照打卡实时解析营养数据，动态计算热量缺口（如每日1400kcal摄入监控），同步追踪体重、体脂率趋势。多维度打卡系统覆盖饮食、运动、用药（如7:00用药提醒）、睡眠等多项指标。AI定制减重计划，并特别配备药盒识别功能，规避饮食禁忌。",
+    "ai_tags": [
+      "时序",
+      "CV",
+      "LLM"
+    ],
+    "pricing": "100-500万",
+    "customers": "Client_7AD12B",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_944CF7",
+    "product": "文基DRS大师",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-21B-A3B，应用于DeepResearch场景进行意图识别、文本生成及续写等能力，打造了“文基DRS大师”产品，对复杂学术文献、行业报告等资料的精准定位率从65%提升至85%，生成深度研究报告的平均时长从原来的45分钟缩短至25分钟。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "3-8万元/年，不包含硬件费用",
+    "customers": "Client_D3267C",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_DB861A",
+    "product": "AI疗愈兽Mimiwi",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-心理健康",
+    "tech": "文心",
+    "product_intro": "AI疗愈兽Mimiwi是深圳小瀑布科技有限公司基于文心4.5打造的软硬一体产品，涵盖情绪感知、AI 场景生成、语音冥想引导、多模态交互等核心功能，面向年轻用户与冥想爱好者，解决专注力不足、情绪调节困难、孤独陪伴缺失等场景问题。通过语音引导结合光效、振动和触感反馈，Mimiwi 为用户打造沉浸式的放松与疗愈体验，成为新一代智能心理健康科技产品。",
+    "ai_tags": [
+      "语音",
+      "LLM"
+    ],
+    "pricing": "200美金/个",
+    "customers": "Client_5E3DCF",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_6C166F",
+    "product": "小鱼迎宾机器人",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "政务",
+    "industry2": "政务-政务办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-Speed-8K，ERNIE-Lite-8K，应用于机器人和游客对话与问答的场景，打造了小鱼迎宾机器人，通过机器人讲解代替人工讲解，减轻了讲解人员的工作压力，提升了游客满意度。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "非卖品（仅作为商务运营资源向场地方提供）",
+    "customers": "Client_B49858",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_9F2027",
+    "product": "V70智能访客一体机",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "V70智能访客一体机是深圳市思卡乐科技有限公司基于飞桨PP-OCRv5打造的综合性智能终端产品，采用新一代AI智能技术，6核处理器，搭载安卓系统，集成了专业化的访客管理软件，提供访客现场快速登记、人证比对、拜访信息核验、权限分配、访客签离等多重功能，实现单位内外不同性质人员的综合管理。产品自带人脸识别、二维码识别、身份证件信息读取、访客单打印等模块，通过将访客预约、通知、签入/签出、门禁联动、智能无线连接等应用集成，帮助企业简化来访登记流程，提升接待工作效率和访客到访体验，满足用户单位对区域安全管理的需求。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "39800元",
+    "customers": "Client_35324D",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_23F543",
+    "product": "慧声回忆录",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "文旅文博",
+    "industry2": "文旅文博-TOC-AI助手",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.0（调用API），应用于电子出版场景，打造了慧声回忆录产品，文心技术使用后的收益：1）关键技术指标提升：中文写作文本长度提升 8%，中文总结能力提升10%，中文语音识别能力提升30%。2）产品功能增加：增加了语音识别能力，增加了最终回忆录文稿成书功能。3）业务效果提升：测试用户反馈文本文采能力提升，对文本内容满意。",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "目前内测阶段免费试用，后续根据市场反馈和竞品定价",
+    "customers": "Client_5E3DCF",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_068890",
+    "product": "WA814大模型工作站",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "WA814大模型工作站全面适配ERNIE-4.5开源模型，基于B760芯片组，支持14代，向下兼容12/13代，双通道SO-DIMM DDR5-5600MHz内存，最大内存支持64GB，涵盖智能问答、智能推荐等功能，面向企业与个人，解决客户服务、教育培训、智能办公、生活助手等场景问题。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "12000元",
+    "customers": "Client_4641F7",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_E77EC1",
+    "product": "模多多-教育版",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-教学辅助",
+    "tech": "文心",
+    "product_intro": "模多多是一款专为中小学师生设计的人工智能教育产品。产品以课程为核心，将文心开源大模型技术深度融入教学流程，作为辅助教学和激发学生兴趣的沉浸式体验环节。产品提供学生学习前台和教师管理后台。提供课程学习路径、课程任务、AI互动体验（文生文、文生图、图生图、多轮对话生图、语音识别、图像分类、限定式代码生成）、学习记录与作品展示、作业广场等功能，引导学生在受控的“围墙花园”模式下感知和应用AI。\n产品介绍链接：https://edu.9zzg.com/features",
+    "ai_tags": [
+      "语音",
+      "CV",
+      "LLM"
+    ],
+    "pricing": "通过产品服务模式（订阅制、按用户数计费等）、功能包划分来定价，无固定价格。",
+    "customers": "Client_49EE24",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_95FFA4",
+    "product": "话话糖口袋宠物机器人",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-学龄前-TOC-智能硬件",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE 4.5（ERNIE-4.5-Turbo-128K），应用于陪伴与交互、情感识别、教育学习场景，打造了话话糖--口袋宠物机器人，产生了语义理解准确率从72%提升至90%，单轮对话平均响应时间从1.2秒压缩至0.8秒，多轮对话连续交互延迟≤1.5秒，接近人类对话节奏。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "500元/个",
+    "customers": "Client_54B776",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1212F8",
+    "product": "分光器读数识别",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "电子通信",
+    "industry2": "电子通信 - 客户服务与售后运维",
+    "tech": "飞桨",
+    "product_intro": "产品使用PP-OCRv4模型，应用于分光器表盘示数识别、端口连接状态分析等场景，打造了“分光器读数识别”产品，产生效果为识别耗时缩短至2秒内、准确率提升至98.5%，故障响应速度提升至分钟级，实现运维效率提升90%，年均节省人工成本超百万元，设备使用寿命延长20%。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "40万元/单位",
+    "customers": "Client_A57A11",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_B9F108",
+    "product": "AI智能玩偶梦棠（meita）",
+    "city": "中山",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品调用ERNIE-LiteAPI，应用于AI玩具对话场景，打造了AI智能玩偶梦棠（meita），产生了对话响应时间提升60%，用户意图识别准确率从75%提升至92%，多轮对话连贯的效果。\n（使用ERNIE-Lite 的原因：基于千帆平台调用成本测算，ERNIE-Lite 远小于 4.5 所需成本，适合轻量化快速验证原型与高频率调用场景。 同时，ERNIE-Lite 是百度上线时间久、用户数据积累多的经典模型，本身具有强稳定性，AI 玩具主要面向用户对话场景，使用经典稳定、满足对话的模型即可；因此无需使用最新最强大的 4.5同样可实现对话场景效果。）",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "500元/个",
+    "customers": "Client_5E3DCF",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_74BA58",
+    "product": "DODO宇航员AI大模型音箱",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-Turbo-32K，应用于智能对话交互等能力，打造了“DODO宇航员AI大模型音箱”产品，在意图识别环节，复杂场景下用户意图识别准确率从传统模型的 82% 提升至 94%，有效减少因意图误判导致的对话中断。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "168元/个",
+    "customers": "Client_5E3DCF",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_2CBE65",
+    "product": "云智选",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-人力资源",
+    "tech": "文心",
+    "product_intro": "基于使用ERNIE Speed技术，在企业招聘场景下，打造了“云智选”产品，构建简历解析、智能评估和智能聊天等功能，\n文心技术使用后的收益：\n1）关键技术指标提升： 候选人智能回复率提升80%，问答准确率提升30%。\n2）产品功能增加：增加产品智能助手，解决产品使用说明、常见问题智能解答。\n3）业务效果提升：招聘成本降低35%，招聘人员获取率提高50%",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "标品：预计2500元/月；定开：5万起",
+    "customers": "Client_C1A9A6",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_B6541C",
+    "product": "智慧能耗哨兵",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "能源",
+    "industry2": "能源-石化-节能减排",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-VL-28B-A3B-PT、ERNIE-4.5-0.3B-PT，应用于AI节能减排方案生成，打造了“智慧能耗哨兵”产品，方案生成的相关性与准确性从约63%提升至82%以上，方案生成时间从传统人工分析的数天缩短至分钟级",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "发布会后提供价格区间",
+    "customers": "Client_EE963B",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_AA6726",
+    "product": "全要素地物识别",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "农业",
+    "industry2": "农业-TOB(林业)-林地资源监测",
+    "tech": "飞桨",
+    "product_intro": "产品基于环境治理和自然资源监测场景，使用了PaddleX中semantic_segmentation产线的Deeplabv3-R50模型，打造了全要素地物识别产品，实现了关键技术指标全要素地物识别准确率提升21%（从71%提升至92%），增加了耕地、林地、水体面积统计功能，解决了人工目视解译准确率和时效性不高的问题，为业务效果提升了工作效率（原需20人月工作量缩短为3人周完成）。",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "40万元(定制化部分按项目整体交付标准报价）",
+    "customers": "Client_347E99",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_AA6726",
+    "product": "病虫害识别",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "农业",
+    "industry2": "农业-TOB(林业)-病虫害与火情预警",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleX中object_detection产线YOLOv3-MobileNetV3模型，应用于林业病虫害智能监测场景，打造了病虫害识别产品，实现了病害树木识别效率显著提升，增加了自动化病害树木提取与在线人工判读功能，解决了松材线虫病防控中基础设施建设薄弱、防治手段落后、科技含量低及应对大面积灾害能力不足的问题，为业务效果提升了全面、快速、准确的病害监测与分析能力。",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "40万元(定制化部分按项目整体交付标准报价）",
+    "customers": "Client_442E33",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_4E31B3",
+    "product": "智能催缴图像核验系统",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "产品使用PP-OCRv4、PicoDet-S模型，在物业管理的场景下，打造了智能催缴图像核验系统，实现图像要素识别准确率从70％提升至98％以上；OCR识别精度与从80％提升至95％以上。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "12万元/套",
+    "customers": "Client_68E0B4",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_E1D199",
+    "product": "三安集成电路系统屏幕截图助手",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "机械",
+    "industry2": "机械-研发设计支持",
+    "tech": "飞桨",
+    "product_intro": "基于PP-OCRv5，打造三安集成电路系统屏幕截图助手，产品涵盖屏幕截图、添加文字、画框、画圆、磨砂、高亮、高斯模糊、OCR 文字识别、OCR表格识别、OCR 二维码与一维码识别等功能，面向工厂内用户解决日常办公问题。",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "不对外销售",
+    "customers": "Client_874441",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_9C51E4",
+    "product": "智能配件检测系统",
+    "city": "珠海",
+    "region": "华南",
+    "industry1": "机械",
+    "industry2": "机械-质量检测与性能测试",
+    "tech": "飞桨",
+    "product_intro": "利用PaddleOCR，检测包装前有没有缺失配件。客户以前在产品出货去时，总是缺失配件，导致用户不能使用产品，我们帮他解决在发货前通过视觉来检查是否缺少配件，有效减少缺配件的情况。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "5到10万（包括硬件）",
+    "customers": "Client_06A6FC",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_C47DE0",
+    "product": "印天AI视觉图书盘点系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "基于PP-OCR、PP-YOLOE-R ，打造印天AI视觉图书盘点系统，将深度学习算法赋能智能巡检机器人（或高清摄像头），通过设定巡检任务构建层架映射表，对任务层架执行书脊目标检测，然后对每个书脊目标执行文本定位和识别，再通过检索匹配系统实现图书盘点功能",
+    "ai_tags": [
+      "OCR",
+      "CV",
+      "NLP"
+    ],
+    "pricing": "项目制报价，15w起步",
+    "customers": "Client_F546D1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_5839D4",
+    "product": "智能合同风控审查",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "法律",
+    "industry2": "法律-法务-合规判别",
+    "tech": "飞桨",
+    "product_intro": "基于PP-OCRv4，打造智能合同风控审查产品涵盖合同信息智能识别、合同关键信息精准抽取、审查算法分析及审查报告自动化输出等功能，面向存在采购、物流、仓储、销售等合同风控需求的企业，解决传统合同审查中效率低下、风险点识别不全面、人工成本高等场景问题",
+    "ai_tags": [
+      "OCR",
+      "时序",
+      "NLP"
+    ],
+    "pricing": "15-20万",
+    "customers": "Client_EA7310",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_485EBC",
+    "product": "智能扭矩管控系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "汽车",
+    "industry2": "汽车 - 质量检测与整车验证",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleX中时序预测产线的PP-TSv2 forecast模型，应用于拧紧工具预测性维护场景），应用于整车生产与零部件装配领域中拧紧工具预测性维护场景，打造了智能扭矩管控系统，实现了拧紧工具故障预测准确率提升约30%、增加了预测性维修提醒功能，解决了生产中因工具突发故障导致的停线、质量波动等问题，为业务效果提升了设备可靠性管理与生产节拍稳定性。",
+    "ai_tags": [
+      "时序"
+    ],
+    "pricing": "50-200万",
+    "customers": "Client_AB0E4E",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_D6CF24",
+    "product": "语盈AI智能销售系统",
+    "city": "东莞",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-用户运营",
+    "tech": "文心",
+    "product_intro": "包含以下功能：智能客户挖掘：通过全网数据分析和企业画像匹配，精准定位高价值客户；多Agent谈判协同：销售、客服、风控Agent协作，实时生成话术、动态报价、风险预警；自动化成交管理：合同生成、订单追踪、支付集成一站式服务；复购预测与触达：基于用户行为分析的智能推荐和复购提醒。本产品应用于B2B企业销售流程自动化，解决获客成本高、人工跟进效率低、转化链路断裂等问题。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "按功能模块订阅，基础版¥50,000/年，支持企业定制",
+    "customers": "Client_75E6B7",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_9859F1",
+    "product": "AI语音毛绒玩具",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-Turbo-VL模型，应用于对话交互系统和内容生成与引导，实现情感化理解与响应功能，打造了基于AI技术的语音毛绒玩具，玩具问答反应速度提升80%，增加了情感捕捉与实时反馈功能，客户转化率增加了30%。",
+    "ai_tags": [
+      "语音",
+      "LLM"
+    ],
+    "pricing": "500元/件",
+    "customers": "Client_7AD12B",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_9F6D00",
+    "product": "VINKOX-STEM Bot-01 AI教具小车",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-AI教具",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-Turbo-VL模型，应用于对话交互系统和内容生成与引导，进行用户输入内容的实时处理和回复，打造了VINKOX-STEM Bot-01 AI教具小车，交互准确率弱场环境下语音识别准确率从62%提升到89%，AI教育功能增强，基于文心实时解析学生提问，自动关联教材知识点。语音引导式调试成功率从58%提升至79%，复购率提升10%；",
+    "ai_tags": [
+      "语音",
+      "LLM"
+    ],
+    "pricing": "980/套（含培训课程），580/套（纯硬件）",
+    "customers": "Client_8A92E7",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F75544",
+    "product": "医研助手",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-诊断辅助",
+    "tech": "文心",
+    "product_intro": "医研助手是一款面向医学研究者、临床医生及科研人员的智能文献服务平台，旨在解决科研工作中文献检索难、阅读效率低、写作辅助弱等核心痛点。\n该产品主要涵盖以下核心功能：\n- 智能文献检索：支持通过关键词、PMID、DOI或作者进行快速精准检索，并兼容PubMed MeSH检索语法，帮助用户快速获取全球医学研究文献资源。 \n- 高效文献阅读与管理：提供“文献阅读”、“我的素材”、“我的文稿”等功能模块，方便用户对检索到的文献进行深度阅读、分类整理和内容沉淀。 \n- AI智能对话与写作辅助：内置“智能对话”与“科研写作”功能，可与AI助手进行交互式问答，获取文献解读、摘要生成、专业翻译等服务，大幅提升科研写作效率。",
+    "ai_tags": [
+      "CV",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "一体机售价19.8万元",
+    "customers": "Client_C4E593",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_ADFBF3",
+    "product": "肾影智测——基于飞桨和文心大模型驱动的肾功能不全精准诊疗管理系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "医疗",
+    "industry2": "医疗-诊断辅助",
+    "tech": "飞桨",
+    "product_intro": "本产品 “肾影智测——基于飞桨和文心大模型驱动的肾功能不全精准诊疗管理系统” 是一个集“智能泌尿系多期增强影像分析—分肾功能预测—临床决策支持—患者管理”于一体的 AI 医疗系统，主要功能包括：多时相泌尿系 CT 影像自动预处理与肾皮质精准分割；基于影像组学与 AI 模型的分肾 GFR（肾小球滤过率）无创定量预测；结合临床指南和病例文书的智能诊疗推荐（个体化诊疗方案生成）；患者移动端随访与依从性管理（用药提醒、异常预警、语义问答）。面向泌尿外科、肾内科医生及慢性肾病患者精确分肾功能预测等需求，解决了现有 ECT 检查成本高、辐射风险大、流程复杂、随访依从性差等痛点。",
+    "ai_tags": [
+      "时序",
+      "CV",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "医院端部署版：约 50 万–100 万元/套（一次性采购+维护费）；\n云端 SaaS 服务版：按检查次数计费，约 200 元/例。",
+    "customers": "Client_8E3B6A",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_41CA46",
+    "product": "偕行AI",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-内容营销",
+    "tech": "飞桨",
+    "product_intro": "在公司日益增长的广告投放情况下，面对不同行业不用产品，运营人员需要针对不同的场景快速生成不同的营销内容方案，调研具体功能，在飞桨模型的助力支持下，细化需求，偕行AI中使用飞桨PaddleNLP模型和ERNIE-ViLG模型，面相公司运营解决文案图片生成场景问题。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "50元人民币/月",
+    "customers": "Client_6C805A",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_10317F",
+    "product": "MEMS智慧能源管理系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "能源",
+    "industry2": "能源-电力电气-运行优化",
+    "tech": "飞桨",
+    "product_intro": "产品使用飞桨时序预测产线的PP-TS模型，应用于电力、工业、商业、医院、学校、政府等大型场所的能源管理场景，打造了具备电力负荷预测、能源数据采集、设备数字化管理、能源分析与评价等功能的SaaS云平台或本地化部署产品，解决了能源安全、能源质量、经济性及动态评价机制等业务场景问题。通过飞桨技术，产品实现了对于负荷预测能力提升了90%，提升了能源利用效率并降低了运营成本。",
+    "ai_tags": [
+      "时序"
+    ],
+    "pricing": "纯软部分10万～100万",
+    "customers": "Client_687F65",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_7299F0",
+    "product": "财务报销智能化系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "金融",
+    "industry2": "金融-通用-日常办公",
+    "tech": "文心",
+    "product_intro": "基于文心大模型ERNIE 4.5独立部署的财务报销智能化系统，以ERNIE-4.5-21B-A3B为主模型，其异构MoE架构与128K超长上下文能力，可高效处理多页发票及审批记录",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "45万",
+    "customers": "Client_0008B3",
+    "product_type": null
+  },
+  {
+    "company": "Partner_CC9CC4",
+    "product": "睿析边缘智脑",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-辅助研发",
+    "tech": "飞桨",
+    "product_intro": "基于PP-YOLOE+，打造睿析边缘智脑，算法涵盖了如园区、社区、工地、校园等场景的多种算法，可按需组合、按场景配置；视频智能化综合管理平台支持前端设备管理、实时视频预览、告警推送、取证抓拍、算法在线加载及优化、数据态势分析大屏展示等",
+    "ai_tags": [
+      "时序"
+    ],
+    "pricing": "3000-12000",
+    "customers": "Client_23E0B1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_A3DFB1",
+    "product": "唐卡AI修复科普展项",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "文旅文博",
+    "industry2": "文旅文博-智慧导览",
+    "tech": "飞桨",
+    "product_intro": "“AI+唐卡”创新示范项目集成智能修复、语义检索、唐卡文化多模态对话三大功能，面向文物数字化保护、研究人员学术研究、公众文化体验场景，解决传统唐卡文物修复周期长、比对查找效率低、文化传播门槛高等问题。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "需协同博物馆具体场景定价",
+    "customers": "Client_341548",
+    "product_type": "软件平台+SaaS"
+  },
+  {
+    "company": "Partner_ECFF81",
+    "product": "基于飞桨和文心大模型自动化液态饲喂与防疫识别一体化系统",
+    "city": "郑州",
+    "region": "华中",
+    "industry1": "农业",
+    "industry2": "农业-TOB(畜牧业)-饲养辅助",
+    "tech": "飞桨",
+    "product_intro": "郑州大学自动化液态饲喂与防疫识别一体化系统，涵盖自动液态饲喂（精准投放）、目标检测（离群识别)与早期疫病预警、疫病诊断与处置建议、余料识别与智能修正、猪只每日体重估算、基于智能体的自动设备参数设置指导、饲料利用率分析等功能。面向规模化生猪养殖场（单套支持约7000头猪），解决饲喂效率低、疫病发现迟缓、人工管理成本高等问题。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "62.5万/套",
+    "customers": "Client_D6A4AB",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F75544",
+    "product": "智能医学助手语音问诊管理平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-诊断辅助",
+    "tech": "飞桨",
+    "product_intro": "智能医学助手语音问诊管理平台是一款专为医院住院场景设计的查房语音记录助手，通过搭配专属的 “智能工牌” 硬件，医生在查房过程中无需额外操作，即可自动完成语音采集、语音识别与结构化记录生成。系统采用领先的中文语音识别引擎，结合医疗领域专用大语言模型，自动将医生与患者的对话转写为文本，并提取形成标准化的查房记录内容（主诉、现病史、查体、诊疗计划等），大幅度减少医生手动记录时间，提升信息完整性与工作效率。",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "50万",
+    "customers": "Client_8E3B6A",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_06AD82",
+    "product": "IP吉祥物机器人",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "文旅文博",
+    "industry2": "文旅文博-TOC-AI助手（衣食住行）",
+    "tech": "文心",
+    "product_intro": "产品核心功能为：1、视觉+语音双向交互，支持音乐舞蹈；2、超高自由度动作，情感化表达；3、支持企业IP/个人形象深度定制，应用场景广泛，可应用于博物馆讲解员、营业场所智能助手以及桌面级情绪陪护机器人。",
+    "ai_tags": [
+      "语音",
+      "CV",
+      "LLM"
+    ],
+    "pricing": "250",
+    "customers": "Client_5E3DCF",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_DEDF3F",
+    "product": "智狐桌面机器人",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-TOC-AI助手（通用）",
+    "tech": "文心",
+    "product_intro": "基于文心大模型ERNIE 4.5的智能桌面机器人，产品涵盖智能语音对话、任务自动化处理（如日程安排、信息查询、语言教学）、个性化内容推荐与主动式情感陪伴等功能。本产品主要面向个人消费者、SOHO办公人群或特定行业用户解决高效信息交互、桌面任务管理、即时服务响应及智能化陪伴的场景问题。",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "时序"
+    ],
+    "pricing": "399-1299",
+    "customers": "Client_B1D5E7",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_AA622F",
+    "product": "AIBot-多模态大模型驱动的自主决策具身智能体",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "AIBot是一款基于飞桨的多模态具身智能体产品。利用paddledetection中视觉模型能力可实现自主巡检与异常上报： 能够按预设路线执行安防或环境巡检任务，识别如门窗未关、地面水渍、烟雾火情、人群异常聚集等情况，并实时上报中控室。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "18万/台",
+    "customers": "Client_EF2F48",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_557A36",
+    "product": "医药零售仓储录入智能化解决方案",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-医疗器械",
+    "tech": "飞桨",
+    "product_intro": "医药零售连锁企业因随货单、发票等单据监管以及药品全生命周期溯源问题，药品出入库存在瓶颈，过往因药品随货单多种制式需要手工录入后进行药品的追溯码扫描录入，从而导致入库挤压。基于paddleOCR打造的智能填单系统，可以快速识别药品信息进行填单，提升录入效率。目前已落地客户有：福建省博爱医药连锁有限公司。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "20万定制费",
+    "customers": "Client_8E3B6A",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_389F84",
+    "product": "智能图纸识别",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "机械",
+    "industry2": "机械-研发设计支持",
+    "tech": "飞桨",
+    "product_intro": "产品在图纸识别场景中应用了PaddleX框架下的PP-OCRv4模型，实现了图纸文字与工程符号的高精度自动识别与结构化提取，打造了面向离散制造行业的AI图纸数字化解决方案。通过飞桨技术，产品关键技术指标显著提升：图纸文字与符号识别准确率由约75%提升至91%，图纸整体识别时间由平均15-30分钟缩短至2分钟以内。同时，产品新增了复杂语义表达的结构化解析功能，解决了制造业中人工抄录效率低、外协图纸标准化难、老旧图纸数字化难等业务痛点，工程师人工录入效率提升约30%-50%，图纸数据利用率显著提高。",
+    "ai_tags": [
+      "OCR",
+      "NLP"
+    ],
+    "pricing": "10万",
+    "customers": "Client_CA46CB",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_9294C7",
+    "product": "攀岩运动员3D+AI科学辅助训练系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-高校-教学辅助",
+    "tech": "文心",
+    "product_intro": "本产品涵盖攀岩场地数字孪生、运动员动作三维重建、科学辅助训练分析等核心功能，面向国家级和专业级攀岩训练场景。系统通过激光雷达+高清摄像机进行毫米级场地重建与多模态数据采集，结合AI算法实现运动员攀爬动作姿态三维重建与复盘分析；同时基于百度文心大模型ERNIE-4.5-21B-A3B-Thinking，为教练和运动员提供训练动作纠错、技术分析及个性化训练建议，打造全流程智能训练支持平台",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "国家队训练使用",
+    "customers": "Client_EDFFE6",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_C9B45E",
+    "product": "KMD集智数采平台",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "医疗",
+    "industry2": "医疗-健康管理",
+    "tech": "飞桨",
+    "product_intro": "KMD集智平台是一套面向工业现场的实时数据采集、分析与存储系统，可从PLC、传感器等设备高频获取运行数据，并实现数据的实时展示、在线分析、可靠存储及历史回查。系统具备高可靠性、可扩展性与便捷的维护特性，可广泛应用于工业监控、设备诊断、工艺优化及数据追溯等应用场景。",
+    "ai_tags": [
+      "CV",
+      "时序"
+    ],
+    "pricing": "22万/套",
+    "customers": "Client_B11DA8",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_277B2D",
+    "product": "红心小助健康管理小程序",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "医疗",
+    "industry2": "医疗-健康管理",
+    "tech": "飞桨",
+    "product_intro": "红心小助健康管理小程序涵盖健康报告解读、健康资讯、慢病监测等功能，通过AI技术将医院服务延伸至家庭，帮助患者便捷管理健康，同时为医院积累慢病管理数据，解决了院后管理常面临的“报告难查、慢病监测不及时、健康问题无处问”的痛点。\n产品中，“健康报告解读”功能为红心小助的核心亮点，患者通过手机拍照将纸质健康报告传入小程序然后通过大模型对报告进行解读，但由于健康报告往往具有复杂的表格结构且患者上传的报告图片存在大量翻转、扭曲等情况，单一的多模态大模型无法准确识别报告内容，因此，本产品通过PaddleOCR-VL先对图片转md然后将md文本传入大语言模型，大大提升了大模型的回复准确率。\n引入 PaddleOCR-VL后，产品新增功能图片格式的健康报告自动解读，健康报告通过PaddleOCR-VL转markdown后，大模型准确率从40%提升至85%，用户体验满意度上升30%。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "暂无",
+    "customers": "Client_7AD12B",
+    "product_type": "微信小程序"
+  },
+  {
+    "company": "Partner_DC5E7A",
+    "product": "咨询报告质量检查平台",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "应用ERNIE-4.5-21B-A3B-Thinking，自动识别用户上传的信息化项目咨询服务报告（含投资表）、信息化项目方案及投资表等按照一定规则（如：1 格式 报告（讨论稿、送审稿、正式报告）格式没有按照公司最新的要求（页面设置、序号、字体和字号、附件说明、发文机关署名、附件、页码）",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "10万/客户",
+    "customers": "Client_DC3031",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_5D1C3F",
+    "product": "聘才猫AI人力智能体平台",
+    "city": "长沙",
+    "region": "华中",
+    "industry1": "企业服务",
+    "industry2": "企业服务-人力资源",
+    "tech": "飞桨",
+    "product_intro": "聘才猫人力资源智能应用平台涵盖智能招聘、精准求职、高效办公、专业培训、科学绩效等五大核心功能模块，面向企业HR团队、招聘管理者、求职者及企业员工，解决人才招聘全流程、职业发展支持、日常办公效率、员工能力提升、组织绩效管理等关键业务场景问题。具体包括：\n-面向企业招聘团队，解决人才筛选效率低、面试流程繁琐、招聘成本高昂等场景问题，通过AI简历智能筛选、远程智能面试、JD助手自动生成、HR数智人7×24小时咨询等功能，实现招聘流程自动化、智能化；\n-面向求职者群体，解决简历匹配度低、面试准备不足、职业规划迷茫等场景问题，通过简历精准匹配优化、模拟面试实战演练、岗位智能推荐、职业发展指导等功能，提升求职成功率和职业竞争力；通过AI大模型技术深度赋能求职、招聘全价值链，为政府职能部门行业管理及服务“监督-分析-决策-调控”，为用人单位人力资源管理“选-用-育-留”，为广大求职者职业发展“规划-成长-匹配”全周期、全流程、全链路提供AI赋能。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "公有版本按量调用，具体调用价格2025.12.31前公布；私有化部署价格￥100000~￥200000",
+    "customers": "Client_4641F7",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_D2BAE9",
+    "product": "智安Hazop分析师",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "机械",
+    "industry2": "机械 - 安全生产与设备管理",
+    "tech": "飞桨",
+    "product_intro": "产品涵盖P&ID图纸解析、仪表识别、OCR文字提取、风险与可操作性(HAZOP)智能推理报告生成等功能，面向化工安全领域解决人工HAZOP分析效率低、图纸信息提取困难等场景问题。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "10000万/年",
+    "customers": "Client_B11DA8",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_C72983",
+    "product": "智能工牌智能体系统",
+    "city": "贵州",
+    "region": "西南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "本产品以 Wi-Fi智能工牌硬件为终端载体，搭载文心大模型核心能力，构建“硬件采集 - AI处理 - 平台管理”全链路智能系统。Wi-Fi智能工牌通过双数字硅麦采集3米内语音信息，经DSP 降噪和语音识别转写后上传至管理平台，文心大模型实时完成情绪分析与内容结构化处理，支持录音文件检索、情绪标签标注、敏感信息预警、SOP分析推理、智能量化打分、数据统计分析等功能，为企业沟通管理、服务质量监控提供 AI 驱动的高效解决方案。",
+    "ai_tags": [
+      "语音",
+      "CV",
+      "LLM"
+    ],
+    "pricing": "18800元/年",
+    "customers": "Client_025485",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_C72983",
+    "product": "智能客服系统",
+    "city": "贵州",
+    "region": "西南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-用户运营",
+    "tech": "文心",
+    "product_intro": "AI 智能客服系统依托百度文心大模型生态，构建了覆盖售前、售中、售后全流程的智能服务体系。售前客服可主动在社交平台与客户互动，完成打招呼、聊天、获取联系方式及客资标签自动标记；售中客服基于企业销售话术与流程，精准引导客户下单或到店，并实现老客户智能盘活；售后客服全程跟踪服务过程，自动记录并对用户情绪、服务效果进行打分追踪，实时提醒相关负责人。该系统面向零售、电商、服务等多行业企业，解决客户服务自动化、需求响应即时化及服务效率与质量优化等问题，深度融合文心大模型能力，实现全链路智能客户服务。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "基础版 1.2 万元 / 年，进阶版 3.8 万元 / 年，企业定制版根据需求面议",
+    "customers": "Client_DB1823",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_F75544",
+    "product": "深度问数医事管理助手",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-健康管理",
+    "tech": "文心",
+    "product_intro": "深度问数应用ERNIE-4.5-21B-A3B-Thinking，在医疗数据管理中，可链接院内各方面数据，助力医院实现数据智能化管理；深度融合医疗专业知识，提供高效、准确的智能化分析；实时智能分析驱动患者管理与设备规划，助力医院精准决策、提质增效； 根据临床资料属性自动选择正确统计方法，并进行统计分析；通过 AI 智能体充分理解临床数据，自动构建预测模型；支持多种分析流程，自动生成高质量可视化图表，满足科研需求。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "30w",
+    "customers": "Client_8E3B6A",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_0354AE",
+    "product": "安陶古镇火灾隐患防控系统",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "政务",
+    "industry2": "政务-智慧城市",
+    "tech": "飞桨",
+    "product_intro": "系统应用PP-YOLOE_plus-S，包含AI火源监控、火源类型管理、摄像头管理、推送管理、历史数据统计等功能，通过物联网平台实时采集视频数据，并就地对数据预处理，包括数据抽帧、数据压缩、数据格式化等一些列操作。同时系统支持历史视频回放查询功能，可以根据实际需求分级预警及规则配置实现责任层层管控。安陶古镇木结构建筑密集，游客数量多，电气老化与易燃物堆放成为最大的隐性火源，火灾隐患极高，该系统解决了传统人工巡检方式无法实现24小时全覆盖的问题，大幅度降低了火灾隐患带来的火情危险。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "8.8w/套",
+    "customers": "Client_97631B",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_B6541C",
+    "product": "智能营销数字员工",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-数字营销",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-21B-A3B-PT、ERNIE-4.5-0.3B-PT，应用于数字员工的任务调度、实体识别和关系抽取，打造了“智能营销数字员工”产品，系统对客户咨询的意图识别准确率提升至95%以上，显著优化了交互效率。",
+    "ai_tags": [
+      "时序",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "(1) 基础底座软体+知识库：12万/年。（不含硬件）\n(2) 营销广告+分屏数字人：8万/套/年。包含两个硬件（1.小工作站；2.电视屏）\n(3) 其他：2.5D形象定制5万/个，个性化交互动作：5万/套；赋能业务能力8-12万/个。",
+    "customers": "Client_626BF7",
+    "product_type": "软件平台/软硬一体"
+  },
+  {
+    "company": "Partner_B6541C",
+    "product": "鲸域Top",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-内容营销",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-21B-A3B-PT、百度蒸汽机模型，应用于文生图提示词生成、视频生成，打造了“鲸域Top-AI社媒内容云矩阵”产品，将传统内容（图文、视频）从构思、制作到分发的周期（2-4天）缩短至分钟级实现。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "指导价10万元/年，根据企业需求配置3-5个矩阵，每个矩阵容纳5个海外社媒账号。",
+    "customers": "Client_33211C",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_5508EC",
+    "product": "AutoCourt：基于文心大模型的多智能体模拟法庭",
+    "city": "平顶山",
+    "region": "华中",
+    "industry1": "法律",
+    "industry2": "法律-TOC-法律咨询",
+    "tech": "文心",
+    "product_intro": "产品应用ERNIE-4.5-Turbo-128K，涵盖起诉状自动生成（CD模式）、答辩状智能起草（DD模式）、法庭审理全过程模拟（CI模式）等功能，面向普通公众、法律从业者及教育机构，解决法律文书起草成本高、庭审流程理解难、法律服务可及性差等问题。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "前为免费测试版，未来拟采用 SaaS 订阅制（预计年费 5000-20000 元/\n机构）",
+    "customers": "Client_0BC15E",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_EE654F",
+    "product": "版信未来-IP数字版权服务平台",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-内容营销",
+    "tech": "文心",
+    "product_intro": "《版信未来》是新一代IP数字版权保护平台。专注于AIGC时代的数字版权确权与字资产管理服务。产品使用ERNIE-4.5-Turbo-32K的API，版信未来的「版小智AI」核心采用ERNIE-4.5（文心系列大模型代表）,让「版小智AI」具备强大自然语言处理力，能精准理解文本，在版权业务中实用又高效。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "会员价格：人民币69.9元/次",
+    "customers": "Client_8BD6B0",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_786958",
+    "product": "Miku AI音箱助手",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE 4.5-VL-28B-A3B的API，应用于智能语音交互、内容生成与信息查询模块场景，打造了Miku AI音箱助手，涵盖查天气、搜新闻、讲故事、实时资讯查询、健康信息问答、语音对答、定时提醒、音乐播放等功能，面向家庭及个人用户，解决日常信息获取、娱乐陪伴、生活管理等场景需求。",
+    "ai_tags": [
+      "语音",
+      "LLM"
+    ],
+    "pricing": "299/台",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1103C0",
+    "product": "有围生肖花钱手机支架",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-Speed 8k的API，采用“端（手机网站/小程序）-云（后端服务器）-模型（文心API）”架构。用户通过手机NFC碰一碰打开网页/小程序，后端服务器处理请求并调用文心大模型API，生成个性化的签文，最终返回至用户手机端呈现。AI灵兽的签文生成与对话响应速度提升至1秒内，内容相关性与趣味性用户满意度从预设模板的65%提升至90%。产品溢价能力显著增强，作为创意礼品吸引力大增，预计线上营销互动率提升40%，用户平均使用时长从0提升至每日3-5分钟。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "79元/个，套装 400元",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_9F156C",
+    "product": "AI智能陪伴聊天机器人-卡比巴拉",
+    "city": "上海",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE 4.5 Turbo-Latest的API，应用于陪伴交互模块，包括：情感化自然语言理解、多轮对话生成、情绪识别与情感反馈、IP人格渲染与角色稳定性保持。新增多角色人格切换能力（对应MBTI设定），对话自然度与连续性显著提升20%，单用户日均对话次数提升10次;",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "268/台",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_9F156C",
+    "product": "AI智能陪伴聊天机器人-魔卡",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "消费服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE 4.5 Turbo-Latest的API，应用于陪伴交互模块：自然语言理解、情感化回应生成、语音指令解析、角色人格驱动回复（基于魔卡IP设定），通过文心提升对话的连贯性、自然度与情感表达质量，是魔卡的核心能力模块。新增多角色人格切换能力（对应MBTI设定），对话自然度与连续性显著提升20%，单用户日均对话次数提升10次;",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "239/个",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_7D7392",
+    "product": "AI研学·多智能体助学公益系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-高校-ToC",
+    "tech": "文心",
+    "product_intro": "AI研学·多智能体助学公益系统是一款面向全学段学生、家长、教师及党员群体的公益免费平台，依托多智能体协同架构，整合AI知识科普、学科辅导、红色教育、思想引领、艺术鉴赏等多元功能，精准解决不同群体在学习成长、党性培养中的各类场景问题，助力用户在AI时代提升综合素养。文心技术使用后的效益：\n1）问答准确性提升40%，响应速度提升50%。\n2）产品功能增加：增加各类问答智能体如：伟人思想智能体，毛选智能体等。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "免费",
+    "customers": "Client_2A7524",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_9B9177",
+    "product": "首创君专利文本智能体",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "法律",
+    "industry2": "法律-律所-文件制作",
+    "tech": "文心",
+    "product_intro": "【首创君专利文本智能体】旨在成为支撑法律服务与创新的关键工具。该智能体基于文心大模型，能够覆盖专利从构思、撰写到评审的全流程任务，提供智能化的专利撰写支持与效率提升。\n文心技术使用后的效益：\n1）工作效率质量提升：内部专业服务团队（专利代理所，律所）撰写专利速度加快（5–7 天 → 4–5 天），撰写质量提高（修改轮次减少超过30%），理解客户技术更快（交底沟通轮次减少）。\n2）产品功能增加：添加专利文本智能体（目前五个），为客户在专利服务套餐中提供新选项。\n3）业务效果提升：从专利撰写与检验方面，为专利服务体系赋能，提高专利服务整体方案商业与品牌价值。（客户满意率提高至超过95%）",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "定制",
+    "customers": "Client_0B5BF1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F9F721",
+    "product": "厦门AI旅游助手",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "文旅文博",
+    "industry2": "文旅文博-TOC-AI助手（衣食住行）",
+    "tech": "文心",
+    "product_intro": "为了能更好地服务厦门游客、推广“厦门旅游年卡”和“乐游厦门”服务，同时能提升旅游信息查询的便利性，产品是基于ERNIE4.5提供AI问答技术的智能助手页面，最终为游客提供高效、便捷、智能的服务体验。文心技术使用后景点知识问答准确率从60%提高到75%。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "暂时免费",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_B6541C",
+    "product": "筑梦星河CAD助手",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "机械",
+    "industry2": "机械-研发设计支持",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-21B-A3B-PT、PaddleOCR-VL，应用于CAD图纸识别和问答，打造了“筑梦星河CAD助手”产品，系统使非CAD专业人员（如运维、管理者）独立解读图纸的效率提升约70%，大幅减少对专职工程师的依赖。",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "(1) 图纸解析、图纸审查（业务审查）、图纸知识库、基础业务报告，基础功能 80万。\n(2) 图纸学习、图纸审查（绘图纠正）、标准图纸生成、 CAD问数、图纸价值挖掘，增值功能30万起步/项，按规模与复杂度 * 系数，需根据实际情况报价",
+    "customers": "Client_DC3031",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_B6541C",
+    "product": "眼科疾病诊断智能体",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-诊断辅助",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-VL-28B-A3B-PT、PaddleOCR-VL，应用于眼科医疗阅片场景，打造了“眼科疾病诊断智能体”产品，实现从“翻阅一堆报告”到“洞察一个器官”的诊疗范式创新，技术指标方面实现了文档问答准确性从63%提升至82%以上",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "200-300万起步",
+    "customers": "Client_8E3B6A",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1FA474",
+    "product": "AI专利辅助撰写系统",
+    "city": "西安",
+    "region": "华中",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.0-Turbo-8K(SFT) 、ERNIE-4.5-Turbo-128K、PaddleOCR-VL、 Baidu Comate应用于专利撰写场景，打造了专其利AI辅助撰写平台。基于SFT（有监督微调）技术对ERNIE-4.0-Turbo-8K大模型进行专项训练，使其精准匹配专利语言表达逻辑与技术描述规范，解决通用大模型“专业性不足”的核心痛点",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "现阶段免费（基础版199元/月，旗舰版599元/月，私有化部署8w-12w)",
+    "customers": "Client_01D518",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_9F6D00",
+    "product": "VinkoX-桌面语音机器人",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "消费服务-娱乐-游戏",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-Turbo-32k的API，应用于自然语言理解、多轮对话生成、内容创作（如故事生成、情感回复）、用户指令解析模块场景，内容生成一致性错误降低 40%，新增情绪化对话能力，支持用户风格偏好记忆与个性化对话能力，用户日均对话轮次提升10次。",
+    "ai_tags": [
+      "语音",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "¥219标准版、¥299旗舰版",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_95BCA9",
+    "product": "暖芽—DIY积木+AI智能陪伴玩具",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-学龄前-TOC-智能硬件",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.0-8K-Preview、ERNIE-Speed-Pro-128K的API，支持用户上传照片生成个性化积木形象，配合声音克隆与性格学习，实现情感化、个性化的深度陪伴。使用文心后，对话意图识别准确率从传统规则引擎的 65% 提升至 95% 以上，复杂长句理解能力大幅增强。研发周期缩短 60%（省去了自研 NLP 模型的环节），单机硬件成本降低 30%。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "198元/套",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_786958",
+    "product": "01Agent - AI图文创作智能体",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-内容营销",
+    "tech": "文心",
+    "product_intro": "产品使用ernie-irag-edit的API，结合 ernie-irag-edit 本地识别用户素材，实现可编辑图文的高精度生成与跨平台格式转换。文心技术使用后图文生成可编辑率从 0% 提升到 100%，多平台排版结构化准确率提升到 90% 以上，创作效率提升5至10倍，单个创作者每天可新增 4 到 10 条内容产出，企业矩阵账号运营效率提升 300%，电商海报制作成本下降约 80%。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "基础版 39 元每月、专业版 150 元每月、企业定制版面议",
+    "customers": "Client_E8F2E9",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_0822E8",
+    "product": "智能票据识别与结构化系统",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "产品使用Paddle OCR的多个模型，应用于系统中的文本检测与识别、 多语种 OCR （繁体 + 英文 + 数字混排）、版式分析与字段抽取、图像预处理（去噪、倾斜矫正、自适应增强）、模板抽取 + OCR结果融合等模块，票据识别准确率从约 60% 提升至92%，新增印章自动识别与合法性校验可直接对接 ERP / RPA，实现端到端自动化入账。",
+    "ai_tags": [
+      "OCR",
+      "CV",
+      "NLP"
+    ],
+    "pricing": "一次性部署：35-45万\n订阅费用：一个账号：标准版本100元/月/人，企业版本200元/月/人",
+    "customers": "Client_5B0E74",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_526380",
+    "product": "基于文心大模型商业提案系统",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-5.0-preview，应用于智能语义检索、多模态内容理解、行业知识问答、提案自动生成（文案/表格/配方建议），打造了“商业提案智能体”产品，系统使提案效率提升3–5倍，产品经理每周节省10–15小时重复劳动。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "定制化服务 70~80 万（三个月交付周期）",
+    "customers": "Client_34D699",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_526380",
+    "product": "基于文心大模型用户洞察智能系统",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-数据分析",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-5.0-preview，应用于舆情监测、智能观点挖掘（ABSA）、ChatBI对话式分析，打造了“用户洞察智能体”产品，实现多语言细粒度情感分析（ABSA）准确率从传统NLP模型的72%提升至91%；复杂意图识别准确率提升20%。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "定制化服务 30~40 万（三个月交付周期）",
+    "customers": "Client_007CC2",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_E08BE6",
+    "product": "基于百度飞桨的对虾表型识别与非侵入式心率测量系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "农业",
+    "industry2": "农业-TOB(渔业)-生长状态监测",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleSeg、PaddleX涵盖对虾心脏语义分割、心脏运动分析与心率估计等功能，面向智慧水产养殖场景，解决对虾育种与科研中非侵入式、高精度生理监测的难题。应用飞桨技术后，单段心脏视频的处理耗时由 3 分钟缩短至 1.8 分钟，自动化处理比例提升至 90% 以上，科研人员的数据分析效率提高 2 倍左右。同时，系统可支持多只个体的并行监测，极大提升了养殖场景下的监测规模与精度。",
+    "ai_tags": [
+      "CV",
+      "NLP"
+    ],
+    "pricing": "需要和福建省赤山茂鑫水产有限公司协同定价",
+    "customers": "Client_33A2AD",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_1C45CE",
+    "product": "黄桷兰：基于⽂⼼⼤模型渐进引导与多智能体协同定制的AI综合⼤实验平台",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-高校-教学辅助",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-turbo-128k，在功能层面，系统实现了丰富的应用特性，具体包括：案例化驱动、短视频+实时问答、游戏化任务完成、社交化技术社区、AI全程助理、阶段性AI指导，以及通过多智能体+知识图谱组合模式实现个性化指导，全方位提升使用体验与技术服务能力。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "10万/门课",
+    "customers": "Client_FB5829",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_12B8F7",
+    "product": "海影追踪·SAR船舶检测与航迹风险评估系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "政务",
+    "industry2": "政务-智慧城市",
+    "tech": "飞桨",
+    "product_intro": "产品涵盖SAR图像船舶目标检测、跨模态身份重识别（Re-ID）、航迹风险评估等功能，面向海事监管、海关缉私及国防安全等领域，解决了关闭AIS信号的“暗目标”船只难以通过传统手段进行全天候、全天时有效监管的场景问题。其中火源检测场景用了目标检测场景使用了PaddleDetection开发套件中的 PP-YOLOE，使用飞桨技术使用后，SAR图像船舶检测精度AP@0.50达到95.6%，推理速度在A800 GPU上达到154.9FPS，远超传统Faster R-CNN模型；产品功能新增对微小船舶目标的自动化捕捉功能；将传统人工判读 SAR 图像的流程从小时级压缩至 分钟级，海量数据筛查效率显著提升。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "暂无",
+    "customers": "Client_2F5A6F",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_702248",
+    "product": "熊猫AI法律数智平台",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "法律",
+    "industry2": "法律-律所-文件制作",
+    "tech": "文心",
+    "product_intro": "熊猫AI法律数智平台涵盖智能问答、合同快写/智审/比对、文书写作与审查等功能，面向企业、律所及政务机关，解决法律内容幻觉、审查标准不一、长文本处理弱、数据易泄露等场景问题。ERNIE-4.5-Turbo文心技术使用后1）关键技术指标提升：合同风险点召回率从 90% 提升到 95%。2）产品功能增加：新增“差异分屏对照”与“风险改进建议一键生成”功能。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "按功能计次收费，2-5元/次",
+    "customers": "Client_84751B",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_F75544",
+    "product": "明鉴·合规智控系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "法律",
+    "industry2": "法律-法务-合规判别",
+    "tech": "文心",
+    "product_intro": "基于文心大模型ERNIE-4.5-21B-A3B-PT、PP-OCRv4的智能合同审查系统。提供“风控驾驶舱”与“审查工作台”等核心功能，实现从文件上传、AI自动审阅、风险标注到一键修订的全流程闭环。解决痛点：政企单位在合同管理与公文流转中，普遍面临审查工作量大、人工校验易疏漏、合规追责风险高等痛点。文心技术使用后1）关键技术指标提升（例如：客服问答准确率从60%提升到85%）：单份合同审查耗时从平均30分钟缩短至45秒，流转效率提升40倍。",
+    "ai_tags": [
+      "时序",
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "一体机/服务器本地化部署20~100万（各价格中包含服务器价格、不同功能点、不同账号数）",
+    "customers": "Client_DC3031",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_4B31DB",
+    "product": "冰块机器人",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOC",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-3.5-8K的API，通过编程拼图硬件采集用户语音并上传至后端服务器，结合实时编程状态调用百度语音技术与文心大模型，实现交互式编程教学、错误指导及用户姓名的自动识别与个性化语音反馈。增加了基于大模型的编程拼图教学功能，用户可在无需协助的情况下，自主学习使用编程拼图，对于使用过程中遇到的问题也可以通过大模型来快速得到解答。",
+    "ai_tags": [
+      "语音",
+      "LLM"
+    ],
+    "pricing": "2399元/套",
+    "customers": "Client_88D0E1",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_FC04C4",
+    "product": "基于多模态大模型的历史壁画智能修复与数字化文旅平台",
+    "city": "郑州",
+    "region": "华中",
+    "industry1": "文旅文博",
+    "industry2": "文旅文博-景区-数字展陈",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-VL-28B、ERNIE 4.5 Turbo、ERNIE 4.5 TurboVL、ERNIE iRAG Edit（调用API）应用于文旅文博-壁画修复场景。关键技术指标：1）关键技术指标提升：针对壁画特定病害区域的修复效果描述准确性提升40%，生成视频质量认可度提高25%；2）产品功能增加：增加了图生视频、多模态壁画修复评估功能；3）业务效果提升：直观修复效果展示时间从月级缩短到天级，大模型评估建议更具有实际参考价值。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "50000元端侧一体机+2000元/月服务费用",
+    "customers": "Client_36B056",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_FC04C4",
+    "product": "智能菌落检测分析仪",
+    "city": "郑州",
+    "region": "华中",
+    "industry1": "医疗",
+    "industry2": "医疗-医疗器械",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-0.3B、ERNIE-4.5-21B-A3B-Thinking（调用API）应用于菌落质检场景。关键技术指标：1）关键技术指标提升：将单次菌落解析的时间由人工的 8min 压缩至 1min 内，降低了人工解读的复杂性。2）业务效果提升：将菌落检测效率从人工的 5min/皿提升至 5s/皿，结果分析时间从 8min 降低到 30s，使实验人员能快速得到准确的结论。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "8-15w",
+    "customers": "Client_E5A1AB",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_4E31B3",
+    "product": "物业巡检智能体",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-VL-28B-A3B-PT，应用于物业场景的巡检项目识别、图片复核，打造“物业巡检智能体”产品，针对特定巡检场景（如设施破损、卫生死角、在岗状态），将关键目标的识别准确率从传统人工抽查的约70%提升至90%以上。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "25万元/套",
+    "customers": "Client_68E0B4",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_51D842",
+    "product": "基于文心大模型的特殊教育智能辅助平台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-学龄前-TOC-智能硬件",
+    "tech": "文心",
+    "product_intro": "产品依托微调后的ERNIE-4.5-21B-A3B构建智能决策中枢，面向特殊儿童家庭干预与康复辅助场景，提供两大核心功能：（1）智能评估与诊疗建议生成：系统接收家长记录的儿童行为、情绪、能力进步等碎片化数据，文心大模型基于内化特教知识库进行综合研判，生成个性化、可操作的诊疗与教育建议。（2）音乐辅助诊疗：根据儿童实时状态（如情绪焦躁、注意力缺失等），智能匹配或生成具有疗愈特性的音乐，实现“数据记录→分析研判→非药物干预”闭环。\n使用文心后，行为分析准确率从65%提升至88% 、产品功能新增智能行为研判与音乐疗愈推荐模块、家长干预满意度提升40%、儿童康复训练配合度提高35%",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "免费为合作特教机构提供基础版；企业定制版10万/年",
+    "customers": "Client_912A26",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_19322E",
+    "product": "植绘Plantome",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "建筑",
+    "industry2": "建筑-设计-方案生成",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-Turbo-128K、ERNIE-4.5-Turbo-VL，应用于园林设计场景，打造了“植绘Plantome”产品，植物适配推荐Top5命中率提升23%，设计方案交付周期从7天缩短到3天。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "暂无，预计26年Q2面向市场售卖时更新定价",
+    "customers": "Client_A70778",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_407CC8",
+    "product": "建筑报告审核智能体",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "建筑",
+    "industry2": "建筑-设计-方案生成",
+    "tech": "飞桨",
+    "product_intro": "“建筑报告审核智能体”，通过PP-OCRv5实现文字识别提取、文心大模型实现数据合规审核，解决了报告录入、审核环节的重复人力工作，该环节综合提效30%，审核报告错误率下降2%。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "30万元/套",
+    "customers": "Client_94D2B1",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_D6C224",
+    "product": "数速植绿",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "建筑",
+    "industry2": "建筑-设计-方案生成",
+    "tech": "飞桨",
+    "product_intro": "广州山水比德设计股份有限公司飞桨 PaddlePaddle 神经网络模块构建自研模型 floraNetModel，并结合飞桨生态中 YOLO 的特征提取结构（如多层卷积、下采样、锚框机制）实现植物点位的自动预测，结合文心大模型实现植物清单推荐，打造了“数速植绿”产品，推荐苗木合理性指数从60%提升到85%；植物布点合理性由约 55% 提升至约 70%，位置偏移误差降低约 40%。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "1200元/年/账号",
+    "customers": "Client_A70778",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_4BECF9",
+    "product": "Taskbot 企业财务票据批量识别系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "基于pp-ocrv5及ernie4.5打造财务票据批量识别：将需要识别的发票上传到智能体平台中，发送识别指令，智能体则将发票信息识别后整理成表格形式，回复给用户。使用飞桨后运营成本降低：智能体可7x24小时处理常规咨询和任务，预估可减少相关岗位30%的重复性人力投入。",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "项目制，根据客户规模和需求定制，报价通常在5万元人民币级别。",
+    "customers": "Client_34D699",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_F7F442",
+    "product": "小艺AI超级员工系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-内容营销",
+    "tech": "文心",
+    "product_intro": "基于ernie4.5打造全链路短视频智能运营与客户管理自动化系统。涵盖AI文案生成与仿写、智能视频批量剪辑、多平台一键发布、全网精准客户采集、自动私信引流、拟人化AI客服对话、全流程数据监管等功能，面向中小企业及营销团队，解决内容生产耗时、获客成本高、客户响应慢、人力依赖强等核心业务痛点。文心技术使用后爆款文案仿写与生成效率提升超过200%，人工撰写时间从小时级降至分钟级。AI客服问答准确率（基于知识库）从初期的约65% 提升至 88%+。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "12980元/套",
+    "customers": "Client_4020F0",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_AA6726",
+    "product": "智能签收",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "物流供应链",
+    "industry2": "物流供应链-仓储",
+    "tech": "飞桨",
+    "product_intro": "产品使用PP-OCRv5模型，应用于产品签收面单的智能识别入库场景，打造了智能签收产品，增加签收面单的智能识别录入功能，时间成本及人力成本下降 50%。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "5万元/套",
+    "customers": "Client_DC3031",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_07D379",
+    "product": "实验室安全管理系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-高校-教学辅助",
+    "tech": "飞桨",
+    "product_intro": "产品中，行为识别和物体目标检测场景使用了PaddleDetection的PPhuman 和Paddleseg 的ppliteseg，原来采用通用相机自带算法，准确率30%，经常误报触发，且检测目标不符合需求，采用飞桨快速部署PPhuman，并分割目标提取工作状态，业务即可调用行为分析和设备工作情况分析，实现了人员行为95%的准确分析，设备工作状态和时长统计等功能。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "根据实验室需求不同定制，无统一报价",
+    "customers": "Client_B3B8CD",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_E08BE6",
+    "product": "基于⽂⼼⼤模型的茶园病虫害诊断与管理系统TeaVisor",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "农业",
+    "industry2": "农业-TOC(种植业)-病虫害诊断防治",
+    "tech": "文心",
+    "product_intro": "TeaVisor是一款面向中小茶农与茶园管理者的智能化茶园病虫害诊断与管理系统。系统依托ERNIE-4.5-turbo-128k、ERNIE-4.5-VL-28B-A3B-PT技术，集成多模态智能识别、实时目标检测、轻量化网页交互、方言语音播报等核心功能，聚焦解决茶园病虫害识别难、防治滞后、农药滥用及农户技术门槛高等行业痛点，以 AI 技术驱动茶叶种植环节的数字化、精准化与绿色化转型。",
+    "ai_tags": [
+      "语音",
+      "CV",
+      "LLM"
+    ],
+    "pricing": "公益属性工具，面向茶农免费开放，暂未制定明确售价，后续可结合具体应用场景协同商议定价方案",
+    "customers": "Client_1EF18F",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_409A74",
+    "product": "锂电池模组焊接设备智能运维平台",
+    "city": "郑州",
+    "region": "华中",
+    "industry1": "机械",
+    "industry2": "机械-质量检测与性能测试",
+    "tech": "飞桨",
+    "product_intro": "产品使用PP-YoloE-Plus-L，应用于工业质检-焊接缺陷检测场景。飞桨技术使用后的收益：焊接缺陷识别准确率达到92.6%，有效解决工业场景下缺焊、焊穿等细微缺陷难以精准定位的问题。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "硬件售价18.72万元/套，含端侧检测设备+基础检测功能，软件年度订阅费2000元",
+    "customers": "Client_0B8FB9",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D2BAE9",
+    "product": "智安应急宝",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "智安应急宝”是一套全生命周期智能化应急管理平台，涵盖应急准备、预案编制、演练、响应及评审五大环节。利用 PaddleOCR、PaddleNLP 技术解决传统应急管理中“预案编制难、文档非结构化数据利用率低、应急响应缺乏历史案例支撑、合规评审依赖人工”等痛点。飞桨技术使用后通过升级到PP-OCRv5模型，文档版面分析与表格还原的准确率从原有的 82% 提升至96%以上，极大地降低了人工校对成本。在应急响应环节，引入PaddleNLP 的 Reranking（重排序）策略后，事故案例推荐的 Top-3 准确率（Recall@3）提升了40%",
+    "ai_tags": [
+      "OCR",
+      "时序",
+      "NLP"
+    ],
+    "pricing": "10000万/年",
+    "customers": "Client_DC3031",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_01733B",
+    "product": "RedFOX儿童语言学习陪伴硬件",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-学龄前-TOC-智能硬件",
+    "tech": "文心",
+    "product_intro": "联手清华大学深圳研究院，依托文心大模型ERNIE-4.5-21B、ERNIE-4.5-0.3B技术底座，深度融合儿童教育理论、行为心理学研究与 AI 智能硬件交互，打造出提供高质量成长陪伴、持续驱动自主学习的 AI 宠物玩伴与智能化成长陪伴平台。文心技术使用后提升 互动性（Interactivity） 与 安全性（Safety） 方面效果最突出，使模型摆脱机械重复的回答模式，转而产生更具参与感、更加适龄的对话内容。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "299-399元",
+    "customers": "Client_523D7A",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_70F63A",
+    "product": "图模空间-工程数据智能管理平台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "建筑",
+    "industry2": "建筑-施工-进度管理",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-turbo-32k、ERNIE-4.0-turbo-128k等文心系列模型，应用于建筑工程图模、文档的结构化处理与对话式交互智能应用，打造“图模空间-工程数据智能管理平台”产品，提升建筑规范问答准确率至95%以上，复杂工程图纸的检索召回率提升至85%。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "目前内部使用为主，对外将以会员订阅制方式提供服务，具体价格待定",
+    "customers": "Client_CA46CB",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8525B4",
+    "product": "私域营销AI百宝箱",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-营销-数字营销",
+    "tech": "文心",
+    "product_intro": "私域营销AI百宝箱是基于企业微信实现数字化、精细化、智能化营销运营管控的私域营销系统，并结合ERNIE-4.5-21B-A3B、Embedding-V1、PP-OCRv5、PaddleSpeech等AI能力建设的一些面客场景工具，文心技术使用后聊天消息分析覆盖面提升20%（图片、语音），话术采纳率提升80%",
+    "ai_tags": [
+      "语音",
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "57万",
+    "customers": "Client_E3F7E0",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_64690F",
+    "product": "HiMat智能体平台",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-辅助研发",
+    "tech": "飞桨",
+    "product_intro": "产品是一款一站式企业级智能体（Agent）构建与运营平台，产品的文档智能解析场景主要应用了PaddleOCR套件中的PaddleOCR-VL模型（用于复杂版面的分析与结构化理解）。使用PaddleOCR-VL后，在文档（尤其是复杂排版、表格）转Word/Excel的场景中，关键字段（如表格线、合并单元格、公式位置）的提取准确率提升超过25%，显著优于传统OCR方案，大幅减少了人工校对和格式修复的工作量。文档数字化与结构化的处理速度平均提升40%，",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "基础版离线20w起",
+    "customers": "Client_FD5515",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_944CF7",
+    "product": "文基AI投标专家",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用ERNIE-4.5-VL-28B-A3B，应用于企业招投标场景中的招标文件解析、投标大纲生成、投标资质文件匹配、投标文件审查等功能，打造“文基AI投标专家”产品，提升标书编制效率70%以上，废标风险直降90%。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "8万元/年",
+    "customers": "Client_007CC2",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_108277",
+    "product": "Votee AI Studio",
+    "city": "香港",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-TOC-AI助手（通用）",
+    "tech": "文心",
+    "product_intro": "产品使用文心大模型（调用ERNIE 4.5 Turbo的API），应用于通用粤语大模型需求场景，打造了Votee AI Studio产品，产生了粤语的意图识别准确率提升至 95% 以上（原基准约为 70%），内容安全合规率达到 100%；服务承载能力爆发式增长；将政企服务时间从“5x8小时”扩展至 “7x24小时” 无间断智能响应，大幅提升用户满意度等效果。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "政府/企业级项目定制报价",
+    "customers": "Client_34D699",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_02FF82",
+    "product": "智能金融数据分析平台",
+    "city": "香港",
+    "region": "华南",
+    "industry1": "金融",
+    "industry2": "金融-通用-日常办公",
+    "tech": "文心",
+    "product_intro": "产品使用文心大模型、飞桨（调用ERNIE 5.0的API；应用PaddleOCR-VL），应用于智能金融数据分析场景，打造了智能金融数据分析平台产品，产生了系统对结构化表格数据的逻辑理解能力显著增强，模型能精准解析复杂的自然语言指令，有效解决了从语义到 SQL 语句的转化瓶颈；赋予了用户直接利用ERNIE 5.0 Preview对面板数据进行自动化回归分析与异常检测的能力；投研响应速度提升 50 倍：在月度数据披露窗口期，将原本需要研究员团队耗费数小时的手动核对与初步分析流程自动化至分钟级等效果。",
+    "ai_tags": [
+      "OCR",
+      "LLM",
+      "CV",
+      "NLP"
+    ],
+    "pricing": "无对外报价，仅供公司服务客户内部专用",
+    "customers": "Client_007CC2",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_A1361C",
+    "product": "接触网悬挂状态检测监测(4C)智能分析系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "能源",
+    "industry2": "能源-电力电气-设备监测",
+    "tech": "飞桨",
+    "product_intro": "为解决基于4C的供电分析过程中面临的各类挑战（数据量极大、专家分析经验不一致、易疲劳等），旨在支持4C缺陷的车载及地面智能分析与人机交互、4C零部件分割，以实现智能化和高效化供电数据分析，降低供电安全分析遗漏、提升供电安全分析效率。\n产品的接触网缺陷检测场景中使用了PaddleDetection的PP-YOLOE-R，使用飞桨后的接触网缺陷检测算法速度提升10倍（单图每秒到10图每秒",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "根据待检测线路长度而定",
+    "customers": "Client_DCACBE",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_389B36",
+    "product": "医疗行业版面标注平台",
+    "city": "香港",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-诊断辅助",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleOCR-VL，应用于医疗数据智能化需求场景，打造了医疗行业版面标注平台产品，产生了实现从全人工标注向机器自动标注 + 人工复核的模式转变，标注效率由每页约20分钟缩短至约5秒/页，整体产能提升约80倍等效果。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "内部系统，对外服务项目根据需求进行定制",
+    "customers": "Client_8E3B6A",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_02E86B",
+    "product": "医疗行业语言标注平台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-诊断辅助",
+    "tech": "飞桨",
+    "product_intro": "产品使用PaddleNLP/bge-m3、PaddleLite，应用于医疗行业多语言数据治理需求场景，打造了医疗行业语言标注平台产品，产生了新增多语种医学内容的自动比对、智能推荐与跨语言对齐等功能，支持更复杂的标注与翻译场景，处理速度由原本约 15 分钟/页缩短至约 3 秒/页，实现数量级的性能提升，显著降低人工投入等效果。",
+    "ai_tags": [
+      "时序",
+      "NLP"
+    ],
+    "pricing": "内部系统，面向市场需求进行特殊定制",
+    "customers": "Client_8E3B6A",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_6E705D",
+    "product": "海迈电子档案平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "政务",
+    "industry2": "政务-智慧城市",
+    "tech": "飞桨",
+    "product_intro": "基于PP-OCRv5打造的海迈电子档案平台，从“事前主动控制、事中动态监管、事后分析利用”的理念出发，以工程项目为核心，以建设工程资料电子化、数据化为纽带，通过“多主体协同，全过程在线”，建立项目电子文件“形成、流转、签章、整理”和电子档案“移交、保管、利用”等全流程信息化体系。打通各方责任主体的协作与协同管理，将“建设工程资料”提升为“建设信息资产”，实现“工程资料电子化从无到有、电子原件率从低到高，建设信息资产从假到真”，进而赋能智慧监管、智慧运营、智慧城市；通过无纸化办公，降本增效，践行“节能减耗，绿色施工”，助力“双碳”目标达成。飞桨技术使用后的效益：\n\n1）关键技术指标提升：扫描件识别准确率从80%提升到90%",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "3万",
+    "customers": "Client_DC3031",
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_7299F0",
+    "product": "AI保姆机",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-健康管理",
+    "tech": "文心",
+    "product_intro": "在我国人口老龄化加速、传统养老模式难以满足照护需求的行业背景下，为解决老年人安全监测、健康管理、情感陪伴等核心痛点，以及家属远程照护、专业护理资源不足等问题，公司依托香港理工大学科研资源与百度文心大模型（ERNIE 4.5 Turbo）技术底座，推出 AI 保姆机等系列产品，打造 “感知 - 认知 - 决策” 全链条智慧养老解决方案，推动居家及机构养老服务的数字化、智能化升级，为银发群体提供有温度的科技守护。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "硬件设备+基础服务5000元",
+    "customers": "Client_75F36F",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_917FB1",
+    "product": "千手智拣",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-无序分拣",
+    "tech": "飞桨",
+    "product_intro": "千手智拣系统是一款高效智能的分拣解决方案。系统通过自动下料、智能识别与气动分拣，精准快速地处理不同形状的零部件。该系统有效解决了人工分拣的质量不稳定与人力成本问题，为玩具等制造行业带来稳定、高效的生产力。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "产品定价：25万一套渠道价：20万一套",
+    "customers": "Client_49B562",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_BA4BFC",
+    "product": "银歌云AI视觉识别结算台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-客户运营",
+    "tech": "飞桨",
+    "product_intro": "银歌AI识别1、精度高银歌AI以视觉识别和大模型对比作为应用基础，结合多模态处理、多场景感知和多算法支持三大核心技术，目前银歌ai识别准确率高达99.8%。 2、识别快用餐时间集中，是餐饮行业的特性。提升收银速度，减少排队时间，一直是餐饮老板经营的难点。传统ai算法，需要将设备拍摄的图像，上传到服务器或计算盒进行识别，再将结果回传给设备。在上传-计算-回传的长链路，使影响的识别速度的重要原因，同时还需要网络的支持，在断网的情况下，还会造成无法识别。 银歌ai视觉识别算法，采用遥遥领先的边端技术，无需搭载服务器、算法盒子、算法棒和边缘计算盒子等外接设备或内嵌设备，银歌只需在设备上就可以完成算力的计算，以及结果的输出。识别速度只需要0.1秒。 3、低成本由于银歌ai采用边端计算的技术方案，在设备上进行识别，无需外接或内嵌服务器、算法盒子、算法棒和边缘计算盒子等设备，与市面上的同类型算法相比，直接为您节省2000-3000的成本费用。降低餐饮行业的使用门槛，让科技创新引领产业创新，用科技赋能助力产业速。 4、易使用餐饮行业，出餐标准不同，是影响识别结果的重要因素。比如红烧菜品颜色的不同、辣椒炒肉中辣椒占比的不同、土豆丝刀工粗细的不同。面对这个问题，传统的图片对比，需要每餐都将菜品拍照学习，在原有的工作内容中，增加工作量。银歌AI，通过颜色、纹理、形状和空间关系等特征进行大模型计算。无需每餐拍照，真正做到降本提质增效。 5、灵活性高银歌AI算法，由深圳市银歌云技术有限公司自主研发，为客户提供识别、收银、进销存、软硬件一体化的落地方案，同时也为行业提供SDK等定制化服务。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "1）AI餐饮识别-门店版（如小碗菜、中式快餐店等）零售价格：1.5万/套渠道价格：9800/套2）AI餐饮识别-项目版（如企业、机关、学校食堂等）零售价格：45万/套渠道价格：35万/套3）AI识别定制（如企业、机关、学校食堂等）基础价格：180万/套，根据项目复杂程度而定",
+    "customers": "Client_2A6AB3",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_5AD4C9",
+    "product": "AI虚拟员工",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "幻真-AI虚拟员工智能体，依托自主研发的核心技术，包括虚拟资产储备、动作表情融合系统、自主学习算法、指令拆解算法、向量记忆算法以及多模态感知交互系统等，为各行各业提供一流的解决方案",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "幻真Pro:首年12万，次年开始每年6万元每台授权；幻真MAX全熄柜，首年16万，次年每年6万元/台授权。目前接入千帆的为幻真Pro，后续其他产线产品都不可以根据需求接入文心大模型",
+    "customers": "Client_009C03",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F75544",
+    "product": "文思助手智能创作平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "政务",
+    "industry2": "政务-政务办公",
+    "tech": "文心",
+    "product_intro": "本产品包含文思公文和文思教学。文思办公为政府人员提供智能公文写作、扩写、校对润色等产品功能。文思教学为广大的教师提供各种智能AI工具，用于课程和课件设计等教学辅助功能。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "文思助手收费清单",
+    "customers": "Client_515579",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_FE4BBD",
+    "product": "顶佳酒店收益大师",
+    "city": "深圳",
+    "region": "华中",
+    "industry1": "文旅",
+    "industry2": "文旅-酒店",
+    "tech": "文心",
+    "product_intro": "顶佳收益大师，致力于酒店收益的BI+AI+顾问服务。核心技术是AI定价，改变酒店定价从人工，转向AI。以AI定价为基础，创建一套酒店收益管理解决方案，预计让酒店收益增长10-20%。",
+    "ai_tags": [
+      "文心应用"
+    ],
+    "pricing": "BI软件：100元/间/年收益顾问：300元/间/年预警基础服务：100元/间/年预警基础服务+价格建议：400元/间/年",
+    "customers": "Client_CA776F",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_006492",
+    "product": "AI人工智能摄像机",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-安防",
+    "tech": "飞桨",
+    "product_intro": "AI人工智能摄像机，专注于智能监控与安防管理。核心技术是AI图像识别，改变传统监控从被动监视，转向智能分析。基于AI图像识别技术，创建一套全面的安防解决方案，预计能大幅提升安全防范效率。具体功能：根据摄像头捕捉的实时画面，分析人物行为、识别异常活动、实时预警并记录。结合大数据分析，提供周边环境的安全评估和建议。通过AI智能分析，普通安保人员也能迅速识别潜在威胁。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "人数鱼眼摄像机 800元算法摄像机 1450元边缘算法盒子 2400元",
+    "customers": "Client_C9458F",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_9D82E6",
+    "product": "AI抄表",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-客户服务",
+    "tech": "飞桨",
+    "product_intro": "自来水手机抄表功能，是一种基于智能手机和OCR图像识别技术的智能化抄表方式。用户或抄表员只需使用手机对准水表表盘拍照，系统便能自动识别水表读数，并将数据即时上传至自来水公司的营收平台。这一功能不仅提高了抄表效率，也确保了数据的准确性和实时性。",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "具体项目具体商议，5-20w不等",
+    "customers": "Client_49ACAE",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_2B13D3",
+    "product": "智能工业视觉质检平台PIXAI",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "基于飞桨平台构建了一套工业视觉质检平台PIXAI。该平台以飞桨深度学习开源开放平台为算法基础，提供了一整套面向工业领域的解决方案组合。借助飞桨平台的高质量算法和丰富的生态支持，象点科技的工业视觉质检平台旨在让应用工程师也能轻松构建AI视觉解决方案。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": null,
+    "customers": "Client_0AF235",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "FFC柔性排线AI瑕疵检测",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "FFC柔性排线AI瑕疵检测产品是一款基于飞桨深度学习平台开发的智能检测产品。该产品深度融合了计算机视觉与人工智能技术，通过对柔性排线图像的高精度分析，实现对瑕疵的高效、自动化检测。产品采用了先进的深度学习算法，构建了专门针对柔性排线瑕疵的识别模型，能够精准地检测出排线中的各种瑕疵类型。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "60万/条产线",
+    "customers": "Client_F85B45",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "AI动作规范识别检测",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-客户服务",
+    "tech": "飞桨",
+    "product_intro": "AI动作规范识别检测系统是一款基于飞桨深度学习框架开发的智能分析系统。该系统通过深度学习算法，对人员的动作进行捕捉、识别和分析，以判断其是否符合预定的动作规范。系统支持多种场景下的动作规范识别，可根据实际需求进行定制和扩展。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "25万/条产线",
+    "customers": "Client_02FE05",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "智能验布机",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "通过4台2K线扫相机对布匹外观进行全检测（为客户解决了多种颜色胚布13种缺陷的检测），采用飞桨视觉检测算法采用PP-YOLOv3检测模型，实现对布匹在运动中的检测。同时通过自研光学系统为客户解决0.1mm破洞、污渍、破边等缺陷检测，同时将检测系统与标记单元进行串联实现了从检测到缺陷标记的无人化操作。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "30万/台",
+    "customers": "Client_0C82D0",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "智控车检大师",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "本产品是一套集成了先进算法模型、自动控制技术和管理平台的整车AI错漏装质检系统。该系统通过深度学习算法模型对生产线上的车辆进行高精度图像识别和分析，能够实时检测零部件的装配质量和位置准确性。结合自动控制技术，系统可以实现对生产线的智能调度和联动，确保在发现错漏装等质量问题时能够迅速做出反应，及时调整生产流程。同时，本产品配备了强大的管理平台，可以实时反馈检测结果并提供详尽的数据分析报告。通过与其他软件的数据交互，系统能够实现与生产管理系统、质量追溯系统等的无缝对接，为生产企业提供全面的质量监控和管理能力。这种集成化的设计不仅提高了质检的准确性和效率，还大幅降低了人为干预的需求，为汽车生产带来了更高的自动化和智能化水平。",
+    "ai_tags": [
+      "CV",
+      "时序"
+    ],
+    "pricing": "400万/条产线",
+    "customers": "Client_8A48B7",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "锌锭铸造表面AI瑕疵质检",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "锌锭铸造表面瑕疵AI质检利用深度学习算法和图像识别技术，对锌锭铸造表面进行高精度、高效率的瑕疵检测。通过对铸造表面图像的分析和处理，该系统能够自动识别出表面存在的各种瑕疵，如坑洼、气孔、夹杂物等，并对其进行分类和标记。同时，该系统还可以对瑕疵的大小、位置和数量进行统计和分析，为生产过程中的质量控制提供有力支持。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "60万/条产线",
+    "customers": "Client_C42492",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "光伏电池板表面AI瑕疵质检",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "本产品是一套针对光伏电池板表面瑕疵进行高精度质检的系统。该系统基于飞桨深度学习框架，结合卷积神经网络（CNN）、目标检测（如Faster R-CNN、YOLOv3）和图像分割（如Mask R-CNN）等算法，对光伏电池板表面进行细致入微的缺陷检测。利用高清工业相机捕获电池板表面图像，系统能够以1mm级别的精度准确识别裂纹、污渍、划痕、气泡等各类瑕疵。同时，该系统集成了自动化控制技术，能够与生产线设备紧密配合，实现瑕疵产品的自动分拣与剔除，确保生产流程的连续性与产品质量的稳定性。配备的智能化管理平台可以实时反馈检测结果，提供详尽的瑕疵统计与生产趋势分析，并支持与企业现有生产管理系统的数据交互，为光伏行业带来全面、高效、智能的质量监控解决方案。",
+    "ai_tags": [
+      "CV",
+      "时序"
+    ],
+    "pricing": "20万/条产线",
+    "customers": "Client_091CAF",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "食品瓶装玻璃器皿AI瑕疵质检",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "本产品是一套基于飞桨深度学习框架的瓶装玻璃器皿外观质量检测系统，集成了多种先进算法，如卷积神经网络（CNN）、目标检测算法（如YOLO、SSD）、图像分割算法（如U-Net）以及光学字符识别（OCR）等，以确保对瓶身、瓶盖、标签等内容的精准检测。利用高精度工业相机，该系统能够实现1mm级别的检测精度，准确捕捉玻璃瓶上的微小缺陷。结合飞桨算法模型，该系统能够快速处理和分析生产线上的实时图像数据，通过比较瓶身、瓶盖和标签的实际图像与预设标准，准确识别出裂纹、污渍、气泡、标签错位等各类缺陷。此外，采用自动化控制技术，系统能够与生产线设备实现无缝对接，自动分拣并剔除缺陷产品，确保生产流程的连续性和产品质量。配备的智能化管理平台不仅能够实时展示检测结果，提供详细的缺陷统计和生产趋势分析，还支持与企业现有的生产管理系统进行数据交互。通过该平台，企业管理人员可以全面监控生产过程，及时调整生产策略，提高生产效率和产品合格率。",
+    "ai_tags": [
+      "OCR",
+      "时序",
+      "CV"
+    ],
+    "pricing": "200万/条产线",
+    "customers": "Client_0C983B",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_B89ACC",
+    "product": "污净AI智能加药机",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-节能减排",
+    "tech": "飞桨",
+    "product_intro": "随着工业和城市化的不断发展,水资源的保护和合理利用变得尤为重要。同时,工业生产和城市生活产生的废水和污水也需要得到有效处理,以保障环境质量。城市污水处理厂和自来水厂,作为市政基础设施的重要组成部分,其中药剂投加是重要关键点。该产品采用物联网、大数据、AI大模型，运用“前馈+模型+后馈”技术原理，通过实时智能决策调整设备运行工况，实现药量精准投加，节能降耗同时保证出水水质稳定达标。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "产品对外售价为58w，百度内推合作价格可以给到5折左右",
+    "customers": "Client_840614",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_EE3272",
+    "product": "道路检测平台",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "政务",
+    "industry2": "政务-智慧城市",
+    "tech": "飞桨",
+    "product_intro": "基于智能交通建立的由车、卫星、无人机、视频监控、气象、环境等构成的空天内地一体的物联网感知平台，构建分布式车-场-云的海量数据处理平台与一张图应用系统，对道路交通全息场景进行全面感知、洞察、预测和决策，让道路交通管理更有序。",
+    "ai_tags": [
+      "CV",
+      "时序"
+    ],
+    "pricing": "根据用户需求模块进行费用洽谈",
+    "customers": "Client_965618",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_84100B",
+    "product": "板栗看板",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "板栗看板是一款项目看板管理工具，当前已经在三个方面与文心合作 1）在文心一言插件商城上线同名“板栗看板”插件 2）在星河社区上架了应用 板栗看板 | 一键生成任务_AI应用-飞桨AI Studio星河社区 3）在板栗看板产品中使用了 EB SDK，进行项目健康检查",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "免费+付费模式团队：普通版149元/人年，Pro版299元/人年个人：9元/月",
+    "customers": "Client_2B6BC6",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_2657A9",
+    "product": "EasyTable智慧能效管理系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-节能减排",
+    "tech": "飞桨",
+    "product_intro": "涵盖了电力负荷预测、能源数据采集、设备数字化管理、能源分析与评价、大屏显示、IoT控制与智能预警等功能。为电力、工业、商业、医院、学校、政府等大型场所解决能源安全、能源质量、能源经济型、动态评价机制等场景。",
+    "ai_tags": [
+      "时序"
+    ],
+    "pricing": "100,000.00元/年/标品",
+    "customers": "Client_92FF6B",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_A9116D",
+    "product": "语文作文智能教学平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-教学辅助",
+    "tech": "文心",
+    "product_intro": "语文作文智能教学系统，借助人工智能技术实现语文作文智能化评改，在不改变学生原有书写方式和写作习惯的前提下，10 秒精批细改，帮助语文教师解决作文批改费时费力、反馈不及时等问题，提升作文教学成效，提高学生写作兴趣，同时实现语文作文教学从作文采集、评改、课堂讲评、范文展示、作文归档的全流程数字化。\n一、语文作文教学的困境\n其一，工作量大，费时费力，批改效率低；\n其二，反馈不及时，长时间堆积待处理；\n其三，讲评、指导缺少量化数据的支撑。\n二、系统亮点\n其一，紧扣教材单元作文要求，10 秒完成精批细改；\n其二，全面量化分析学生作文，实现个性化的写作指导；\n其三，AI 智能化千人千面写作建议，助力学生个性化学；\n其四，实现作文教学全流程数字化，促进精准教研，优化完善教学质量监测；\n其五，微信小程序直接使用，无需下载 app 和其他硬件设备。\n三、成效分享\n案例一：3 个月辅助 40 名教师批改 8541 份作文。教师普遍反馈，作文智能教学系统\n节省了老师们大量的时间，可以集中精力做 AI 做不到的事情。\n案例二：2 个月辅助 36 名教师批改 2496 份作文。语文老师表示“我们非常看重学生\n的写作能力，但批改起来确实量太大了。使用这个工具，可以先帮我们字词纠错、语法纠错、\n好词好句划线，减轻了很多工作量。",
+    "ai_tags": [
+      "时序",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "终端市场价：平均3万/年/学段\n\n渠道政策（采购价）：\n5折结算，即1.5万\n（渠道负责客服）\n6折结算，即1.8万\n（我方负责客服）\n\n区域统采可依据实际项目沟通",
+    "customers": "Client_7B4AED",
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_FC237A",
+    "product": "创速猫AI简历",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "企业服务",
+    "industry2": "企业服务-人力资源",
+    "tech": "文心",
+    "product_intro": "基于ERNIE 3.5和4.0，主要应用场景为简历生成、简历优化、在线编辑、模拟面试、职业规划、行业分析等功能，面向求职者一站式解决求职难题。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "单月会员19.9元\n一年会员79.9元\n终身会员99.9元",
+    "customers": "Client_88D0E1",
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_DDFC2E",
+    "product": "AI人岗匹配",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-人力资源",
+    "tech": "文心",
+    "product_intro": "基于ERNIE Bot3.5对岗位提供精准定位，对人才与企业做双向精准匹配",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "目前免费，技术买断的话定价在25w左右",
+    "customers": "Client_88D0E1",
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_CD75F2",
+    "product": "悦尔家庭健康",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "医疗",
+    "industry2": "医疗-健康管理",
+    "tech": "飞桨",
+    "product_intro": "为用户和家庭提供实时健康监测与免疫评估分析、健康报告解读及健康趋势和建议。丰富专业的疾病知识库，实时AI对话，为用户提供个性化健康计划",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": null,
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_44AF38",
+    "product": "人工智能机器视觉与自然语言处理控制实训平台",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "教育",
+    "industry2": "教育-高校-TOB-AI教具",
+    "tech": "飞桨",
+    "product_intro": "产品是针对高校人工智能专业推出的一款综合型教学及实训设备。平台边缘计算网关采用Nvidia JetsonNano，结合17.3寸大屏显示单元、视觉相机、麦克风阵列、ROS机械臂、AIOT端感知控制等硬件，完成机器视觉、飞桨Paddle、TensorFlow、Pytorch、ROS系统等课程及相关人工智能场景化工程化应用实践开发。",
+    "ai_tags": [
+      "CV",
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "市场刊例价：5万/台\n百度合作项目售价：1.84万/台",
+    "customers": "Client_809B0C",
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_B5B442",
+    "product": "羽毛球技战术分析系统",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "文旅",
+    "industry2": "文旅-TOC-AI助手（衣食住行）",
+    "tech": "飞桨",
+    "product_intro": "Ecopti懿力创新的羽毛球技战术分析系统包括自动化视频捕捉与分析、即时分享与回放、客观运动表现评价及促进球员良性竞争等功能，旨在为羽毛球运动员提供一个全面的比赛和训练分析平台。主要包括自动化视频捕捉与分析、即时分享与回放、客观运动表现评价。",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "价格为150-200w/套系统。",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_50E226",
+    "product": "中学理化生AI教考系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-智慧考试",
+    "tech": "飞桨",
+    "product_intro": "西交智汇理化生实验操作AI教考系统是一套针对中学理化生实验操作教学和考试一体化业务打造的智能化产品。其中包含算力服务设备、智能终端设备、应用软件、实验评分算法等。围绕AI自动对实验操作过程的实时画面和录播画面进行评分的核心能力，产品涵盖了理化生实验操作课程管理、教学计划管理、教学资源管理、课前备课、课中互动、课后分析、AI助教、考试计划管理、考务数据上报、考试计划自动编排、阅卷管理、AI自动阅卷等功能。面向学校解决了实验课程建设、实验类校本资源建设、实验课程教务管理等场景中的问题和痛点。面向实验授课老师解决了课前实验内容备课、课中实验步骤演示教学、课中监管并纠正每一位学生的实验操作、课后教学成效分析等场景中的问题和痛点。面向学生解决了实验课堂上学生在座位上观察学习老师实验操作细节、多个学生使用同一套实验设备进行实验操作等场景中的问题和痛点。面向地市级和区县级考试管理机构解决了考试任务下发、考试计划编排、阅卷、成绩发布、成绩异议审核等场景中的问题和痛点。面向参考学校和考点学校解决了考务数据上传、考试抽签、考试设备运维、考场监考管理等场景中的问题和痛点。面向参考考生解决了人脸身份验证、无纸化考试、考试数采集等场景中的问题和痛点。",
+    "ai_tags": [
+      "CV",
+      "NLP"
+    ],
+    "pricing": "待伙伴明确具体价格",
+    "customers": "Client_49EE24",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_3DDDD5",
+    "product": "AIET私域客服",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "营销",
+    "industry2": "营销-用户运营（客服/私域）",
+    "tech": "文心",
+    "product_intro": "",
+    "ai_tags": [
+      "文心应用"
+    ],
+    "pricing": "个人版1800元/半年，2800元/年；企业版9800元/年；旗舰版39800元/年",
+    "customers": null,
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_8AC4BE",
+    "product": "随身物品智能识物终端",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "法律",
+    "industry2": "法律-TOB-公检法",
+    "tech": "飞桨",
+    "product_intro": "",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "58000元",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8AC4BE",
+    "product": "智能云审讯管理系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "法律",
+    "industry2": "法律-TOB-公检法",
+    "tech": "飞桨",
+    "product_intro": "",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "160000元",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8AC4BE",
+    "product": "智能卷宗归目平台",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "法律",
+    "industry2": "法律-TOB-公检法",
+    "tech": "飞桨",
+    "product_intro": "",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "1200000元",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8AC4BE",
+    "product": "智能合规审核系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "法律",
+    "industry2": "法律-TOB-公检法",
+    "tech": "飞桨",
+    "product_intro": "",
+    "ai_tags": [
+      "NLP"
+    ],
+    "pricing": "900000元",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8AC4BE",
+    "product": "案情研判指挥系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "法律",
+    "industry2": "法律-TOB-公检法",
+    "tech": "飞桨",
+    "product_intro": "",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "120000元",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8AC4BE",
+    "product": "人形体态定位管理系统",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "法律",
+    "industry2": "法律-TOB-公检法",
+    "tech": "飞桨",
+    "product_intro": "",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "180000元",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_19322E",
+    "product": "植侣",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "其他",
+    "industry2": "农业/园林科普",
+    "tech": "文心",
+    "product_intro": "有二维码",
+    "ai_tags": [
+      "文心应用"
+    ],
+    "pricing": "现阶段免费",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_1726D8",
+    "product": "萃想",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-内容运营",
+    "tech": "文心",
+    "product_intro": "",
+    "ai_tags": [
+      "文心应用"
+    ],
+    "pricing": "现阶段免费",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_A7FF1D",
+    "product": "行知合物AI教育云平台",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-教培-AI教具",
+    "tech": "文心",
+    "product_intro": "登录地址：https://aiedu.ubtrobot.com/web/#/aicenter\n手机账号：15900123924\n密码：123456",
+    "ai_tags": [
+      "文心应用"
+    ],
+    "pricing": "待伙伴确定",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_AE53D1",
+    "product": "Lockzhiner Vision AI Module",
+    "city": "福州",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-高校-TOB-AI教具",
+    "tech": "飞桨",
+    "product_intro": "",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "店铺链接：https://fzlzdz.taobao.com/",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_0561D3",
+    "product": "AI助理小云",
+    "city": "福建",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-用户运营（客服/私域）",
+    "tech": "文心",
+    "product_intro": "",
+    "ai_tags": [
+      "文心应用"
+    ],
+    "pricing": "点卡收费，调用一次消耗相应点数，收费0.025元",
+    "customers": null,
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_4C2E7C",
+    "product": "小博老师编程学习助手",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-教培-教学辅助",
+    "tech": "文心",
+    "product_intro": "",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "该模块作为ToB解决方案中的增值服务，额外收费5～10w",
+    "customers": null,
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_88E231",
+    "product": "PUPU智能AI阅读助手",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-K12-ToC",
+    "tech": "文心",
+    "product_intro": "PUPUai产品涵盖文章总结、智能对话、文章知识拓展等功能，面向青少年解决对阅读不感兴趣、读不懂、阅读没收获等场景问题",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "现阶段免费",
+    "customers": null,
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_750F23",
+    "product": "S400/S200飞机+AI盒子",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "政务",
+    "industry2": "政务-智慧城市",
+    "tech": "飞桨",
+    "product_intro": "无人机搭载的AI盒子巡检系统，通过高度集成与高清成像技术，对目标区域的全方位、智能化监测，提升监管效率与应急响应速度。",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "市场价：S400 8.98万；S200(标准版) 2.4万；四光云台 4.8万\n渠道价：S400 4.25万；S200(标准版) 1.9万；四光云台 3.6万",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_532E37",
+    "product": "物资管理系统",
+    "city": "广州",
+    "region": "华南",
+    "industry1": "建筑建造",
+    "industry2": "建筑建造-物流供应链-仓储",
+    "tech": "飞桨",
+    "product_intro": "面向房建、基建工程项目，材料收发存环节的重点材料品类，提供软硬一体+AI的轻量化物资管控产品，实现现场业务替代，过程管理闭环、精准数据获取，支撑横向无缝协同，纵向管理落地，控本、保供、减负、提效，降低材料成本。",
+    "ai_tags": [
+      "飞桨应用"
+    ],
+    "pricing": "需要by case评估",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_488354",
+    "product": "紫猫AI",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-客户运营",
+    "tech": "文心",
+    "product_intro": "跨境电商营销文案自动生成工具，紫猫Al天电脑为路境电商个业用户提供了智能化运营模板、行业领先的多语言翻译、实时行业资讯等功\n能。借助百度文心大模型的强大能力，平台能够提供个性化推荐，并自动化处理日常内容生成需求。这极大地简化了卖家的运营工作，提升了回复的准确性与响应读度，借助汶一平台，卖家可以轻松成对复杂的路境运营环境，实现低成木、高效率的国际业务拓展，兒著提升亮年力。紫猫A功能上线后，平台用户活跃度大幅提升，日活用户增长19%，用户留存率提升了27%，与此同时，洗及多语言翻译与法萱模板调用次数增长超过40%。",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": null,
+    "customers": null,
+    "product_type": "SaaS工具平台"
+  },
+  {
+    "company": "Partner_485EBC",
+    "product": "拧紧曲线分析",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "基于paddle框架应用于拧紧曲线分析模块，用于检测拧紧曲线是否符合质量要求以及NG原因分析",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "待定",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_9C44AB",
+    "product": "数字人生产平台",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "其他",
+    "industry2": "无法判断",
+    "tech": "文心",
+    "product_intro": "通过问答交互方式构建服务专属数字人，目前技术路线是RAG+Prompt",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "纯软件6万",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_17DA8B",
+    "product": "棒棒堂AI听评课",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-教学辅助",
+    "tech": "文心",
+    "product_intro": "棒棒堂 AI 听评课涵盖音视频识别、文档解析、课堂教学过分析、\n课堂分析报告生成导出等功能，面向 K12 教育阶段教师的教学教研场景，用 AI 能 力辅助学校提高教研效率",
+    "ai_tags": [
+      "文心应用"
+    ],
+    "pricing": "暂时无标准报价",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_8CF465",
+    "product": "TF AI DEA",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-设计辅助-汽车",
+    "tech": "飞桨",
+    "product_intro": "面向汽车工程师计算不同汽车车体的流场信息，基于Paddle Science套件在仿真数据测试集上精度高，预测速度快，占用显存少，能进行全场仿真预测，多平台推理部署、软硬件兼容。",
+    "ai_tags": [
+      "时序"
+    ],
+    "pricing": "仅由十沣销售对外报价，不支持提供市场价格",
+    "customers": "Client_70D308",
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_B863DF",
+    "product": "政策咨询数字人",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "政务",
+    "industry2": "政务-政务服务",
+    "tech": "文心",
+    "product_intro": "政策互动服务平台，通过AI及虚拟现实技术，解决企业和群众在政策获取、理解和应用方面的难题，通过实时在线的数字人结合大模型的问答服务，提高政策服务便捷性。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "20万/套+定开by case看价格",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_694A0A",
+    "product": "CV3智能相机",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "面向工业产品检测中解决计数、缺陷、有无、定位等场景问题，使用PP-chatOCRv4，集成视觉检测系统，打造出CV3电子智能相机，字符识别准确度从85%提升到95%",
+    "ai_tags": [
+      "OCR",
+      "CV"
+    ],
+    "pricing": "3-5千元",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_3E2E4F",
+    "product": "智能报销助手",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "飞桨",
+    "product_intro": "使用PaddleOCR，通过拍照扫描发票，进行票据信息识别和报销信息自动填充，结合个人报销额度和报销制度等，进行智能化报销，票据信息识别准确率从80%提升到85%",
+    "ai_tags": [
+      "OCR",
+      "LLM"
+    ],
+    "pricing": "10万起私有化部署",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_8766FE",
+    "product": "AI活动直播助手",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "营销",
+    "industry2": "营销-市场营销",
+    "tech": "文心",
+    "product_intro": "基于100%自有数据调用ERNIE API（ERNIE 4.0-8K）落地落地行业分类和直播内容文字转录对直播内容进行总结和摘要，赋能云现场AI活动直播助手，助力信息处理效率相比提升20%。",
+    "ai_tags": [
+      "CV",
+      "LLM"
+    ],
+    "pricing": "1万起",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_D71B32",
+    "product": "重庆安陶古镇旅游助手",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "文旅",
+    "industry2": "文旅-TOC-AI助手（衣食住行）",
+    "tech": "文心",
+    "product_intro": "由安陶古镇运营方提供的旅行助手智能体，使用ERNIE Speed的重庆安陶古镇旅游是智能体，能提供天气查询、旅游规划建议生成、景点和住宿餐饮推荐",
+    "ai_tags": [
+      "时序",
+      "LLM"
+    ],
+    "pricing": "免费",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_5AE7C0",
+    "product": "AI笔筒",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "面向党建、文创、法律、银行等多个行业的从业人员，应用于与智能屏交互的对话功能，打造了AI笔筒，能精准理解下达的指令信息并提供准确全面的答复。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "1.WiFi版本价格: 约200元以内每台\n2.一般售卖价格: 300-400元每台\n3.标牌价: 800元以上每台",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_F8ECB5",
+    "product": "科创助手",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-高校-科研辅助",
+    "tech": "文心",
+    "product_intro": "基于维普海量高价值语料，使用ERNIE-Speed-8K；ERNIE-Lite-128K-Academic；ERNIE-3.5-128K，做了AI科研助手。能快速识别用户检索意图，一键生成论文大纲与文献综述，满足文献问答、智能翻译等10大应用场景，极大提升了科研工作者的效率。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "69元/月",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_051429",
+    "product": "异音检测机台",
+    "city": "珠海",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "面向电机生产与维修领域，解决工厂电机异常噪音、故障识别及早期预警等场景问题，使用PaddleSpeech，打造了微电机异音检测，通过振动分析、声波异音检测等功能，工厂异音检测和识别准确率从50%提升到95%",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "5万起",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_64FC13",
+    "product": "集市流量预测工具",
+    "city": "重庆",
+    "region": "西南",
+    "industry1": "营销",
+    "industry2": "营销-市场营销",
+    "tech": "文心",
+    "product_intro": "基于集市的人流量数据通过PaddleTS时序模型进行未来人流量的预测，主要为集市的运营提供人流量预测，为集市运营方实现基于数据驱动的运营计划安排，集市运营效率提升30%",
+    "ai_tags": [
+      "时序"
+    ],
+    "pricing": "2万起",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_D10627",
+    "product": "陶瓷胚体AI瑕疵检测",
+    "city": "南昌",
+    "region": "华中",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "使用PaddleDetection中的PP-YOLOE+检测模型，打造陶瓷胚体AI瑕疵检测，缺陷识别率从56%提升到95%，单人日审核量从1000件提升到5000件。",
+    "ai_tags": [
+      "CV",
+      "NLP"
+    ],
+    "pricing": "20w/套",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_C5C591",
+    "product": "大数据精准教学系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-教学辅助",
+    "tech": "飞桨",
+    "product_intro": "使用PP-OCRv4、PaddleDetection，打造大数据精准教学系统，试卷定位准确率85%→95%，客观题识别准确率90%→97%\n产品功能主要包含答题卡制作、答题卡识别、试卷扫描和题目批阅。答题卡识别适用于所有学生和教师，减少了以往通过填图或贴条码方式带来的额外运营成本，并节省了学生的考试时间。同时自动批阅客观题与填空题，显著减轻了教师的负担。同时答题卡制作和试题整理的工作不仅解决了在处理第三方答题卡时需手动框选答案区域以及拆分试卷题目的问题，且通过自动化手段实现了这些任务，极大地降低了人力投入，提升了工作效率。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "待定",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_D9FDDB",
+    "product": "AI寄快递",
+    "city": "深圳",
+    "region": "华南",
+    "industry1": "物流供应链",
+    "industry2": "物流供应链-运输",
+    "tech": "文心",
+    "product_intro": "「AI寄快递」融合百度文心大模型和快递100自有领域知识库及寄件类API（如时效预估、运力比选等），将大模型的“记忆-理解-推理-生成”全面能力融入用户寄件交互的全过程，目前该功能用户已超过3万。",
+    "ai_tags": [
+      "LLM"
+    ],
+    "pricing": "暂时免费",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_1267C1",
+    "product": "金属零件外观分拣机",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "工业",
+    "industry2": "工业-质量检测",
+    "tech": "飞桨",
+    "product_intro": "系统通过机器视觉工业相机拍摄产品表面图片，进行自动化检测，剔除 外观划伤、凹坑、脏污、缺又产品，系统会发出信号给剔除装置进行处理并报警提示\n1秒1个提升到1秒3个",
+    "ai_tags": [
+      "CV"
+    ],
+    "pricing": "50万/台",
+    "customers": null,
+    "product_type": "软硬一体"
+  },
+  {
+    "company": "Partner_C36C6A",
+    "product": "城市管理AI智能应用助手",
+    "city": "厦门",
+    "region": "华南",
+    "industry1": "教育",
+    "industry2": "教育-K12-TOB-智慧校园",
+    "tech": "飞桨",
+    "product_intro": "在传统模式下，市民与巡查员在系统上报市容市貌问题时，面临着一系列痛点：包括专业门槛高、操作步骤复杂繁琐导致市民和新手巡查员上手速度慢、易出错。加之，手动上报信息质量参差不齐，不准确的上报信息又进一步拖慢了处理效率，最终影响了市民的整体体验。使用百度飞桨全流程开发工具PaddleX和多模态大模型套件PaddleMIX,实现了图生确定文、文生文的高精度识别，为上报系统提供了图片识别部位框选、智能生成描述、智能匹配事项等功能。用户只需拍摄现场照片，系统即可自动识别关键部位，生成准确的事件描述，并智能匹配相关事项，全面优化了事件上报的业务流程和上报效率。相比之前的手动输入，上报难度降低了80%，上报效率提升了150%，上报准确率高达95%",
+    "ai_tags": [
+      "时序",
+      "CV",
+      "LLM"
+    ],
+    "pricing": "50万起",
+    "customers": null,
+    "product_type": "SaaS"
+  },
+  {
+    "company": "Partner_158F10",
+    "product": "音视频自动化标注系统",
+    "city": "成都",
+    "region": "西南",
+    "industry1": "营销",
+    "industry2": "营销-内容营销(数字人)",
+    "tech": "飞桨",
+    "product_intro": "使用PP-chatOCRv4，打造音视频自动化标注系统，服务于广电行业，实现了媒体资料统一管理，已在多个融媒体中心落地。",
+    "ai_tags": [
+      "OCR"
+    ],
+    "pricing": "保密",
+    "customers": null,
+    "product_type": "软件平台"
+  },
+  {
+    "company": "Partner_2F8EC2",
+    "product": "AI鼠标",
+    "city": "武汉",
+    "region": "华中",
+    "industry1": "企业服务",
+    "industry2": "企业服务-日常办公",
+    "tech": "文心",
+    "product_intro": "使用ERNIE 4.0，应用于AI智能文案写作，打造了秋叶AI智能鼠标，产生效果如下：\n1）文案写作的创意和吸引力得到提升，用户可以更快速地生成高质量的文案，平均生成一条文案内容的时间在3分钟以内；\n2）增加了AI文案写作功能，支持多种类型的文案生成和修改；\n3）提升了文案的专业性和准确性，用户可以高质高效地完成文案写作任务。",
+    "ai_tags": [
+      "LLM",
+      "NLP"
+    ],
+    "pricing": "单个鼠标299元；鼠标+图书+网课套装399元",
+    "customers": null,
+    "product_type": "软硬一体"
+  }
+]

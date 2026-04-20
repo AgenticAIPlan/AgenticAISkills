@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{TITLE}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f9fb;
+      --surface: #ffffff;
+      --border: #e8eaef;
+      --border-subtle: #f0f1f4;
+      --text-primary: #111318;
+      --text-secondary: #5c6370;
+      --text-muted: #9ca3af;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
+      --accent-line: #bfdbfe;
+      --success: #059669;
+      --warning: #d97706;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+      --radius: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 72px 32px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .report-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      letter-spacing: 0.2px;
+    }
+
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      margin-bottom: 56px;
+      padding: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat {
+      text-align: center;
+      position: relative;
+    }
+
+    .stat:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -32px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    .stat-value {
+      font-family: 'Sora', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Section */
+    .section { margin-bottom: 40px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-light);
+      border-radius: var(--radius);
+      color: var(--accent);
+    }
+
+    .section-icon svg { width: 16px; height: 16px; }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Analysis Grid */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .analysis-item {
+      padding: 20px;
+      background: var(--bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s var(--ease);
+    }
+
+    .analysis-item:hover {
+      border-color: var(--accent-line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .analysis-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .analysis-value {
+      font-size: 14px;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      padding: 5px 12px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 20px;
+      margin: 2px;
+      border: 1px solid var(--accent-line);
+    }
+
+    .tag-outline {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--border);
+    }
+
+    /* Partners */
+    .tier { margin-bottom: 32px; }
+
+    .tier-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .tier-badge.sr {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+    }
+
+    .tier-badge.r {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .tier-badge.b {
+      background: var(--bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .partner-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .partner-card {
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: all 0.25s var(--ease);
+      cursor: default;
+    }
+
+    .partner-card:hover {
+      border-color: var(--accent-line);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .partner-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .partner-product {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .partner-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .meta-tag svg {
+      width: 12px;
+      height: 12px;
+      opacity: 0.6;
+    }
+
+    .partner-reason {
+      padding: 14px 16px;
+      background: var(--accent-light);
+      border-radius: var(--radius);
+      border-left: 3px solid var(--accent);
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .partner-reason::before {
+      content: '匹配理由';
+      display: block;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    /* Notes */
+    .note-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .note-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg);
+      border-radius: var(--radius);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .note-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--warning);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Questions */
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .question-card {
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: all 0.25s var(--ease);
+    }
+
+    .question-card:hover {
+      border-color: var(--accent-line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .question-card::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+
+    .question-hint {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 40px 20px; }
+      h1 { font-size: 26px; }
+      .stats { flex-direction: column; gap: 24px; padding: 24px; }
+      .stat:not(:last-child)::after { display: none; }
+      .analysis-grid { grid-template-columns: 1fr; }
+      .question-grid { grid-template-columns: 1fr; }
+      .partner-card { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <p class="report-date">{DATE}</p>
+      <h1>{TITLE}</h1>
+      <p class="subtitle">{SUBTITLE}</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">{PARTNER_COUNT}</div>
+        <div class="stat-label">生态伙伴</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{AI_TAGS_COUNT}</div>
+        <div class="stat-label">AI 能力维度</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">{CITY_COUNT}</div>
+        <div class="stat-label">覆盖城市</div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <h2 class="section-title">需求分析</h2>
+      </div>
+      <div class="card">
+        <div class="analysis-grid">
+          <div class="analysis-item">
+            <div class="analysis-label">客户场景</div>
+            <div class="analysis-value">{CUSTOMER_SCENE}</div>
+          </div>
+          <div class="analysis-item">
+            <div class="analysis-label">所需 AI 能力</div>
+            <div class="analysis-value">{AI_CAPABILITIES}</div>
+          </div>
+          <div class="analysis-item">
+            <div class="analysis-label">推荐技术</div>
+            <div class="analysis-value">{RECOMMENDED_TECH}</div>
+          </div>
+          <div class="analysis-item">
+            <div class="analysis-label">落地方向</div>
+            <div class="analysis-value">{IMPLEMENTATION}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+        <h2 class="section-title">推荐供应商</h2>
+      </div>
+      {TIER_SR}
+      {TIER_R}
+      {TIER_B}
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #fef3c7;">
+          <svg style="color: #d97706;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h2 class="section-title">注意事项</h2>
+      </div>
+      <div class="card">
+        <div class="note-list">{NOTES}</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background: #f3e8ff;">
+          <svg style="color: #7c3aed;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h2 class="section-title">追问澄清</h2>
+      </div>
+      <div class="question-grid">{QUESTIONS}</div>
+    </section>
+
+    <footer>
+      <p>中南片区生态伙伴匹配系统</p>
+    </footer>
+  </div>
+</body>
+</html>
