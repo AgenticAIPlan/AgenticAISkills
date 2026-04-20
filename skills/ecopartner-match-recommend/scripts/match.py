@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-aiduijie - 飞桨华南区AI供需智能匹配脚本
+ecopartner-match-recommend - 中南片区生态伙伴智能匹配脚本
 
 使用方法：
   python3 scripts/match.py "客户想做票据识别，每天5000张"
-  python3 scripts/match.py --industry 金融 --tech OCR --city 厦门
+  python3 scripts/match.py --industry 金融 --tech OCR --city 广州
   python3 scripts/match.py --json '{"industry":"工业","tech":"CV","city":"深圳"}'
 """
 
@@ -19,7 +19,7 @@ DATA_PATH = os.path.join(SCRIPT_DIR, '..', 'references', 'partner-data.json')
 
 
 def load_partners():
-    """加载华南区伙伴数据"""
+    """加载中南片区伙伴数据"""
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
         return json.load(f)
 
@@ -60,7 +60,7 @@ def expand_industries(industry):
 
 
 def match_partners(partners, industry=None, tech=None, city=None, keyword=None, top_n=5):
-    """匹配华南区伙伴"""
+    """匹配中南片区伙伴"""
     results = []
 
     # 扩展行业关键词
@@ -177,7 +177,7 @@ def format_results(results, industry=None, tech=None, city=None):
             '大模型': 'ERNIE Bot / 文心一言',
             '智能体': 'Agent框架 + ERNIE',
         }
-        print(f'├─ 飞桨工具：{tool_map.get(tech, "PaddleX")}')
+        print(f'├─ 推荐工具：{tool_map.get(tech, "PaddleX")}')
     print(f'├─ 部署方式：本地部署 / 云端API（按需选择）')
     print(f'└─ 预估周期：POC 2周，落地 4-6周')
 
@@ -185,9 +185,9 @@ def format_results(results, industry=None, tech=None, city=None):
 def interactive_mode():
     """交互模式"""
     partners = load_partners()
-    print('🎯 飞桨华南区AI供需智能匹配')
+    print('🎯 中南片区生态伙伴智能匹配')
     print('─' * 40)
-    print(f'已加载 {len(partners)} 家华南区伙伴数据')
+    print(f'已加载 {len(partners)} 家生态伙伴数据')
     print()
 
     while True:
@@ -237,7 +237,7 @@ def interactive_mode():
 
 
 def main():
-    parser = argparse.ArgumentParser(description='飞桨华南区AI供需智能匹配')
+    parser = argparse.ArgumentParser(description='中南片区生态伙伴智能匹配')
     parser.add_argument('query', nargs='?', help='需求描述（自然语言）')
     parser.add_argument('--industry', '-i', help='行业（如：金融、工业、医疗）')
     parser.add_argument('--tech', '-t', help='技术需求（如：OCR、CV、NLP、大模型）')

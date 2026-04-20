@@ -1,6 +1,7 @@
-# partner-data.json 数据格式说明
+# ecopartner-match-recommend - partner-data.json 数据格式说明
 
-> 数据来源：百度飞桨生态AI产品表格（华南/华中/西南区域）
+> Skill: ecopartner-match-recommend
+> 数据来源：中南片区生态AI产品表格（华南/华中/西南区域）
 > 最后更新：2026-04-19
 
 ---
