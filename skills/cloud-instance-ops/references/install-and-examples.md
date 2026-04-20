@@ -221,7 +221,7 @@ EOF
 ### 10.1 Single-run before serving
 ```bash
 python3 scripts/remote_port_owner.py --port 8080
-python3 scripts/remote_service_check.py --url http://127.0.0.1:8080/docs --expect-status 200
+curl -fsS http://127.0.0.1:8080/docs
 ```
 
 ### 10.2 Artifact check

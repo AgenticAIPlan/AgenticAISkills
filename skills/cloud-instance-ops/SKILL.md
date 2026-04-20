@@ -137,7 +137,7 @@ Do not claim “deployed successfully” until all applicable checks pass:
 Use the bundled scripts when helpful:
 
 ```bash
-python3 scripts/remote_service_check.py --url http://127.0.0.1:8080/docs
+curl -fsS http://127.0.0.1:8080/docs
 python3 scripts/artifact_check.py --path /data/exam/output.wav --kind audio
 python3 scripts/deployment_final_check.py --url http://127.0.0.1:8080/health --repeat 2
 ```
@@ -161,15 +161,20 @@ Prefer one environment per task (`venv` or `conda`). If isolation is impossible:
 
 ## Password SSH guidance
 Password SSH is common in exam or public-IP environments. Use it carefully:
-- choose the narrowest password source that the **current tool process can actually read**
+- prefer a **local secure input UI** for interactive password entry
+- for interactive operator workflows, default to **secure prompt + SSH master-connection reuse**
 - password source priority for Codex-style tool execution:
-  1. password explicitly provided by the user in the current chat turn
+  1. a local secure input UI (`prompt-password`) for the current task
   2. a user-provided local temp file path
   3. an environment variable that has been **verified visible** to the current tool process
-- before asking the user to `export` a password variable, run a tiny visibility check first; if the current tool process still cannot read it, do **not** ask the user to repeat the export—switch to a temp file or one-shot wrapper instead
-- if the user already provided the password in chat for the current task, it is acceptable to use it in a one-shot local wrapper or helper invocation, as long as it is not written to the repo, shell history, or final response
+- the recommended flow is: **bootstrap the SSH master session first, then execute the real remote command**
+- after the first successful login, reuse the SSH master connection for the same `thread_id + user@host:port` so later commands in the same thread do not re-prompt for the password
+- by default, a reused session stays alive until the operator explicitly closes it
+- if the first business command fails **after** bootstrap succeeds, do not ask for the password again; reuse the existing session for retries in the same thread
+- unless the user explicitly insists, do **not** ask them to paste passwords or other secrets directly into chat
+- before asking the user to `export` a password variable, run a tiny visibility check first; if the current tool process still cannot read it, do **not** ask the user to repeat the export—switch to secure prompt input or a temp file instead
 - never write passwords into the repo, shell history, or final logs
-- distinguish network failure, host key issues, wrong password, and server-side auth restrictions
+- distinguish authentication failure, session-bootstrap failure, and business-command failure
 - prefer a reusable helper script over ad-hoc multi-layer quoting when automation is needed
 - when `expect` or a similar wrapper is still required, keep the wrapper as small as possible and keep logs password-free
 
@@ -181,15 +186,29 @@ if [ -n "$CLOUD_INSTANCE_PASSWORD" ]; then echo set; else echo missing; fi
 
 Recommended helper usage:
 
+1. Bootstrap a session once per thread:
+
 ```bash
-python3 scripts/password_ssh.py \
-  --host 10.0.0.8 \
-  --user root \
-  --port 22 \
-  --password-file /tmp/cloud_instance_password \
-  --remote-command "hostname && whoami"
+python3 scripts/password_ssh.py   --host 10.0.0.8   --user root   --port 22   --prompt-password   --ensure-session
 ```
 
+2. Reuse that session for real commands:
+
+```bash
+python3 scripts/password_ssh.py   --host 10.0.0.8   --user root   --port 22   --remote-command "hostname && whoami"
+```
+
+3. Close the reused session explicitly when you are done:
+
+```bash
+python3 scripts/password_ssh.py   --host 10.0.0.8   --user root   --port 22   --close-session
+```
+
+Fallback modes:
+- for unattended automation: use `--password-file` or `--password-env`
+- for interactive operator workflows: prefer `--prompt-password` and `--ensure-session`
+- if the user wants one-shot behavior, disable session reuse explicitly with `--no-reuse-session`
+- sessions are thread-scoped by default; other threads do not reuse them unless a shared `--session-namespace` is explicitly provided
 ## Interrupted run recovery
 When the task was interrupted, never restart blindly. First check:
 1. residual processes
@@ -240,7 +259,7 @@ Load only the reference relevant to the current task:
 ## Scripts
 - `scripts/preflight.py`: local preflight checks and initial status classification
 - `scripts/ssh_probe.py`: non-destructive SSH connectivity/auth probe with optional bastion
-- `scripts/password_ssh.py`: reusable password-based SSH wrapper that prefers direct password input or temp files over fragile ad-hoc `expect` snippets
+- `scripts/password_ssh.py`: password-based SSH helper with secure prompt input, optional thread-scoped session reuse, and safer defaults for host key checking
 - `scripts/normalize_result.py`: normalize command outcomes into the shared status contract
 - `scripts/remote_port_owner.py`: inspect which local process is listening on a port
 - `scripts/artifact_check.py`: verify output artifacts exist and look reasonable
