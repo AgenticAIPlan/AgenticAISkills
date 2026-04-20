@@ -6,7 +6,7 @@
     python generate_comic.py --article "科普文章内容" --output ./output/
 
 依赖:
-    pip install openai
+    pip install openai Pillow
 """
 
 import os
@@ -15,12 +15,19 @@ import json
 import base64
 import argparse
 import time
+from io import BytesIO
 from pathlib import Path
 
 try:
     from openai import OpenAI
 except ImportError:
     print("请安装 openai: pip install openai")
+    sys.exit(1)
+
+try:
+    from PIL import Image, ImageDraw, ImageFont
+except ImportError:
+    print("请安装 Pillow: pip install Pillow")
     sys.exit(1)
 
 
@@ -105,6 +112,111 @@ class SciPopComicGenerator:
                     time.sleep(wait_time)
 
         raise Exception(f"API调用失败，已重试{max_retries}次")
+
+    def _add_caption_to_image(self, image_bytes: bytes, caption: str) -> bytes:
+        """在图像底部居中添加科普旁白
+
+        Args:
+            image_bytes: 原始图像字节
+            caption: 科普旁白文字（20字以内）
+
+        Returns:
+            添加旁白后的图像字节
+        """
+        if not caption:
+            return image_bytes
+
+        # 打开图像
+        image = Image.open(BytesIO(image_bytes))
+        width, height = image.size
+
+        # 创建绘图对象
+        draw = ImageDraw.Draw(image)
+
+        # 尝试加载中文字体，依次尝试常用字体
+        font_size = 36
+        font = None
+        font_paths = [
+            "/System/Library/Fonts/PingFang.ttc",  # macOS
+            "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
+            "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf",  # Linux
+            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux
+            "C:\Windows\Fonts\msyh.ttc",  # Windows 微软雅黑
+        ]
+
+        for font_path in font_paths:
+            if os.path.exists(font_path):
+                try:
+                    font = ImageFont.truetype(font_path, font_size)
+                    break
+                except Exception:
+                    continue
+
+        # 如果没有找到中文字体，使用默认字体
+        if font is None:
+            try:
+                font = ImageFont.truetype("arial.ttf", font_size)
+            except Exception:
+                font = ImageFont.load_default()
+
+        # 计算文字尺寸
+        bbox = draw.textbbox((0, 0), caption, font=font)
+        text_width = bbox[2] - bbox[0]
+        text_height = bbox[3] - bbox[1]
+
+        # 底部留白区域高度
+        padding = 20
+        text_area_height = text_height + padding * 2
+
+        # 计算文字位置（底部居中）
+        x = (width - text_width) // 2
+        y = height - text_area_height + padding
+
+        # 绘制半透明背景矩形（提高文字可读性）
+        overlay = Image.new('RGBA', image.size, (0, 0, 0, 0))
+        overlay_draw = ImageDraw.Draw(overlay)
+
+        # 背景矩形：圆角效果，半透明黑色
+        bg_margin = 10
+        bg_x1 = x - bg_margin
+        bg_y1 = y - bg_margin
+        bg_x2 = x + text_width + bg_margin
+        bg_y2 = y + text_height + bg_margin
+
+        # 绘制圆角矩形背景
+        corner_radius = 8
+        overlay_draw.rounded_rectangle(
+            [bg_x1, bg_y1, bg_x2, bg_y2],
+            radius=corner_radius,
+            fill=(0, 0, 0, 180)  # 黑色，70% 不透明度
+        )
+
+        # 合并背景层
+        if image.mode != 'RGBA':
+            image = image.convert('RGBA')
+        image = Image.alpha_composite(image, overlay)
+
+        # 重新创建绘图对象（在合并后的图像上）
+        draw = ImageDraw.Draw(image)
+
+        # 绘制文字（白色，带轻微描边效果）
+        # 描边
+        outline_color = (0, 0, 0, 255)
+        for adj_x in [-1, 0, 1]:
+            for adj_y in [-1, 0, 1]:
+                if adj_x != 0 or adj_y != 0:
+                    draw.text((x + adj_x, y + adj_y), caption, font=font, fill=outline_color)
+
+        # 主文字（白色）
+        draw.text((x, y), caption, font=font, fill=(255, 255, 255, 255))
+
+        # 转回 RGB 模式（如果需要 PNG 格式）
+        output = BytesIO()
+        image_rgb = Image.new('RGB', image.size, (255, 255, 255))
+        image_rgb.paste(image, mask=image.split()[3] if image.mode == 'RGBA' else None)
+        image_rgb.save(output, format='PNG')
+
+        return output.getvalue()
 
     def _generate_image(self, prompt: str, size: str = "1024x1024", max_retries: int = 3) -> bytes:
         """生成图像，返回图像字节"""
@@ -214,6 +326,10 @@ class SciPopComicGenerator:
             print(f"  生成 Panel {panel_id}: {caption}")
 
             image_bytes = self.phase2_generate_panel(image_prompt, style_seed, panel_id)
+
+            # 在图像底部居中添加科普旁白
+            if caption:
+                image_bytes = self._add_caption_to_image(image_bytes, caption)
 
             # 保存图像
             panel_path = output_dir / f"panel_{panel_id:02d}.png"

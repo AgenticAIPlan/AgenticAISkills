@@ -26,7 +26,7 @@ description: |
 |------|------|
 | **API Key** | 星河社区 API Key，环境变量 `AISTUDIO_API_KEY` |
 | **API 端点** | `https://aistudio.baidu.com/llm/lmapi/v3` |
-| **SDK** | `pip install openai` |
+| **SDK** | `pip install openai Pillow` |
 | **分析模型** | `ernie-5.0-thinking-preview`（原生全模态大模型） |
 | **生图模型** | `ernie-image-turbo`（图像生成 API） |
 
@@ -37,7 +37,7 @@ description: |
 export AISTUDIO_API_KEY="your-key"
 
 # 安装依赖
-pip install openai
+pip install openai Pillow
 
 # 验证连通性（Python）
 python -c "
@@ -262,6 +262,49 @@ with open("panel_01.png", "wb") as f:
 | `1376x768` | 全局大图（横向长条） |
 | `768x1376` | 全局大图（竖向长条） |
 | `1264x848`, `1200x896`, `896x1200`, `848x1264` | 其他比例 |
+
+#### 科普旁白渲染
+
+**位置规范**: 科普旁白统一渲染在单 Panel 图像**底部居中**位置。
+
+**渲染参数**:
+- 字体大小：36px
+- 文字颜色：白色（#FFFFFF）
+- 背景样式：半透明黑色圆角矩形（70% 不透明度）
+- 描边效果：黑色 1px 描边，增强可读性
+
+**实现方式**（使用 Pillow）:
+
+```python
+from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
+
+def add_caption(image_bytes: bytes, caption: str) -> bytes:
+    """在图像底部居中添加科普旁白"""
+    if not caption:
+        return image_bytes
+
+    image = Image.open(BytesIO(image_bytes))
+    draw = ImageDraw.Draw(image)
+
+    # 加载中文字体
+    font = ImageFont.truetype("/System/Library/Fonts/PingFang.ttc", 36)
+
+    # 计算文字位置（底部居中）
+    bbox = draw.textbbox((0, 0), caption, font=font)
+    text_width = bbox[2] - bbox[0]
+    x = (image.width - text_width) // 2
+    y = image.height - 60  # 底部留白
+
+    # 绘制半透明背景 + 文字
+    # ... 详见 scripts/generate_comic.py
+
+    output = BytesIO()
+    image.save(output, format='PNG')
+    return output.getvalue()
+```
+
+> 💡 **注意**: 旁白文字在生成图像**后**通过 Pillow 渲染，不是由图像生成模型直接生成。
 
 #### Phase 2b: 多模态反馈迭代
 
