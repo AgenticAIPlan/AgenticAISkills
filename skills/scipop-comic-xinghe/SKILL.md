@@ -81,8 +81,16 @@ print('API 连接成功:', response.choices[0].message.content[:20])
 **系统提示词模板**:
 
 ```
-你是一位科普连环画脚本编写专家。分析文章并根据内容的丰富程度和结构确定最合适的 Panel 数量（4-6个）。输出一个 JSON 对象，包含四个字段："recommended_panels"（整数，4-6），"recommendation_reason"（一句话中文解释为什么这个 Panel 数量适合该文章），"style_seed"（简短的中文风格描述，在所有 Panel 中复用），"panels"（与推荐数量匹配的对象数组，每个对象包含 "id"、"scene" 中文场景描述、"image_prompt" 中文图像生成提示）。仅输出原始 JSON，不要使用 markdown 代码块。
+你是一位科普连环画脚本编写专家。分析文章并根据内容的丰富程度和结构确定最合适的 Panel 数量（4-6个）。输出一个 JSON 对象，包含四个字段："recommended_panels"（整数，4-6），"recommendation_reason"（一句话中文解释为什么这个 Panel 数量适合该文章），"style_seed"（简短的中文风格描述，在所有 Panel 中复用），"panels"（与推荐数量匹配的对象数组，每个对象包含 "id"、"scene" 中文场景描述、"caption" 中文科普旁白（20字以内，简洁有力）、"image_prompt" 中文图像生成提示、"fact_check" 本画面涉及的关键事实）。仅输出原始 JSON，不要使用 markdown 代码块。
+
+⚠️ 关键信息保留要求：
+1. 必须保留文章中的关键数字（年份、数量、百分比等）
+2. 必须准确使用人物姓名和身份，不可张冠李戴
+3. 必须保留专有名词和科学术语的原文
+4. 时间、地点必须与文章记载一致
 ```
+
+> 📖 详细的关键信息保留规范参见 [references/article_analysis_prompts.md](references/article_analysis_prompts.md#关键信息保留与事实核对)
 
 **image_prompt 撰写规范**（详见 [references/ernie_image_prompt_guide.md](references/ernie_image_prompt_guide.md)）：
 
@@ -172,12 +180,20 @@ for chunk in response:
   "recommended_panels": 5,
   "recommendation_reason": "文章涵盖五个层次，5格可完整呈现叙事弧线。",
   "style_seed": "扁平插画风格，柔和粉彩配色，清晰轮廓，2D矢量艺术",
+  "key_facts": {
+    "key_numbers": ["关键数字列表，如年份、数量、百分比"],
+    "key_names": ["关键人物/机构名称列表"],
+    "key_locations": ["关键地点列表"],
+    "key_dates": ["关键时间列表"],
+    "key_terms": ["关键术语列表"]
+  },
   "panels": [
     {
       "id": 1,
       "scene": "场景描述",
       "caption": "科普旁白，20字以内",
-      "image_prompt": "中文图像生成提示，描述画面内容、风格、构图等"
+      "image_prompt": "中文图像生成提示，描述画面内容、风格、构图等",
+      "fact_check": "本画面涉及的关键事实，用于核对准确性"
     }
   ]
 }
@@ -191,6 +207,8 @@ for chunk in response:
 | `scene` | 场景描述，用于理解上下文 |
 | `caption` | **科普旁白**，中文，20字以内，简洁有力，用于展示在图像中或作为配文 |
 | `image_prompt` | 图像生成提示词 |
+| `fact_check` | **关键事实核对**，记录本画面涉及的数字、人物、时间等关键信息，确保准确性 |
+| `key_facts` | **全局关键信息**，汇总文章中的关键数字、名称、地点等，用于整体核对 |
 
 **用户确认**: 展示 `recommended_panels` 与 `recommendation_reason`，询问用户是否采用。若不同意，询问期望数量（4-6），调整 `panels` 数组。
 

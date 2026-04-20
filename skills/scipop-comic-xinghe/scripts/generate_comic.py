@@ -261,7 +261,20 @@ class SciPopComicGenerator:
         print("=" * 50)
         print("Phase 1: 文章解析中...")
 
-        system_prompt = """你是一位科普连环画脚本编写专家。分析文章并根据内容的丰富程度和结构确定最合适的 Panel 数量（4-6个）。输出一个 JSON 对象，包含四个字段："recommended_panels"（整数，4-6），"recommendation_reason"（一句话中文解释为什么这个 Panel 数量适合该文章），"style_seed"（简短的中文风格描述，在所有 Panel 中复用），"panels"（与推荐数量匹配的对象数组，每个对象包含 "id"、"scene" 中文场景描述、"caption" 中文科普旁白（20字以内，简洁有力）、"image_prompt" 中文图像生成提示）。仅输出原始 JSON，不要使用 markdown 代码块。"""
+        system_prompt = """你是一位科普连环画脚本编写专家。分析文章并根据内容的丰富程度和结构确定最合适的 Panel 数量（4-6个）。输出一个 JSON 对象，包含以下字段：
+- "recommended_panels"（整数，4-6）
+- "recommendation_reason"（一句话中文解释为什么这个 Panel 数量适合该文章）
+- "style_seed"（简短的中文风格描述，在所有 Panel 中复用）
+- "key_facts"（对象，包含：key_numbers 关键数字列表、key_names 关键人物/机构名称列表、key_locations 关键地点列表、key_dates 关键时间列表、key_terms 关键术语列表）
+- "panels"（数组，每个对象包含 "id"、"scene" 场景描述、"caption" 科普旁白20字以内、"image_prompt" 图像生成提示、"fact_check" 本画面关键事实）
+
+⚠️ 关键信息保留要求：
+1. 必须保留文章中的关键数字（年份、数量、百分比等）
+2. 必须准确使用人物姓名和身份，不可张冠李戴
+3. 必须保留专有名词和科学术语的原文
+4. 时间、地点必须与文章记载一致
+
+仅输出原始 JSON，不要使用 markdown 代码块。"""
 
         messages = [
             {"role": "system", "content": system_prompt},
@@ -279,10 +292,26 @@ class SciPopComicGenerator:
         print(f"推荐 Panel 数量: {data['recommended_panels']}")
         print(f"推荐理由: {data['recommendation_reason']}")
         print(f"风格种子: {data['style_seed']}")
-        print(f"\n各 Panel 旁白:")
+
+        # 显示关键信息
+        key_facts = data.get('key_facts', {})
+        if key_facts:
+            print(f"\n关键信息提取:")
+            if key_facts.get('key_numbers'):
+                print(f"  关键数字: {', '.join(key_facts['key_numbers'][:5])}")
+            if key_facts.get('key_names'):
+                print(f"  关键人物/机构: {', '.join(key_facts['key_names'][:5])}")
+            if key_facts.get('key_locations'):
+                print(f"  关键地点: {', '.join(key_facts['key_locations'][:5])}")
+            if key_facts.get('key_dates'):
+                print(f"  关键时间: {', '.join(key_facts['key_dates'][:3])}")
+
+        print(f"\n各 Panel 旁白与事实核对:")
         for panel in data['panels']:
             caption = panel.get('caption', '（无旁白）')
+            fact_check = panel.get('fact_check', '（无）')
             print(f"  Panel {panel['id']}: {caption}")
+            print(f"    事实: {fact_check}")
 
         return data
 
@@ -308,11 +337,13 @@ class SciPopComicGenerator:
         panel_paths = []
         captions = {}
         final_prompts = {}  # 记录每个 Panel 最终使用的 prompt（用于 Phase 3）
+        fact_checks = {}  # 记录每个 Panel 的关键事实
 
         for panel in panels:
             panel_id = panel["id"]
             image_prompt = panel["image_prompt"]
             caption = panel.get("caption", "")
+            fact_check = panel.get("fact_check", "")
 
             # 构建完整 prompt（包含 style_seed）
             full_prompt = f"{image_prompt}，{style_seed}，高质量，连环画"
@@ -320,10 +351,15 @@ class SciPopComicGenerator:
             # 保存旁白
             captions[panel_id] = caption
 
+            # 保存事实核对信息
+            fact_checks[panel_id] = fact_check
+
             # 保存最终 prompt（用于 Phase 3 全局合成）
             final_prompts[panel_id] = full_prompt
 
             print(f"  生成 Panel {panel_id}: {caption}")
+            if fact_check:
+                print(f"    事实核对: {fact_check}")
 
             image_bytes = self.phase2_generate_panel(image_prompt, style_seed, panel_id)
 
@@ -344,6 +380,12 @@ class SciPopComicGenerator:
         captions_path = output_dir / "captions.json"
         captions_path.write_text(json.dumps(captions, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"\n  旁白已保存: {captions_path}")
+
+        # 保存事实核对信息
+        if fact_checks:
+            fact_checks_path = output_dir / "fact_checks.json"
+            fact_checks_path.write_text(json.dumps(fact_checks, ensure_ascii=False, indent=2), encoding="utf-8")
+            print(f"  事实核对信息已保存: {fact_checks_path}")
 
         # 保存最终 prompts（用于 Phase 3）
         prompts_path = output_dir / "final_prompts.json"
@@ -549,6 +591,13 @@ def main():
     phase1_path = output_dir / "phase1_result.json"
     phase1_path.write_text(json.dumps(phase1_result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Phase 1 结果已保存: {phase1_path}")
+
+    # 单独保存关键信息，便于核对
+    key_facts = phase1_result.get('key_facts', {})
+    if key_facts:
+        key_facts_path = output_dir / "key_facts.json"
+        key_facts_path.write_text(json.dumps(key_facts, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"关键信息已保存: {key_facts_path}")
 
     if args.phase1_only:
         print("\n仅执行Phase 1模式，完成。")
