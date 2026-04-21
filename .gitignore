@@ -58,3 +58,4 @@ env/
 # Temporary files
 tmp/
 temp/
+.tmp/

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Benchmark Test V7"
+  short_description: "LLM Benchmark自动化测试工具，批量测试模型响应"
+  default_prompt: "/benchmark-test-v7 --file benchmark.xlsx"

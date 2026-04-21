@@ -1,0 +1,24 @@
+{
+  "name": "benchmark-test-skill",
+  "version": "6.0.0",
+  "description": "大模型 Benchmark 自动化测试 Skill - 支持多模型批量测试，自动保存结果到 Excel，自动检查电量并充电，支持附件上传",
+  "main": "skill.js",
+  "scripts": {
+    "start": "node skill.js",
+    "test": "node benchmark_test.js",
+    "install-deps": "npm install playwright xlsx && npx playwright install chromium"
+  },
+  "keywords": [
+    "benchmark",
+    "automation",
+    "llm",
+    "testing",
+    "ducc-skill"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "xlsx": "^0.18.5"
+  }
+}
