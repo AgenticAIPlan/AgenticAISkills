@@ -88,6 +88,8 @@
 
 ⚠️ **重要**：文字叠加是必须执行的步骤，不可跳过！
 
+⚠️ **免责声明要求**：所有图片（方图和长图）底部居中必须注明"AI创意叙事，不构成新闻报道"，使用代码叠加，不依赖模型生成。
+
 ### 叠加流程
 
 ```
@@ -97,10 +99,21 @@ Step 2: 下载生成的图片
     ↓
 Step 3: 根据背景主色调自动选择文字颜色（白/黑）
     ↓
-Step 4: 使用 Pillow 叠加微小说文字
+Step 4: 使用 Pillow 叠加微小说文字（长图）
     ↓
-Step 5: 保存最终图片并验证文字可读性
+Step 5: 使用 Pillow 叠加免责声明（所有图片）
+    ↓
+Step 6: 保存最终图片并验证文字可读性
 ```
+
+### 免责声明样式规范
+
+| 参数 | 标准值 | 说明 |
+|------|--------|------|
+| 内容 | "AI创意叙事，不构成新闻报道" | 固定文案 |
+| 字号 | 12px | 小字号，不干扰主视觉 |
+| 颜色 | 半透明灰色 | 深色背景用浅灰，浅色背景用深灰 |
+| 位置 | 底部居中 | 距底部约35px |
 
 ### 文字颜色自动判断
 
@@ -131,6 +144,8 @@ import requests
 from io import BytesIO
 import textwrap
 
+DISCLAIMER_TEXT = "AI创意叙事，不构成新闻报道"
+
 def overlay_text_on_image(
     image_url: str,
     novel_text: str,
@@ -138,7 +153,7 @@ def overlay_text_on_image(
     output_path: str = "/tmp/final_9x16.png"
 ) -> str:
     """
-    在长图上叠加微小说文字
+    在长图上叠加微小说文字 + 免责声明
 
     Args:
         image_url: 背景图片URL
@@ -157,6 +172,7 @@ def overlay_text_on_image(
 
     # 字体设置（尝试多种路径）
     font_size = 24
+    disclaimer_font_size = 12
     font_paths = [
         "/System/Library/Fonts/PingFang.ttc",
         "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
@@ -164,14 +180,17 @@ def overlay_text_on_image(
         "NotoSansSC-Regular.otf",
     ]
     font = None
+    disclaimer_font = None
     for fp in font_paths:
         try:
             font = ImageFont.truetype(fp, font_size)
+            disclaimer_font = ImageFont.truetype(fp, disclaimer_font_size)
             break
         except:
             continue
     if font is None:
         font = ImageFont.load_default()
+        disclaimer_font = ImageFont.load_default()
 
     # 排版参数
     margin = 50
@@ -182,6 +201,25 @@ def overlay_text_on_image(
     lines = textwrap.wrap(novel_text, width=chars_per_line)
 
     # 绘制文字
+    y = margin
+    for line in lines:
+        draw.text((margin, y), line, font=font, fill=text_color)
+        y += line_height
+
+    # 叠加免责声明（底部居中）
+    width, height = img.size
+    bbox = draw.textbbox((0, 0), DISCLAIMER_TEXT, font=disclaimer_font)
+    text_width = bbox[2] - bbox[0]
+    x = (width - text_width) // 2
+    disclaimer_y = height - 35
+    disclaimer_color = (180, 180, 180) if brightness < 128 else (100, 100, 100)
+    draw.text((x, disclaimer_y), DISCLAIMER_TEXT, font=disclaimer_font, fill=disclaimer_color)
+
+    img.save(output_path)
+    print(f"✅ 文字叠加完成: {output_path}")
+    print(f"   文字颜色: {'白色' if text_color == (255,255,255) else '黑色'}")
+    print(f"   免责声明: 已叠加")
+    return output_path
     y = margin
     for line in lines:
         draw.text((margin, y), line, font=font, fill=text_color)

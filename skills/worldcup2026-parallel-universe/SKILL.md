@@ -760,28 +760,32 @@ quality_score = Σ (维度评分 × 权重)
 
 ### Step 10 — 最终多模态交付 (MultiModal_Publisher)
 
-聚合所有步骤输出，调用生图API生成图片，**叠加微小说文字**，组装结构化交付包。
+聚合所有步骤输出，调用生图API生成图片，**叠加微小说文字和免责声明**，组装结构化交付包。
 
 **⚠️ 执行流程（必须按顺序完成）**：
 
 ```
-Step 10.1: 生成方图 (1:1) ──────────────────────→ 获取 image_1x1_url
+Step 10.1: 生成方图 (1:1) 和长图 (9:16) ─────────→ 获取 image_1x1_url 和 image_9x16_url
                     │
                     ▼
-Step 10.1: 生成长图背景 (9:16) ─────────────────→ 获取 image_9x16_url (纯背景)
+Step 10.1.1: ⚠️ 用户确认与反馈循环 ─────────────────→ 用户满意后继续
                     │
                     ▼
-Step 10.2: ⚠️ 叠加文字到长图 (必须执行!) ───────→ 获取最终长图 (已叠加文字)
-                    │                                    ↓
-                    │                           image_9x16_final_path
+Step 10.2.1: 为方图叠加免责声明 ──────────────────→ 获取 image_1x1_final_path
+                    │
                     ▼
-Step 10.3: 组装最终输出 ────────────────────────→ 返回完整 JSON
+Step 10.2.2: 为长图叠加微小说文字 + 免责声明 ──────→ 获取 image_9x16_final_path
+                    │
+                    ▼
+Step 10.3: 组装最终输出 ─────────────────────────→ 返回完整 JSON
 ```
 
 **⚠️ 关键提醒**：
-- **Step 10.2 不可跳过**：长图生成后必须执行文字叠加，否则长图只是纯背景图，不完整
+- **Step 10.1.1 不可跳过**：图片生成后必须让用户确认满意度，不满意则重新生成
+- **Step 10.2 不可跳过**：所有图片必须叠加免责声明，长图还需叠加微小说文字
+- **免责声明**：所有图片底部居中必须注明"AI创意叙事，不构成新闻报道"
 - **文字颜色必须正确**：根据 Step 8 的 `dominant_color_hex` 自动判断使用白色或黑色文字
-- **验证输出**：确认最终长图文件存在且文字清晰可读
+- **验证输出**：确认最终图片文件存在且文字清晰可读
 
 #### 10.1 图片生成
 
@@ -815,14 +819,77 @@ response = client.images.generate(
 image_url = response.data[0].url
 ```
 
-#### 10.2 文字叠加（长图专用）⚠️ 必须执行
+#### 10.1.1 用户确认与反馈循环 ⚠️ 必须执行
 
-**⚠️ 此步骤不可遗漏！长图必须叠加文字才算完成。**
+**⚠️ 此步骤不可跳过！图片生成后必须让用户确认满意度。**
 
-文生图模型无法精确渲染文字，需通过代码在生成的图片上叠加微小说原文。
+图片生成完成后，必须向用户展示生成的图片并收集反馈。
+
+**执行流程**：
+
+```
+Step 1: 展示生成的图片给用户
+        ↓
+Step 2: 询问用户满意度
+        ↓
+Step 3a: 用户满意 → 继续执行 Step 10.2
+        ↓
+Step 3b: 用户不满意 → 收集反馈意见 → 重新生成图片
+        ↓
+        重试（最多3次，超限提示用户）
+```
+
+**用户确认询问模板**：
+
+> **图片已生成完成！**
+>
+> 请查看上方图片，您对生成的效果满意吗？
+>
+> 1. **满意** → 我将继续完成后续步骤（叠加文字、组装最终输出）
+> 2. **不满意** → 请告诉我您希望调整的地方（如：色彩、构图、氛围、风格等），我将重新生成
+>
+> 请回复您的选择或反馈意见。
+
+**反馈处理流程**：
+
+| 用户反馈类型 | 处理方式 |
+|-------------|---------|
+| 用户回复"满意"/"可以"/"继续"等肯定词 | 继续执行 Step 10.2 |
+| 用户回复具体修改意见 | 收集反馈，调整 Step 9 的图片提示词，重新调用 Step 10.1 |
+| 用户回复"不满意"但无具体意见 | 询问具体调整方向（色彩/构图/氛围/风格） |
+
+**重试规则**：
+- 最多重试3次图片生成
+- 每次重试需根据用户反馈调整提示词
+- 超过3次仍不满意 → 提示用户："已达到最大重试次数(3次)，建议您接受当前效果或稍后重新开始创作。"
+
+**⚠️ 禁止行为**：
+- 禁止在用户未确认满意的情况下直接跳到 Step 10.2
+- 禁止假设用户满意而不询问
+
+#### 10.2 图片后处理：叠加免责声明 + 长图文字叠加 ⚠️ 必须执行
+
+**⚠️ 此步骤不可遗漏！所有图片必须叠加免责声明，长图还需叠加微小说文字。**
+
+文生图模型无法精确渲染文字，需通过代码在生成的图片上叠加内容。
+
+**执行顺序**：
+```
+Step 10.2.1: 为方图 (1:1) 叠加免责声明
+        ↓
+Step 10.2.2: 为长图 (9:16) 叠加微小说文字 + 免责声明
+        ↓
+Step 10.3: 组装最终输出
+```
+
+**免责声明要求**：
+- **内容**："AI创意叙事，不构成新闻报道"
+- **位置**：底部居中
+- **样式**：小字号（12px），半透明灰色，不干扰主视觉
+- **适用范围**：所有生成的图片（方图和长图）
 
 **执行检查清单**（执行前必须确认）：
-- [ ] 已获取长图背景图片 URL
+- [ ] 已获取方图和长图的背景图片 URL
 - [ ] 已准备好微小说原文（`novel_text`）
 - [ ] 已确定背景主色调（来自 Step 8 的 `dominant_color_hex`）
 - [ ] 已选择与背景形成高对比的文字颜色
@@ -843,11 +910,97 @@ import requests
 from io import BytesIO
 import textwrap
 
+DISCLAIMER_TEXT = "AI创意叙事，不构成新闻报道"
+
 def calculate_brightness(hex_color: str) -> float:
     """计算颜色亮度（0-255）"""
     hex_color = hex_color.lstrip('#')
     r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
     return (r * 299 + g * 587 + b * 114) / 1000
+
+def get_font(font_size: int) -> ImageFont:
+    """获取可用的中文字体"""
+    font_paths = [
+        "/System/Library/Fonts/PingFang.ttc",  # macOS
+        "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
+        "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",  # Linux
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux 备选
+        "/Windows/Fonts/msyh.ttc",  # Windows 微软雅黑
+        "NotoSansSC-Regular.otf",  # 当前目录
+    ]
+    for font_path in font_paths:
+        try:
+            return ImageFont.truetype(font_path, font_size)
+        except:
+            continue
+    return ImageFont.load_default()
+
+def add_disclaimer(img: Image.Image, brightness: float) -> Image.Image:
+    """
+    在图片底部居中添加免责声明
+
+    Args:
+        img: PIL Image 对象
+        brightness: 背景亮度值
+
+    Returns:
+        添加了免责声明的图片
+    """
+    draw = ImageDraw.Draw(img)
+    width, height = img.size
+
+    # 免责声明样式：小字号，半透明灰色，不干扰主视觉
+    disclaimer_font_size = 12
+    disclaimer_font = get_font(disclaimer_font_size)
+
+    # 根据背景亮度选择免责声明颜色（灰色系，半透明效果）
+    if brightness < 128:
+        disclaimer_color = (180, 180, 180, 200)  # 浅灰色（深色背景用）
+    else:
+        disclaimer_color = (100, 100, 100, 200)  # 深灰色（浅色背景用）
+
+    # 计算免责声明位置（底部居中，距底部20px）
+    bbox = draw.textbbox((0, 0), DISCLAIMER_TEXT, font=disclaimer_font)
+    text_width = bbox[2] - bbox[0]
+    x = (width - text_width) // 2
+    y = height - 35  # 距底部35px，留出一定边距
+
+    # 绘制免责声明
+    draw.text((x, y), DISCLAIMER_TEXT, font=disclaimer_font, fill=disclaimer_color[:3])
+
+    return img
+
+def process_square_image(
+    image_url: str,
+    dominant_color_hex: str,
+    output_path: str = "/tmp/final_1x1.png"
+) -> str:
+    """
+    为方图叠加免责声明
+
+    Args:
+        image_url: 生成的方图URL
+        dominant_color_hex: 背景主色调（来自Step 8，如 "#1a1a2e"）
+        output_path: 输出图片路径
+
+    Returns:
+        输出图片路径
+    """
+    # 下载图片
+    response = requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
+
+    # 计算背景亮度
+    brightness = calculate_brightness(dominant_color_hex)
+
+    # 添加免责声明
+    img = add_disclaimer(img, brightness)
+
+    # 保存结果
+    img.save(output_path)
+    print(f"✅ 方图免责声明叠加完成: {output_path}")
+
+    return output_path
 
 def overlay_text_on_image(
     image_url: str,
@@ -856,7 +1009,7 @@ def overlay_text_on_image(
     output_path: str = "/tmp/final_9x16.png"
 ) -> str:
     """
-    在生成的长图上叠加微小说文字
+    在生成的长图上叠加微小说文字 + 免责声明
 
     ⚠️ 此函数必须执行，不可跳过
 
@@ -878,66 +1031,59 @@ def overlay_text_on_image(
     brightness = calculate_brightness(dominant_color_hex)
     text_color = (255, 255, 255) if brightness < 128 else (0, 0, 0)
 
-    # 3. 字体设置（优先使用系统可用字体）
+    # 3. 字体设置
     font_size = 24
     line_height = int(font_size * 1.8)  # 行间距
     margin = 50
 
-    # 尝试多种中文字体路径
-    font_paths = [
-        "/System/Library/Fonts/PingFang.ttc",  # macOS
-        "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
-        "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",  # Linux
-        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux 备选
-        "/Windows/Fonts/msyh.ttc",  # Windows 微软雅黑
-        "NotoSansSC-Regular.otf",  # 当前目录
-    ]
-
-    font = None
-    for font_path in font_paths:
-        try:
-            font = ImageFont.truetype(font_path, font_size)
-            break
-        except:
-            continue
-
-    if font is None:
-        # 降级使用默认字体
-        font = ImageFont.load_default()
-        print("警告：未找到中文字体，使用默认字体")
+    font = get_font(font_size)
 
     # 4. 自动换行处理（每行约25个中文字符）
     chars_per_line = 25
     lines = textwrap.wrap(novel_text, width=chars_per_line)
 
-    # 5. 绘制文字
+    # 5. 绘制微小说文字
     y_position = margin
     for line in lines:
         draw.text((margin, y_position), line, font=font, fill=text_color)
         y_position += line_height
 
-    # 6. 保存结果
+    # 6. 叠加免责声明（底部居中）
+    img = add_disclaimer(img, brightness)
+
+    # 7. 保存结果
     img.save(output_path)
-    print(f"✅ 文字叠加完成，已保存至: {output_path}")
+    print(f"✅ 长图文字叠加完成，已保存至: {output_path}")
     print(f"   - 背景亮度: {brightness:.1f}")
-    print(f"   - 文字颜色: {'白色' if text_color == (255, 255, 255) else '黑色'}")
+    print(f"   - 微小说文字颜色: {'白色' if text_color == (255, 255, 255) else '黑色'}")
     print(f"   - 总行数: {len(lines)}")
+    print(f"   - 免责声明: 已叠加")
 
     return output_path
 
-# 执行示例
-# final_image_path = overlay_text_on_image(
-#     image_url="生成的图片URL",
+# ========== 执行示例 ==========
+
+# 方图处理（仅叠加免责声明）
+# final_1x1_path = process_square_image(
+#     image_url="方图URL",
+#     dominant_color_hex="#1a1a2e"  # 来自 Step 8
+# )
+
+# 长图处理（叠加微小说文字 + 免责声明）
+# final_9x16_path = overlay_text_on_image(
+#     image_url="长图URL",
 #     novel_text="微小说正文...",
 #     dominant_color_hex="#1a1a2e"  # 来自 Step 8
 # )
 ```
 
 **执行后验证**：
-- [ ] 检查输出文件是否存在
-- [ ] 确认文字清晰可读
-- [ ] 确认文字颜色与背景形成足够对比
-- [ ] 确认排版整齐，无文字溢出
+- [ ] 方图已叠加免责声明（底部居中，清晰可见）
+- [ ] 长图已叠加微小说文字（清晰可读）
+- [ ] 长图已叠加免责声明（底部居中，清晰可见）
+- [ ] 文字颜色与背景形成足够对比
+- [ ] 排版整齐，无文字溢出
+- [ ] 免责声明不影响主视觉美观度
 
 **常见问题修复**：
 
@@ -947,34 +1093,41 @@ def overlay_text_on_image(
 | 文字溢出 | 字号过大或行数过多 | 减小字号至 20px 或增加每行字符数 |
 | 字体缺失 | 系统无指定字体 | 使用上述代码中的字体路径列表 |
 | 排版混乱 | 未正确换行 | 使用 `textwrap.wrap()` 确保自动换行 |
+| 免责声明不清晰 | 颜色对比不足 | 调整免责声明颜色为更明显的灰色 |
 
 **文字叠加参数标准值**：
 
 | 参数 | 标准值 | 说明 |
 |------|--------|------|
-| 字体 | 思源黑体 / PingFang SC | 清晰易读的中文字体 |
-| 字号 | 24px | 300-500字篇幅最佳 |
+| 微小说字体 | 思源黑体 / PingFang SC | 清晰易读的中文字体 |
+| 微小说字号 | 24px | 300-500字篇幅最佳 |
 | 行间距 | 1.8倍字号 | 阅读舒适 |
-| 文字颜色 | 自动判断 | 根据背景亮度选择白/黑 |
+| 微小说文字颜色 | 自动判断 | 根据背景亮度选择白/黑 |
 | 边距 | 50px | 四周留白 |
 | 每行字符 | 25个中文字 | 确保排版整齐 |
+| 免责声明字号 | 12px | 小字号，不干扰主视觉 |
+| 免责声明颜色 | 半透明灰色 | 根据背景亮度调整深浅 |
+| 免责声明位置 | 底部居中 | 距底部35px |
 
 #### 10.3 最终输出
 
 **⚠️ 输出前必须确认**：
-- [ ] 方图（1:1）已生成（纯视觉，无文字）
-- [ ] 长图（9:16）**已完成文字叠加**（不是纯背景图！）
+- [ ] 方图（1:1）已叠加免责声明（底部居中）
+- [ ] 长图（9:16）已叠加微小说文字 + 免责声明
 - [ ] 文字叠加文件路径已记录
+- [ ] 免责声明清晰可见且不影响主视觉美观度
 
 **最终输出格式**：
 ```json
 {
   "novel_text": "微小说正文",
   "word_count": 字数,
-  "image_1x1_url": "方图URL（纯视觉）",
+  "image_1x1_url": "方图原始URL",
+  "image_1x1_final_path": "方图最终路径（已叠加免责声明，如 /tmp/final_1x1.png）",
   "image_9x16_url": "长图背景URL（生成原始图）",
-  "image_9x16_final_path": "长图最终路径（已叠加文字，如 /tmp/final_9x16.png）",
+  "image_9x16_final_path": "长图最终路径（已叠加文字+免责声明，如 /tmp/final_9x16.png）",
   "text_overlay_completed": true,
+  "disclaimer_added": true,
   "text_color_used": "white/black",
   "provenance_metadata": {
     "match_source": "事实来源",
