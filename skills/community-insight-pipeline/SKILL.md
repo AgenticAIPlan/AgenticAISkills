@@ -196,7 +196,8 @@ python3 -c "from PIL import Image; print(Image.open('/tmp/img_PLATFORMID.png').s
 # 任一边 > 2000px  → 仅依据文字上下文标注，不调用 Read
 
 # Step 4：将标注结果写入文件（含中文必须写文件，严禁 -c 内联执行）
-# 将以下内容写入 /tmp/batchNN_gen.py，再执行：
+# 用 Write 工具将以下 Python 内容写入 /tmp/batchNN_gen.py：
+```python
 import json
 annotations = [
   {
@@ -212,6 +213,7 @@ annotations = [
 result = {"model": "claude-sonnet-4-6", "annotations": annotations}
 with open("/tmp/ann_results.json", "w", encoding="utf-8") as f:
     json.dump(result, f, ensure_ascii=False, indent=2)
+```
 
 # Step 5：执行并保存
 python3 /tmp/batchNN_gen.py && python3 annotate.py --save /tmp/ann_results.json

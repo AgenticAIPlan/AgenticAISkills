@@ -14,7 +14,6 @@ import os
 import sys
 import sqlite3
 import argparse
-from datetime import datetime
 
 DB_PATH = os.getenv("DISCUSSION_DB_PATH", "discussions.db")
 
