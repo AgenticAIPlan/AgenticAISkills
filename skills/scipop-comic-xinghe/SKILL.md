@@ -287,7 +287,35 @@ for chunk in response:
 
 > ⚠️ **重要**：以上字段均为必填，Agent 生成脚本时必须确保每个 Panel 包含所有 5 个字段（id、scene、caption、image_prompt、fact_check），不得遗漏。
 
-**用户确认**: 展示 `recommended_panels` 与 `recommendation_reason`，询问用户是否采用。若不同意，询问期望数量（4-6），调整 `panels` 数组。
+**用户确认**: 向用户展示完整脚本，包含以下内容：
+
+```
+📋 连环画脚本预览
+
+推荐 Panel 数量：{recommended_panels} 格
+理由：{recommendation_reason}
+风格：{style_seed}
+
+--- Panels 内容 ---
+
+Panel 1:
+• 场景：{scene}
+• 旁白：{caption}
+• 图像提示：{image_prompt}
+• 事实核对：{fact_check}
+
+Panel 2:
+...
+
+--- 关键信息 ---
+{key_facts 摘要}
+
+---
+是否接受此脚本？
+[接受] [重新生成] [调整 Panel 数量]
+```
+
+> ⚠️ **重要**：输出给用户确认的脚本必须包含每个 Panel 的完整 5 个字段（id、scene、caption、image_prompt、fact_check），不得省略任何字段。用户需要看到完整信息才能做出确认决定。
 
 ---
 
