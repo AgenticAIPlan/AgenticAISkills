@@ -441,6 +441,7 @@ pip install openai
 **重要提示**：
 - `ernie-image-turbo` 对中文理解能力更强，**所有图片提示词必须使用中文撰写**
 - 图片必须**能体现出核心事件**（如"绝杀进球"、"点球大战失利"、"帽子戏法"等），通过视觉元素传达事件性质
+- ⚠️ **文生图模型无法精确渲染文字**，微小说原文文字将在 Step 10 通过代码叠加到图片上
 
 **参考文档**：撰写提示词时请参考 [image_prompt_guide.md](references/image_prompt_guide.md)，确保提示词清晰、优质、符合文生图最佳实践。
 
@@ -461,42 +462,54 @@ pip install openai
 - 社媒方图，朋友圈/Instagram
 - **必须体现核心事件**（通过主体意象、视觉元素）
 - 背景纹理与核心事件呼应，传达情绪氛围
-- 不嵌入文字，纯视觉呈现
+- 纯视觉呈现，无文字
 
 #### 9:16 竖版长图 (1024×1820)
 - 微博/小红书/Story
-- **必须嵌入微小说原文**（完整300字）
+- **生成纯背景图片**，为后续文字叠加预留空间
 - **背景需体现核心事件**（通过视觉元素暗示事件性质）
-- 文字排版要求：
-  - 从顶部开始，留有适当边距
-  - 行间距 1.5-2.0 倍
-  - 字体清晰可读，与背景形成对比
+- 背景设计要求：
+  - 顶部留有适当空间（便于叠加标题）
+  - 中央区域相对简洁（便于叠加正文）
   - 底部保留空间标注元数据
-- 背景与文字形成层次感
+  - 整体色调与文字形成对比（确保叠加后文字清晰可读）
 
 **图片生成提示词结构（中文）**：
+
+**方图提示词**：
 ```
-[纵横比]尺寸的海报，[主色调]背景，[辅助色]点缀，
+一张方形海报，
+[主色调]渐变背景，[辅助色]光晕点缀，
 画面中央呈现[核心事件的视觉表现]，
-[字体粗细]的中文字体作为主要视觉元素，
-[微小说原文]完整呈现在画面中央，
-[背景描述]作为微妙的背景纹理，
-极简布局，高对比度，编辑品质，
-[情绪关键词]，[核心事件关键词]，
-2026年世界杯氛围
+[背景描述]，
+[风格关键词]，[情绪关键词]，[核心事件关键词]，
+高清，编辑品质，2026年世界杯主题
+```
+
+**长图提示词**（纯背景，不含文字）：
+```
+一张竖版长图海报，
+[主色调]背景，[辅助色]点缀，
+画面呈现[核心事件的视觉表现]作为背景，
+顶部和中央区域留有简洁空间，
+[背景描述]作为微妙的纹理，
+[风格关键词]，[情绪关键词]，[核心事件关键词]，
+高清，编辑品质，2026年世界杯主题
 ```
 
 **提示词撰写要点**：
 1. **核心事件视觉化**：必须包含能体现事件性质的视觉元素
 2. 明确描述画面主体和背景
 3. 指定色彩基调（主色、辅助色）
-4. 说明文字排版方式（仅长图）
-5. 情绪关键词（如"热血"、"诗意"、"疏离"）
-6. 风格关键词（如"极简"、"editorial"、"电影感"）
+4. 情绪关键词（如"热血"、"诗意"、"疏离"）
+5. 风格关键词（如"极简"、"editorial"、"电影感"）
+6. **长图不要求嵌入文字**，文字将在 Step 10 通过代码叠加
 
 ### Step 10 — 最终多模态交付 (MultiModal_Publisher)
 
-聚合所有步骤输出，调用生图API生成最终图片，组装结构化交付包。
+聚合所有步骤输出，调用生图API生成图片，**叠加微小说文字**，组装结构化交付包。
+
+#### 10.1 图片生成
 
 **模型调用**：`ernie-image-turbo`（目标生图模型）
 
@@ -526,6 +539,94 @@ response = client.images.generate(
 
 # 获取图片 URL
 image_url = response.data[0].url
+```
+
+#### 10.2 文字叠加（长图专用）
+
+**重要**：文生图模型无法精确渲染文字，需通过代码在生成的图片上叠加微小说原文。
+
+**使用 Pillow (PIL) 叠加文字**：
+
+```python
+from PIL import Image, ImageDraw, ImageFont
+import requests
+from io import BytesIO
+
+def overlay_text_on_image(image_url: str, novel_text: str, output_path: str):
+    """
+    在生成的长图上叠加微小说文字
+
+    Args:
+        image_url: 生成的背景图片URL
+        novel_text: 微小说原文（约300字）
+        output_path: 输出图片路径
+    """
+    # 下载图片
+    response = requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
+
+    # 创建绘图对象
+    draw = ImageDraw.Draw(img)
+
+    # 字体设置（需提前准备好中文字体文件）
+    font_path = "fonts/NotoSansSC-Regular.otf"  # 或其他中文字体
+    font_size = 24
+    font = ImageFont.truetype(font_path, font_size)
+
+    # 文字颜色（根据背景色调调整）
+    text_color = (255, 255, 255)  # 白色文字
+
+    # 文字区域
+    margin = 50
+    line_height = font_size * 1.8  # 行间距
+    max_width = img.width - margin * 2
+
+    # 自动换行处理
+    lines = []
+    for char in novel_text:
+        # 简单换行逻辑，实际可使用 textwrap
+        pass
+
+    # 绘制文字
+    y_position = margin
+    for line in lines:
+        draw.text((margin, y_position), line, font=font, fill=text_color)
+        y_position += line_height
+
+    # 保存结果
+    img.save(output_path)
+    return output_path
+```
+
+**文字叠加参数建议**：
+
+| 参数 | 建议值 | 说明 |
+|------|--------|------|
+| 字体 | Noto Sans SC / 思源黑体 | 清晰易读的中文字体 |
+| 字号 | 20-28px | 根据300字篇幅调整 |
+| 行间距 | 1.6-2.0倍 | 确保阅读舒适 |
+| 文字颜色 | 白色(#FFFFFF) 或 黑色(#000000) | 与背景形成高对比 |
+| 边距 | 40-60px | 四周留白 |
+| 对齐方式 | 左对齐或居中 | 根据设计风格选择 |
+
+#### 10.3 最终输出
+
+**最终输出格式**：
+```json
+{
+  "novel_text": "微小说正文",
+  "word_count": 字数,
+  "image_1x1_url": "方图URL（纯视觉）",
+  "image_9x16_url": "长图URL（已叠加文字）",
+  "provenance_metadata": {
+    "match_source": "事实来源",
+    "retrieval_timestamp": "检索时间戳",
+    "confidence_summary": "置信度摘要"
+  },
+  "quality_status": "passed/degraded",
+  "disclaimer": "AI创意叙事，不构成新闻报道"
+}
+```
 
 # 或保存 base64 图片
 if hasattr(response.data[0], 'b64_json') and response.data[0].b64_json:
