@@ -634,6 +634,27 @@ pip install openai
 
 聚合所有步骤输出，调用生图API生成图片，**叠加微小说文字**，组装结构化交付包。
 
+**⚠️ 执行流程（必须按顺序完成）**：
+
+```
+Step 10.1: 生成方图 (1:1) ──────────────────────→ 获取 image_1x1_url
+                    │
+                    ▼
+Step 10.1: 生成长图背景 (9:16) ─────────────────→ 获取 image_9x16_url (纯背景)
+                    │
+                    ▼
+Step 10.2: ⚠️ 叠加文字到长图 (必须执行!) ───────→ 获取最终长图 (已叠加文字)
+                    │                                    ↓
+                    │                           image_9x16_final_path
+                    ▼
+Step 10.3: 组装最终输出 ────────────────────────→ 返回完整 JSON
+```
+
+**⚠️ 关键提醒**：
+- **Step 10.2 不可跳过**：长图生成后必须执行文字叠加，否则长图只是纯背景图，不完整
+- **文字颜色必须正确**：根据 Step 8 的 `dominant_color_hex` 自动判断使用白色或黑色文字
+- **验证输出**：确认最终长图文件存在且文字清晰可读
+
 #### 10.1 图片生成
 
 **模型调用**：`ernie-image-turbo`（目标生图模型）
@@ -666,75 +687,156 @@ response = client.images.generate(
 image_url = response.data[0].url
 ```
 
-#### 10.2 文字叠加（长图专用）
+#### 10.2 文字叠加（长图专用）⚠️ 必须执行
 
-**重要**：文生图模型无法精确渲染文字，需通过代码在生成的图片上叠加微小说原文。
+**⚠️ 此步骤不可遗漏！长图必须叠加文字才算完成。**
 
-**使用 Pillow (PIL) 叠加文字**：
+文生图模型无法精确渲染文字，需通过代码在生成的图片上叠加微小说原文。
+
+**执行检查清单**（执行前必须确认）：
+- [ ] 已获取长图背景图片 URL
+- [ ] 已准备好微小说原文（`novel_text`）
+- [ ] 已确定背景主色调（来自 Step 8 的 `dominant_color_hex`）
+- [ ] 已选择与背景形成高对比的文字颜色
+
+**文字颜色选择规则**（根据背景色调自动判断）：
+
+| 背景主色调 | 文字颜色 | RGB 值 | 判断逻辑 |
+|-----------|---------|--------|---------|
+| 深色（深红、深紫、深蓝、灰蓝等） | 白色 | `(255, 255, 255)` | 背景亮度 < 128 |
+| 浅色（白、淡黄、淡蓝等） | 黑色 | `(0, 0, 0)` | 背景亮度 ≥ 128 |
+| 不确定时 | 白色带描边 | 白色文字 + 黑色描边 | 确保可读性 |
+
+**完整代码示例（直接执行）**：
 
 ```python
 from PIL import Image, ImageDraw, ImageFont
 import requests
 from io import BytesIO
+import textwrap
 
-def overlay_text_on_image(image_url: str, novel_text: str, output_path: str):
+def calculate_brightness(hex_color: str) -> float:
+    """计算颜色亮度（0-255）"""
+    hex_color = hex_color.lstrip('#')
+    r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    return (r * 299 + g * 587 + b * 114) / 1000
+
+def overlay_text_on_image(
+    image_url: str,
+    novel_text: str,
+    dominant_color_hex: str,
+    output_path: str = "/tmp/final_9x16.png"
+) -> str:
     """
     在生成的长图上叠加微小说文字
+
+    ⚠️ 此函数必须执行，不可跳过
 
     Args:
         image_url: 生成的背景图片URL
         novel_text: 微小说原文（约300字）
+        dominant_color_hex: 背景主色调（来自Step 8，如 "#1a1a2e"）
         output_path: 输出图片路径
+
+    Returns:
+        输出图片路径
     """
-    # 下载图片
+    # 1. 下载背景图片
     response = requests.get(image_url)
     img = Image.open(BytesIO(response.content))
-
-    # 创建绘图对象
     draw = ImageDraw.Draw(img)
 
-    # 字体设置（需提前准备好中文字体文件）
-    font_path = "fonts/NotoSansSC-Regular.otf"  # 或其他中文字体
+    # 2. 根据背景亮度自动选择文字颜色
+    brightness = calculate_brightness(dominant_color_hex)
+    text_color = (255, 255, 255) if brightness < 128 else (0, 0, 0)
+
+    # 3. 字体设置（优先使用系统可用字体）
     font_size = 24
-    font = ImageFont.truetype(font_path, font_size)
-
-    # 文字颜色（根据背景色调调整）
-    text_color = (255, 255, 255)  # 白色文字
-
-    # 文字区域
+    line_height = int(font_size * 1.8)  # 行间距
     margin = 50
-    line_height = font_size * 1.8  # 行间距
-    max_width = img.width - margin * 2
 
-    # 自动换行处理
-    lines = []
-    for char in novel_text:
-        # 简单换行逻辑，实际可使用 textwrap
-        pass
+    # 尝试多种中文字体路径
+    font_paths = [
+        "/System/Library/Fonts/PingFang.ttc",  # macOS
+        "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
+        "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",  # Linux
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux 备选
+        "/Windows/Fonts/msyh.ttc",  # Windows 微软雅黑
+        "NotoSansSC-Regular.otf",  # 当前目录
+    ]
 
-    # 绘制文字
+    font = None
+    for font_path in font_paths:
+        try:
+            font = ImageFont.truetype(font_path, font_size)
+            break
+        except:
+            continue
+
+    if font is None:
+        # 降级使用默认字体
+        font = ImageFont.load_default()
+        print("警告：未找到中文字体，使用默认字体")
+
+    # 4. 自动换行处理（每行约25个中文字符）
+    chars_per_line = 25
+    lines = textwrap.wrap(novel_text, width=chars_per_line)
+
+    # 5. 绘制文字
     y_position = margin
     for line in lines:
         draw.text((margin, y_position), line, font=font, fill=text_color)
         y_position += line_height
 
-    # 保存结果
+    # 6. 保存结果
     img.save(output_path)
+    print(f"✅ 文字叠加完成，已保存至: {output_path}")
+    print(f"   - 背景亮度: {brightness:.1f}")
+    print(f"   - 文字颜色: {'白色' if text_color == (255, 255, 255) else '黑色'}")
+    print(f"   - 总行数: {len(lines)}")
+
     return output_path
+
+# 执行示例
+# final_image_path = overlay_text_on_image(
+#     image_url="生成的图片URL",
+#     novel_text="微小说正文...",
+#     dominant_color_hex="#1a1a2e"  # 来自 Step 8
+# )
 ```
 
-**文字叠加参数建议**：
+**执行后验证**：
+- [ ] 检查输出文件是否存在
+- [ ] 确认文字清晰可读
+- [ ] 确认文字颜色与背景形成足够对比
+- [ ] 确认排版整齐，无文字溢出
 
-| 参数 | 建议值 | 说明 |
+**常见问题修复**：
+
+| 问题 | 原因 | 解决方案 |
+|------|------|---------|
+| 文字不可见 | 颜色与背景相近 | 切换文字颜色（白↔黑）或添加描边 |
+| 文字溢出 | 字号过大或行数过多 | 减小字号至 20px 或增加每行字符数 |
+| 字体缺失 | 系统无指定字体 | 使用上述代码中的字体路径列表 |
+| 排版混乱 | 未正确换行 | 使用 `textwrap.wrap()` 确保自动换行 |
+
+**文字叠加参数标准值**：
+
+| 参数 | 标准值 | 说明 |
 |------|--------|------|
-| 字体 | Noto Sans SC / 思源黑体 | 清晰易读的中文字体 |
-| 字号 | 20-28px | 根据300字篇幅调整 |
-| 行间距 | 1.6-2.0倍 | 确保阅读舒适 |
-| 文字颜色 | 白色(#FFFFFF) 或 黑色(#000000) | 与背景形成高对比 |
-| 边距 | 40-60px | 四周留白 |
-| 对齐方式 | 左对齐或居中 | 根据设计风格选择 |
+| 字体 | 思源黑体 / PingFang SC | 清晰易读的中文字体 |
+| 字号 | 24px | 300字篇幅最佳 |
+| 行间距 | 1.8倍字号 | 阅读舒适 |
+| 文字颜色 | 自动判断 | 根据背景亮度选择白/黑 |
+| 边距 | 50px | 四周留白 |
+| 每行字符 | 25个中文字 | 确保排版整齐 |
 
 #### 10.3 最终输出
+
+**⚠️ 输出前必须确认**：
+- [ ] 方图（1:1）已生成（纯视觉，无文字）
+- [ ] 长图（9:16）**已完成文字叠加**（不是纯背景图！）
+- [ ] 文字叠加文件路径已记录
 
 **最终输出格式**：
 ```json
@@ -742,7 +844,10 @@ def overlay_text_on_image(image_url: str, novel_text: str, output_path: str):
   "novel_text": "微小说正文",
   "word_count": 字数,
   "image_1x1_url": "方图URL（纯视觉）",
-  "image_9x16_url": "长图URL（已叠加文字）",
+  "image_9x16_url": "长图背景URL（生成原始图）",
+  "image_9x16_final_path": "长图最终路径（已叠加文字，如 /tmp/final_9x16.png）",
+  "text_overlay_completed": true,
+  "text_color_used": "white/black",
   "provenance_metadata": {
     "match_source": "事实来源",
     "retrieval_timestamp": "检索时间戳",

@@ -86,56 +86,139 @@
 
 ## 文字叠加指南（长图专用）
 
+⚠️ **重要**：文字叠加是必须执行的步骤，不可跳过！
+
 ### 叠加流程
 
 ```
-Step 1: 文生图生成纯背景图片
+Step 1: 文生图生成纯背景图片（ernie-image-turbo）
     ↓
 Step 2: 下载生成的图片
     ↓
-Step 3: 使用 Pillow 叠加微小说文字
+Step 3: 根据背景主色调自动选择文字颜色（白/黑）
     ↓
-Step 4: 保存最终图片
+Step 4: 使用 Pillow 叠加微小说文字
+    ↓
+Step 5: 保存最终图片并验证文字可读性
 ```
 
-### Pillow 叠加文字示例
+### 文字颜色自动判断
+
+根据背景主色调亮度自动选择文字颜色：
+
+| 背景亮度 | 文字颜色 | RGB 值 |
+|---------|---------|--------|
+| < 128（深色背景） | 白色 | `(255, 255, 255)` |
+| ≥ 128（浅色背景） | 黑色 | `(0, 0, 0)` |
+
+```python
+def calculate_brightness(hex_color: str) -> float:
+    """计算颜色亮度（0-255）"""
+    hex_color = hex_color.lstrip('#')
+    r, g, b = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    return (r * 299 + g * 587 + b * 114) / 1000
+
+# 使用示例
+brightness = calculate_brightness("#1a1a2e")  # 深紫色背景
+text_color = (255, 255, 255) if brightness < 128 else (0, 0, 0)
+```
+
+### Pillow 完整叠加代码
 
 ```python
 from PIL import Image, ImageDraw, ImageFont
+import requests
+from io import BytesIO
 import textwrap
 
-def overlay_text(image_path: str, novel_text: str, output_path: str):
-    """在长图上叠加微小说文字"""
-    img = Image.open(image_path)
+def overlay_text_on_image(
+    image_url: str,
+    novel_text: str,
+    dominant_color_hex: str,
+    output_path: str = "/tmp/final_9x16.png"
+) -> str:
+    """
+    在长图上叠加微小说文字
+
+    Args:
+        image_url: 背景图片URL
+        novel_text: 微小说原文（约300字）
+        dominant_color_hex: 背景主色调（如 "#1a1a2e"）
+        output_path: 输出路径
+    """
+    # 下载图片
+    response = requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
     draw = ImageDraw.Draw(img)
 
-    # 字体设置
-    font = ImageFont.truetype("NotoSansSC-Regular.otf", 24)
+    # 根据背景亮度选择文字颜色
+    brightness = calculate_brightness(dominant_color_hex)
+    text_color = (255, 255, 255) if brightness < 128 else (0, 0, 0)
 
-    # 文字参数
+    # 字体设置（尝试多种路径）
+    font_size = 24
+    font_paths = [
+        "/System/Library/Fonts/PingFang.ttc",
+        "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
+        "/Windows/Fonts/msyh.ttc",
+        "NotoSansSC-Regular.otf",
+    ]
+    font = None
+    for fp in font_paths:
+        try:
+            font = ImageFont.truetype(fp, font_size)
+            break
+        except:
+            continue
+    if font is None:
+        font = ImageFont.load_default()
+
+    # 排版参数
     margin = 50
-    line_height = 40
-    max_width = img.width - margin * 2
+    line_height = int(font_size * 1.8)
+    chars_per_line = 25
 
     # 自动换行
-    lines = textwrap.wrap(novel_text, width=25)
+    lines = textwrap.wrap(novel_text, width=chars_per_line)
 
     # 绘制文字
     y = margin
     for line in lines:
-        draw.text((margin, y), line, font=font, fill="white")
+        draw.text((margin, y), line, font=font, fill=text_color)
         y += line_height
 
+    # 保存
     img.save(output_path)
+    print(f"✅ 文字叠加完成: {output_path}")
+    print(f"   文字颜色: {'白色' if text_color == (255,255,255) else '黑色'}")
+    return output_path
 ```
+
+### 排版参数标准
+
+| 参数 | 标准值 | 说明 |
+|------|--------|------|
+| 字号 | 24px | 适合300字篇幅 |
+| 行间距 | 1.8倍字号 | 阅读舒适 |
+| 边距 | 50px | 四周留白 |
+| 每行字符 | 25个中文字 | 确保排版整齐 |
 
 ### 推荐字体
 
 | 字体 | 特点 | 适用场景 |
 |------|------|----------|
-| 思源黑体 | 清晰易读，现代感 | 正文、现代风格 |
+| 思源黑体 / PingFang SC | 清晰易读，现代感 | 正文、现代风格 |
 | 思源宋体 | 典雅，文学感 | 诗意、怀旧风格 |
-| 阿里巴巴普惠体 | 简洁，商务感 | 正式、新闻风格 |
+| 微软雅黑 | Windows 默认 | 正式、新闻风格 |
+
+### 常见问题修复
+
+| 问题 | 解决方案 |
+|------|---------|
+| 文字不可见 | 检查背景亮度，切换文字颜色（白↔黑） |
+| 字体缺失 | 使用代码中的字体路径列表，或降级使用默认字体 |
+| 文字溢出 | 减小字号至20px或增加每行字符数至30 |
+| 排版混乱 | 使用 `textwrap.wrap()` 确保自动换行 |
 
 ---
 
