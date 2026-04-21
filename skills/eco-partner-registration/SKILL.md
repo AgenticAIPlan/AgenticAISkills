@@ -1,8 +1,6 @@
 ---
 name: eco-partner-registration
 description: "生态伙伴入库提报 Skill — 自动执行生态产品提报和伙伴协议提报两阶段流程，包括生态归属判断、产品认证表格填写、提报邮件生成、伙伴协议草案生成、工商信息收集、申请理由撰写和材料归档。触发词：伙伴入库、生态产品提报、伙伴协议提报、产品认证、提报材料、伙伴协议、合作协议、入库登记、申请理由、产品说明、认证表格、协议草案、提报流程、飞桨生态、文心生态、生态伙伴注册"
-author: tricia
-tags: [eco-partner, registration, product-certification, partner-agreement, paddlepaddle, ernie, workflow]
 ---
 
 # eco-partner-registration
