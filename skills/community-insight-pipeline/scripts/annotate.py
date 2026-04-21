@@ -17,7 +17,7 @@ import json
 import sqlite3
 import argparse
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
 DB_PATH = os.getenv("DISCUSSION_DB_PATH", "discussions.db")
 
@@ -77,7 +77,7 @@ def cmd_save(json_file: str):
         sys.exit(1)
 
     conn = get_conn()
-    now = datetime.utcnow().isoformat()
+    now = datetime.now(timezone.utc).isoformat()
     for ann in annotations:
         conn.execute(
             """

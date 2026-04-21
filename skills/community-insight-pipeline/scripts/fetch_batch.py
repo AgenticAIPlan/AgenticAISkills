@@ -15,7 +15,7 @@ import os
 import sys
 import time
 import sqlite3
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 
 try:
     import praw
@@ -165,7 +165,7 @@ def load_reddit() -> praw.Reddit:
 
 
 def now_iso() -> str:
-    return datetime.utcnow().isoformat()
+    return datetime.now(timezone.utc).isoformat()
 
 
 def safe_author(obj) -> str:
@@ -206,7 +206,7 @@ def post_to_row(submission, search_keywords: str) -> dict:
         "author":          safe_author(submission),
         "subreddit":       str(submission.subreddit),
         "score":           submission.score,
-        "created_at":      datetime.utcfromtimestamp(submission.created_utc).isoformat(),
+        "created_at":      datetime.fromtimestamp(submission.created_utc, tz=timezone.utc).isoformat(),
         "fetched_at":      now_iso(),
         "search_keywords": search_keywords,
         "image_urls":      extract_image_urls(submission),
@@ -232,7 +232,7 @@ def comment_to_row(comment, submission, search_keywords: str,
         "author":          safe_author(comment),
         "subreddit":       str(submission.subreddit),
         "score":           comment.score,
-        "created_at":      datetime.utcfromtimestamp(comment.created_utc).isoformat(),
+        "created_at":      datetime.fromtimestamp(comment.created_utc, tz=timezone.utc).isoformat(),
         "fetched_at":      now_iso(),
         "search_keywords": search_keywords,
         "image_urls":      "",

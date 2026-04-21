@@ -99,7 +99,7 @@ Agent 启动后，依次向用户确认以下信息，**全部确认完毕再进
 执行以下命令检查 `.env` 是否存在且包含必要字段：
 
 ```bash
-grep -E "REDDIT_CLIENT_ID|REDDIT_CLIENT_SECRET|REDDIT_USER_AGENT" .env 2>/dev/null
+grep -E "^(REDDIT_CLIENT_ID|REDDIT_CLIENT_SECRET|REDDIT_USER_AGENT)=.+" .env 2>/dev/null
 ```
 
 - **三项均存在且非空** → 告知用户"credentials 已就绪，继续执行"
@@ -194,9 +194,12 @@ curl -sL "IMAGE_URL" -o /tmp/img_PLATFORMID.png
 python3 -c "from PIL import Image; print(Image.open('/tmp/img_PLATFORMID.png').size)"
 # 宽/高均 <= 2000px → 可用 Read 工具查看图片内容
 # 任一边 > 2000px  → 仅依据文字上下文标注，不调用 Read
+```
 
 # Step 4：将标注结果写入文件（含中文必须写文件，严禁 -c 内联执行）
-# 用 Write 工具将以下 Python 内容写入 /tmp/batchNN_gen.py：
+
+用 Write 工具将以下 Python 内容写入 `/tmp/batchNN_gen.py`：
+
 ```python
 import json
 annotations = [
@@ -215,6 +218,7 @@ with open("/tmp/ann_results.json", "w", encoding="utf-8") as f:
     json.dump(result, f, ensure_ascii=False, indent=2)
 ```
 
+```bash
 # Step 5：执行并保存
 python3 /tmp/batchNN_gen.py && python3 annotate.py --save /tmp/ann_results.json
 
