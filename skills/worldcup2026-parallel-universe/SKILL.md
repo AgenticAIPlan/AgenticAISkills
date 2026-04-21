@@ -206,7 +206,7 @@ pip install openai
 ┌──────────────────────────────────────────────────────────────┐
 │  Phase 1 · 意图解构与契约锁定                                 │
 │  Step 1 │ Intent_Parser    │ 解析三元组 → conflict_archetype  │
-│  Step 2 │ Config_Manager   │ 锁定体裁契约 (300字微小说)        │
+│  Step 2 │ Config_Manager   │ 锁定体裁契约 (300-500字微小说)     │
 │         │ 📍 模型: ernie-5.0-thinking-preview                    │
 └────────────────────────────┬─────────────────────────────────┘
                              ▼
@@ -220,7 +220,7 @@ pip install openai
                              ▼
 ┌──────────────────────────────────────────────────────────────┐
 │  Phase 3 · 创意生产与多重审计                                 │
-│  Step 5 │ Creative_Writer  │ 高质微小说创作 (≤300字)           │
+│  Step 5 │ Creative_Writer  │ 高质微小说创作 (300-500字)        │
 │  Step 6 │ Safety_Guard     │ 合规审查 + 事实置信度核查          │
 │  Step 7 │ Reflexion_Critic │ 自评闭环 (σ>0.3 触发局部重写)     │
 │         │                  │ 上限3次 → 失败则熔断降级           │
@@ -331,7 +331,7 @@ pip install openai
 
 ### Step 2 — 体裁契约锁定 (Config_Manager)
 
-确认输出契约：体裁为社媒微小说，严格限300字，锁定叙事约束参数。
+确认输出契约：体裁为社媒微小说，篇幅300-500字，锁定叙事约束参数。
 
 **模型调用**：`ernie-5.0-thinking-preview`
 
@@ -339,7 +339,7 @@ pip install openai
 ```json
 {
   "genre": "社媒微小说",
-  "length_limit": 300,
+  "length_limit": {"min": 300, "max": 500},
   "pov_mode": "视角模式",
   "forbidden_patterns": ["禁止模式列表"],
   "tone_anchor": "英文基调描述短语"
@@ -419,7 +419,7 @@ pip install openai
 **模型调用**：`ernie-5.0-thinking-preview`
 
 **创作规则**：
-1. 严格控制在300字以内
+1. 严格控制在300-500字
 2. 精确遵循 pov_mode 视角
 3. **必须体现 `emotion_direction`（正向/负向情绪）**
 4. 至少嵌入2个 sensory_anchors
@@ -558,7 +558,7 @@ pip install openai
 **模型调用**：`ernie-5.0-thinking-preview`
 
 **硬性门槛**（必须通过，不纳入评分）：
-- 字数达标：≤ 300字，不通过则压缩后回流
+- 字数达标：300-500字，不通过则调整后回流
 
 **高质方法论校验维度**（按重要性权重）：
 
@@ -862,7 +862,7 @@ def overlay_text_on_image(
 
     Args:
         image_url: 生成的背景图片URL
-        novel_text: 微小说原文（约300字）
+        novel_text: 微小说原文（300-500字）
         dominant_color_hex: 背景主色调（来自Step 8，如 "#1a1a2e"）
         output_path: 输出图片路径
 
@@ -953,7 +953,7 @@ def overlay_text_on_image(
 | 参数 | 标准值 | 说明 |
 |------|--------|------|
 | 字体 | 思源黑体 / PingFang SC | 清晰易读的中文字体 |
-| 字号 | 24px | 300字篇幅最佳 |
+| 字号 | 24px | 300-500字篇幅最佳 |
 | 行间距 | 1.8倍字号 | 阅读舒适 |
 | 文字颜色 | 自动判断 | 根据背景亮度选择白/黑 |
 | 边距 | 50px | 四周留白 |
@@ -1049,7 +1049,7 @@ if hasattr(response.data[0], 'b64_json') and response.data[0].b64_json:
 |---------|------|-----------|
 | 人设漂移 σ | ≤ 0.30 | 变异 `tone_anchor` 参数后回流 Step 5 |
 | 情绪弧线拟合度 | ≥ 0.70 | 调整三幕字数分配后回流 Step 5 |
-| 字数达标 | ≤ 300字 | 压缩 Act 2 后回流 Step 5 |
+| 字数达标 | 300-500字 | 调整字数后回流 Step 5 |
 | **最大重试次数** | **3次** | 超限触发熔断，`quality_status: "degraded"` |
 
 ### 错误处理
@@ -1066,7 +1066,7 @@ if hasattr(response.data[0], 'b64_json') and response.data[0].b64_json:
 
 | 产物 | 规格 | 用途 |
 |------|------|------|
-| 微小说正文 | ≤300字中文 | 社媒文案 |
+| 微小说正文 | 300-500字中文 | 社媒文案 |
 | 1:1 方图 | 1024×1024 | 朋友圈 / Instagram |
 | 9:16 竖版长图 | 1024×1820 | 微博 / 小红书 / Story |
 | 溯源元数据 | JSON | 内容审核 / 存档 |
