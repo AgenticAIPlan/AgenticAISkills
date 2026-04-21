@@ -135,6 +135,9 @@ client = OpenAI(
     base_url="https://aistudio.baidu.com/llm/lmapi/v3"
 )
 
+# 负面提示词（避免常见图像生成问题）
+negative_prompt = "重复文字，多余的手，第三只手，变形的手指，人体结构错误，比例失调，模糊不清，风格混乱"
+
 # 生成图像
 response = client.images.generate(
     model="ernie-image-turbo",
@@ -146,7 +149,8 @@ response = client.images.generate(
         "seed": 42,
         "use_pe": True,
         "num_inference_steps": 8,
-        "guidance_scale": 1.0
+        "guidance_scale": 1.0,
+        "negative_prompt": negative_prompt  # 负面提示词
     }
 )
 
@@ -171,7 +175,8 @@ curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations' \n 
         "seed": 42,
         "use_pe": true,
         "num_inference_steps": 8,
-        "guidance_scale": 1.0
+        "guidance_scale": 1.0,
+        "negative_prompt": "重复文字，模糊不清，风格混乱"
     }'
 ```
 
@@ -188,6 +193,25 @@ curl --location 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations' \n 
 | `use_pe` | boolean | 否 | 是否使用优先增强，默认 `true` |
 | `num_inference_steps` | integer | 否 | 推理步数，默认 8，范围 1-50 |
 | `guidance_scale` | float | 否 | 引导比例，默认 1.0，范围 0-20 |
+| `negative_prompt` | string | 否 | **负面提示词**，避免生成不需要的内容，如"重复文字，多余的手，变形" |
+
+### 负面提示词推荐
+
+> ⚠️ **重要**: 为避免模型生成重复文字、多余肢体等问题，建议在每次调用时添加负面提示词。
+
+**推荐负面提示词**：
+
+```
+重复文字，多余的手，第三只手，变形的手指，人体结构错误，比例失调，模糊不清，风格混乱
+```
+
+**按场景定制**：
+
+| 场景 | 推荐负面提示词 |
+|-----|--------------|
+| 人物场景 | 多余的手，第三只手，变形的手指，人体结构错误，比例失调 |
+| 文字场景 | 重复文字，文字重叠，文字模糊 |
+| 通用场景 | 模糊不清，风格混乱，低质量 |
 
 ### 支持尺寸
 
