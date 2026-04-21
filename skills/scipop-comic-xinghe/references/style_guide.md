@@ -313,6 +313,8 @@ Ernie-image-turbo 对中文 Prompt 支持良好，以下技巧可提升效果：
 
 ## 全局合成注意事项
 
+> ⚠️ **重要变更**: 全局大图不再使用模型生成，而是**直接拼接用户确认的单 Panel 图像**。这样可以确保全局大图与用户确认的单 Panel 完全一致。
+
 ### 布局选择
 
 | Panel数 | 推荐布局 | 视觉效果 |
@@ -333,3 +335,42 @@ Ernie-image-turbo 对中文 Prompt 支持良好，以下技巧可提升效果：
 │  5  │  6  │
 └─────┴─────┘
 ```
+
+### 拼接实现方式
+
+使用 Pillow 库直接拼接用户确认的单 Panel 图像：
+
+```python
+from PIL import Image
+
+def create_comic_grid(panel_images, rows, cols, border_width=4):
+    """将多个 Panel 图像拼接成连环画"""
+    panel_width, panel_height = panel_images[0].size
+
+    # 计算画布尺寸
+    total_width = cols * panel_width + (cols + 1) * border_width
+    total_height = rows * panel_height + (rows + 1) * border_width
+
+    # 创建画布
+    canvas = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+
+    # 按阅读顺序粘贴
+    for idx, panel in enumerate(panel_images):
+        if idx >= rows * cols:
+            break
+        row, col = idx // cols, idx % cols
+        x = border_width + col * (panel_width + border_width)
+        y = border_width + row * (panel_height + border_width)
+        canvas.paste(panel, (x, y))
+
+    return canvas
+```
+
+### 拼接优势
+
+| 优势 | 说明 |
+|-----|------|
+| **风格一致** | 每个格子的风格与用户确认的单 Panel 完全相同 |
+| **内容一致** | 每个格子的内容与用户确认的单 Panel 完全相同 |
+| **旁白一致** | 每个格子的旁白位置、样式与单 Panel 完全相同 |
+| **无模型漂移** | 避免模型重新生成导致的风格和内容偏差 |

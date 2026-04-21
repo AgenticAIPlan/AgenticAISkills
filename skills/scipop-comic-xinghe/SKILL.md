@@ -1026,6 +1026,8 @@ curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content
 
 > 📖 详细规范参见 [references/style_guide.md](references/style_guide.md)
 
+> ⚠️ **重要变更**: 全局大图不再使用模型生成，而是**直接拼接用户确认的单 Panel 图像**。这样可以确保全局大图与用户确认的单 Panel 完全一致，避免风格漂移和内容不符的问题。
+
 #### Phase 3a: 布局确认
 
 根据 Panel 数量推荐布局：
@@ -1042,76 +1044,169 @@ curl -s https://aistudio.baidu.com/llm/lmapi/v3/chat/completions \n  -H "Content
 
 **布局合法性**: `行数 × 列数 ≥ Panel数`
 
-#### Phase 3b: 全局 Prompt 构建
+#### Phase 3b: 图像拼接（Pillow 实现）
 
-> ⚠️ **关键**: 使用 **Phase 2b 迭代后用户满意的最终 Prompt**，而非 Phase 1 原始 Prompt。
+> ⚠️ **核心原则**: 使用 **Phase 2 用户确认的单 Panel 图像**直接拼接，不调用模型重新生成。
 
-**合并规则**:
-1. 收集所有 Panel 用户满意的最终 `image_prompt`
-2. 添加连环画结构指令：`{grid} 格连环画，共 {num_panels} 格`
-3. 添加风格种子：`{style_seed}`
-4. 添加分隔要求：`每格之间用粗黑边框清晰分隔，按阅读顺序排列`
-5. 按顺序排列各 Panel 的最终 prompt
+**拼接逻辑**：
+1. 读取所有用户确认的单 Panel 图像（已渲染旁白）
+2. 根据布局计算画布尺寸
+3. 按阅读顺序（从左到右、从上到下）拼接图像
+4. 添加格子间的黑色分隔线
+5. 若有空余格子，填充白色背景
 
-**提示词长度建议**: 全局合成以 200-400 中文字符为宜。
-
-```
-{grid} 格连环画，共 {num_panels} 格，{style_seed}，
-每格之间用粗黑边框清晰分隔，按阅读顺序排列：
-第1格：{panel_1_final_image_prompt}
-第2格：{panel_2_final_image_prompt}
-...
-第N格：{panel_N_final_image_prompt}
-```
-
-若有空余格，末尾追加"剩余格子留白"。
-
-**示例**（假设 Panel 1 经过迭代优化后）:
-
-```
-# 原始 Prompt (Phase 1):
-一位科学家在实验室中，扁平插画风格
-
-# 迭代后最终 Prompt (Phase 2b 满意结果):
-一位戴眼镜的女科学家，穿着白色实验服，正激动地指着屏幕，现代实验室背景有显微镜和电脑，屏幕上显示橙红色的黑洞光环图像，扁平插画风格，清晰轮廓，科学配色，高质量
-
-# Phase 3 合并时使用迭代后的最终 Prompt
-```
-
-#### Phase 3c: 大图生成
-
-> ⚠️ **尺寸注意**: `ernie-image-turbo` 最大支持 `1376x768`，不支持 `2048x2048`。
+**完整实现代码**：
 
 ```python
-import base64
-from openai import OpenAI
+from PIL import Image, ImageDraw
+from typing import List, Tuple
 
-client = OpenAI(
-    api_key="your-api-key",
-    base_url="https://aistudio.baidu.com/llm/lmapi/v3"
-)
+def create_comic_grid(
+    panel_images: List[Image.Image],
+    rows: int,
+    cols: int,
+    border_width: int = 4,
+    border_color: Tuple[int, int, int] = (0, 0, 0)
+) -> Image.Image:
+    """将多个 Panel 图像拼接成连环画
 
-response = client.images.generate(
-    model="ernie-image-turbo",
-    prompt="【全局Prompt】",
-    n=1,
-    response_format="b64_json",
-    size="1376x768",  # 最大横向尺寸
-    extra_body={
-        "use_pe": True,
-        "num_inference_steps": 8,
-        "guidance_scale": 1.0
-    }
-)
+    Args:
+        panel_images: 用户确认的单 Panel 图像列表（已渲染旁白）
+        rows: 行数
+        cols: 列数
+        border_width: 格子边框宽度，默认 4px
+        border_color: 边框颜色，默认黑色
 
-image_bytes = base64.b64decode(response.data[0].b64_json)
-with open("global_comic.png", "wb") as f:
-    f.write(image_bytes)
+    Returns:
+        拼接后的连环画大图
+    """
+    if not panel_images:
+        raise ValueError("Panel 图像列表不能为空")
+
+    # 获取单个 Panel 尺寸（假设所有 Panel 尺寸相同）
+    panel_width, panel_height = panel_images[0].size
+
+    # 计算画布总尺寸
+    total_width = cols * panel_width + (cols + 1) * border_width
+    total_height = rows * panel_height + (rows + 1) * border_width
+
+    # 创建画布（白色背景）
+    canvas = Image.new('RGB', (total_width, total_height), (255, 255, 255))
+    draw = ImageDraw.Draw(canvas)
+
+    # 绘制边框线
+    for i in range(rows + 1):
+        y = i * (panel_height + border_width)
+        draw.line([(0, y), (total_width, y)], fill=border_color, width=border_width)
+    for j in range(cols + 1):
+        x = j * (panel_width + border_width)
+        draw.line([(x, 0), (x, total_height)], fill=border_color, width=border_width)
+
+    # 按阅读顺序粘贴 Panel（从左到右，从上到下）
+    for idx, panel_img in enumerate(panel_images):
+        if idx >= rows * cols:
+            break
+
+        row = idx // cols
+        col = idx % cols
+
+        # 计算粘贴位置（考虑边框）
+        x = border_width + col * (panel_width + border_width)
+        y = border_width + row * (panel_height + border_width)
+
+        # 确保 Panel 图像是 RGB 模式
+        if panel_img.mode != 'RGB':
+            panel_img = panel_img.convert('RGB')
+
+        canvas.paste(panel_img, (x, y))
+
+    return canvas
+
+
+def assemble_comic_from_files(
+    panel_paths: List[str],
+    rows: int,
+    cols: int,
+    output_path: str,
+    border_width: int = 4
+) -> str:
+    """从文件路径读取 Panel 图像并拼接
+
+    Args:
+        panel_paths: 单 Panel 图像文件路径列表
+        rows: 行数
+        cols: 列数
+        output_path: 输出文件路径
+        border_width: 边框宽度
+
+    Returns:
+        输出文件路径
+    """
+    panel_images = []
+    for path in panel_paths:
+        img = Image.open(path)
+        panel_images.append(img)
+
+    comic = create_comic_grid(panel_images, rows, cols, border_width)
+    comic.save(output_path, 'PNG')
+
+    return output_path
 ```
 
-#### Phase 3d: 大图反馈迭代（可选）
+**使用示例**：
 
-若用户对大图有整体调整意见，使用多模态反馈路径重新生成。
+```python
+# 假设用户已确认 4 个 Panel
+panel_paths = [
+    "panel_01_confirmed.png",
+    "panel_02_confirmed.png",
+    "panel_03_confirmed.png",
+    "panel_04_confirmed.png"
+]
+
+# 拼接为 2x2 布局
+output = assemble_comic_from_files(
+    panel_paths=panel_paths,
+    rows=2,
+    cols=2,
+    output_path="comic_2x2.png"
+)
+print(f"连环画已保存: {output}")
+```
+
+**5格布局处理（2x3 空出右下角）**：
+
+```python
+# 5格布局：2行3列，最后一个格子留白
+panel_paths_5 = [
+    "panel_01.png", "panel_02.png", "panel_03.png",
+    "panel_04.png", "panel_05.png"
+]
+
+# 直接调用，函数会自动处理空余格子
+# Panel 6 位置保持白色背景
+output_5 = assemble_comic_from_files(
+    panel_paths=panel_paths_5,
+    rows=2,
+    cols=3,
+    output_path="comic_2x3_5panels.png"
+)
+```
+
+#### Phase 3c: 大图反馈迭代（可选）
+
+若用户对布局不满意，可：
+1. 调整布局参数（rows, cols）重新拼接
+2. 调整边框宽度或颜色
+3. 返回 Phase 2 修改特定 Panel 后重新拼接
+
+#### 全局大图与单 Panel 一致性保证
+
+> ✅ **优势**：由于直接使用用户确认的单 Panel 图像拼接，全局大图与单 Panel 完全一致：
+> - 风格一致：每个格子的风格与用户确认的单 Panel 完全相同
+> - 内容一致：每个格子的内容与用户确认的单 Panel 完全相同
+> - 旁白一致：每个格子的旁白位置、样式与单 Panel 完全相同
+> - 无模型漂移：避免了模型重新生成导致的风格和内容偏差
 
 #### 全局大图旁白保留
 
@@ -1155,8 +1250,8 @@ Phase 3 全局合成时，`style_seed` 置于 Prompt 首部强调，防止风格
 1. **环境检查**: 确认 `AISTUDIO_API_KEY` 已设置
 2. **Phase 1**: 解析文章 → 确认 Panel 数量 → 保存 `style_seed`
 3. **Phase 1b**: 脚本校验 → 评估吸引力/清晰度/优质度 → 自动优化 → 展示校验结果
-4. **Phase 2**: 逐个生成 Panel → 渲染科普旁白 → 展示给用户确认 → 收集反馈 → 迭代优化
-5. **Phase 3**: 确认布局 → 构建全局 Prompt → 生成大图 → 渲染旁白 → 可选迭代
+4. **Phase 2**: 逐个生成 Panel → 渲染科普旁白 → 展示给用户确认 → 收集反馈 → 迭代优化 → **保存用户确认的 Panel 图像**
+5. **Phase 3**: 确认布局 → **直接拼接用户确认的 Panel 图像** → 生成大图 → 可选迭代
 6. **交付**: 保存所有 Panel 图像及最终大图（均含渲染后的旁白）
 
 ---
@@ -1170,7 +1265,13 @@ Phase 3 全局合成时，`style_seed` 置于 Prompt 首部强调，防止风格
 `ernie-image-turbo` 对中文 Prompt 效果最佳。
 
 **Q: 旁白文字是如何添加的？**
-旁白文字不是由图像生成模型直接生成，而是在模型生成图像后，通过 Pillow 库渲染到图像底部居中位置。用户看到的单 Panel 图像和全局大图都是已经渲染旁白后的成品。
+旁白文字不是由图像生成模型直接生成，而是在模型生成图像后，通过 Pillow 库渲染到图像底部居中位置。用户看到的单 Panel 图像是已经渲染旁白后的成品。
+
+**Q: 全局大图是如何生成的？**
+全局大图**不是由模型重新生成**，而是通过 Pillow 直接拼接用户确认的单 Panel 图像。这样可以确保全局大图与用户确认的单 Panel 完全一致，避免风格漂移和内容不符的问题。
+
+**Q: 全局大图与单 Panel 是否一致？**
+完全一致。由于全局大图是直接拼接用户确认的单 Panel 图像，每个格子的风格、内容、旁白都与用户确认的单 Panel 完全相同。
 
 **Q: base64 在 Windows 处理？**
 PowerShell: `[Convert]::ToBase64String([IO.File]::ReadAllBytes("panel_01.png"))`
