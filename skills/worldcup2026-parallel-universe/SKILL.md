@@ -347,9 +347,11 @@ pip install openai
 ```
 
 **禁止模式**：
-- 政治敏感表述
+- 政治敏感表述、可能引起争议的政治或宗教相关意象
 - 真实球员负面人身攻击
 - 未经证实的伤情细节
+- 低俗、违法或不符合公序良俗的内容
+- 近现代名人肖像（已确认出现在微小说正文中的球员除外）
 
 ---
 
@@ -424,6 +426,10 @@ pip install openai
 5. confidence_score < 0.6 的事实必须模糊化处理
 6. 遵守三幕字数分配
 7. 绝不使用 forbidden_patterns
+8. **严禁使用以下内容**：
+   - 可能引起争议的政治、宗教相关意象
+   - 低俗、违法或不符合公序良俗的内容
+   - 近现代名人肖像（三元组中确认的球员除外）
 
 **情绪方向创作指南**：
 
@@ -464,6 +470,7 @@ pip install openai
 
 **审计维度**：
 - `compliance_pass` - 合规是否通过
+- `forbidden_content_check` - 禁止内容检查（政治/宗教争议意象、低俗违法内容、近现代名人肖像）
 - `fact_confidence_pass` - 事实置信度是否通过
 - `overall_pass` - 整体是否通过
 
@@ -472,6 +479,8 @@ pip install openai
 {
   "compliance_pass": true/false,
   "compliance_issues": ["问题列表"],
+  "forbidden_content_check": true/false,
+  "forbidden_content_found": ["发现的禁止内容"],
   "fact_confidence_pass": true/false,
   "unfuzzified_risks": ["未模糊化风险"],
   "overall_pass": true/false,
@@ -616,6 +625,10 @@ pip install openai
 4. 情绪关键词（如"热血"、"诗意"、"疏离"）
 5. 风格关键词（如"极简"、"editorial"、"电影感"）
 6. **长图不要求嵌入文字**，文字将在 Step 10 通过代码叠加
+7. **严禁使用以下内容**：
+   - 可能引起争议的政治、宗教相关意象
+   - 低俗、违法或不符合公序良俗的内容
+   - 近现代名人肖像（三元组中确认的球员除外）
 
 ### Step 10 — 最终多模态交付 (MultiModal_Publisher)
 
