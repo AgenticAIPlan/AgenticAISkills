@@ -147,7 +147,7 @@ print('API 连接成功:', response.choices[0].message.content[:20])
 | "id" | 整数 | Panel 编号，从1开始递增 |
 | "scene" | 字符串 | 中文场景描述，包含主体、动作、环境、情绪 |
 | "caption" | 字符串 | 中文科普旁白，20字以内，简洁有力 |
-| "image_prompt" | 字符串 | 中文图像生成提示，80-150字，包含主体、动作、环境、细节、风格 |
+| "image_prompt" | 字符串 | 中文图像生成提示，100-200字，必须详细描述所有元素 |
 | "fact_check" | 字符串 | 本画面涉及的关键事实（人物、时间、地点、数据等） |
 
 ## 叙事框架要求（钩子-解释与案例-结论与展望）
@@ -155,11 +155,40 @@ print('API 连接成功:', response.choices[0].message.content[:20])
 - Panel 2 ~ N-1（解释与案例）：每个 Panel 只承载一个核心概念，逻辑递进
 - Panel N（结论与展望）：回应开篇，有情感或价值升华
 
-## 关键信息保留要求
-1. 必须保留文章中的关键数字（年份、数量、百分比等）
-2. 必须准确使用人物姓名和身份，不可张冠李戴
-3. 必须保留专有名词和科学术语的原文
-4. 时间、地点必须与文章记载一致
+## ⚠️ image_prompt 撰写核心要求（必须严格遵守）
+
+### 1. 必须严格遵循 scene 字段的场景设计
+scene 字段描述了画面的核心内容，image_prompt 必须完整还原 scene 中的所有元素：
+- 主体人物：姓名、外貌、服饰、动作
+- 环境背景：地点、时间、氛围
+- 关键道具：屏幕内容、标语、文件等
+
+### 2. 关键信息必须完整体现在 image_prompt 中
+
+| 信息类型 | 要求 | 示例 |
+|---------|------|------|
+| **具体数字** | 必须原样写出，不可省略 | "5500万光年"、"一年有期徒刑"、"1000元罚金" |
+| **具体文字** | 必须用引号标明，写明"清晰显示XX字样" | 手机屏幕清晰显示"差评"二字 |
+| **法条编号** | 必须写出具体编号和内容 | 刑法第221条"损害商业信誉、商品声誉罪" |
+| **专有名词** | 必须使用原文，不可意译或简化 | "事件视界望远镜(EHT)" |
+
+### 3. 文字内容显示规范
+画面中需要显示文字时，必须明确写出：
+- "屏幕/标语/文件上清晰显示'具体文字内容'"
+- 重要文字用引号标明，不可模糊描述如"显示XX内容"
+
+### 4. image_prompt 长度要求
+- 最少 100 字，最多 200 字
+- 每个关键元素都要有详细描述
+- 避免模糊表述，使用具体描述
+
+## 关键信息保留检查清单（生成每个 Panel 时必须核对）
+□ 是否保留了文章中的关键数字？（年份、数量、金额、刑期等）
+□ 是否准确使用了人物姓名和身份？
+□ 是否保留了专有名词和科学术语的原文？
+□ 时间、地点是否与文章记载一致？
+□ scene 中的所有元素是否都在 image_prompt 中体现？
+□ 需要显示的文字内容是否明确写出？（如标语、法条、判决结果等）
 
 仅输出原始 JSON，不要使用 markdown 代码块。
 ```
@@ -169,12 +198,36 @@ print('API 连接成功:', response.choices[0].message.content[:20])
 **image_prompt 撰写规范**（详见 [references/ernie_image_prompt_guide.md](references/ernie_image_prompt_guide.md)）：
 
 ```
-{主体特征}，{动作姿态}，{环境背景}，{细节元素}，{风格关键词}，{质量标签}
+{主体特征详细描述}，{具体动作姿态}，{环境背景细节}，{关键道具/文字内容}，{细节元素}，{风格关键词}
 ```
 
-**示例**：
+**对比示例**（展示如何写出高质量的 image_prompt）：
+
+| 场景 | ❌ 问题示例 | ✅ 正确示例 |
+|-----|-----------|-----------|
+| 显示屏幕内容 | 手机屏幕显示差评内容 | 手机屏幕清晰显示"差评"二字 |
+| 显示法条 | 电子屏显示刑法条文，红色高亮刑期 | 电子屏清晰显示刑法第221条"损害商业信誉、商品声誉罪，处二年以下有期徒刑"，刑期数字用红色大字体高亮 |
+| 显示标语 | 标语清晰 | 餐厅入口上方挂着金色立体大字标语"金杯银杯不如老百姓口碑" |
+| 显示判决结果 | 判决书标注数字 | 判决书上清晰标注"一年有期徒刑""1000元罚金" |
+
+**完整示例**：
+
 ```
-一位戴眼镜的女科学家，穿着白色实验服，正激动地指着屏幕，现代实验室背景有显微镜和电脑，屏幕上显示橙红色的黑洞光环图像，扁平插画风格，清晰轮廓，科学配色，高质量，连环画
+❌ 问题版本（太简略，缺少关键信息）：
+餐厅内景，王五坐在桌前举手机，屏幕显示差评内容，服务员持菜单站旁神情严肃，背景顾客抬头注视，暖光吊灯下氛围紧张，写实漫画风格
+
+✅ 正确版本（详细，关键信息完整）：
+餐厅内景，王五坐在桌前举着手机，手机屏幕清晰显示"差评"二字，服务员穿着制服手持菜单站在桌旁神情严肃，背景中其他顾客纷纷抬头看向王五，暖光吊灯下氛围紧张，写实漫画风格，清晰轮廓
+```
+
+**另一个示例**：
+
+```
+❌ 问题版本（法条信息缺失）：
+法庭场景，法官敲锤，电子屏显示刑法条文，红色高亮刑期部分，背景简化法庭元素，写实漫画风格
+
+✅ 正确版本（法条编号和内容完整）：
+法庭场景，法官敲法槌，前方电子屏清晰显示刑法第221条"损害商业信誉、商品声誉罪，处二年以下有期徒刑"和第246条"侮辱罪、诽谤罪，处三年以下有期徒刑"，刑期数字用红色大字体高亮突出，背景简化，写实漫画风格，清晰轮廓
 ```
 
 #### Panel 数量决策规则
@@ -398,7 +451,7 @@ Panel 2:
 - id（整数，从1开始）
 - scene（中文场景描述，非空）
 - caption（科普旁白，20字以内，非空）
-- image_prompt（图像生成提示，80-150字，非空）
+- image_prompt（图像生成提示，100-200字，非空）
 - fact_check（关键事实，非空）
 
 如缺少任何字段或字段为空，输出：
@@ -412,7 +465,33 @@ Panel 2:
   "passed": false
 }
 
-### 步骤二：质量评估（字段完整后进行）
+### 步骤二：image_prompt 质量校验（关键检查）
+
+#### 2.1 场景设计遵循检查
+检查每个 Panel 的 image_prompt 是否完整还原 scene 字段中的所有元素：
+- 主体人物是否描述详细？（姓名、外貌、服饰）
+- 动作姿态是否具体？
+- 环境背景是否完整？
+- 关键道具是否体现？
+
+#### 2.2 关键信息保留检查
+检查 image_prompt 中是否包含：
+- 具体数字：年份、金额、刑期、数量等是否原样写出？
+- 具体文字：屏幕/标语/文件上的文字是否用引号明确标出？
+- 专有名词：法条编号、术语、名称是否准确？
+- 人物信息：姓名、身份是否准确？
+
+#### 2.3 文字内容显示检查
+画面中需要显示文字时，image_prompt 是否明确写出：
+- "屏幕清晰显示'具体文字'"
+- "标语上写着'具体内容'"
+- ❌ 错误：屏幕显示差评内容（太模糊）
+- ✅ 正确：手机屏幕清晰显示"差评"二字
+
+#### 2.4 长度检查
+image_prompt 字数是否在 100-200 字之间？过短会导致细节缺失。
+
+### 步骤三：质量评估（前两步通过后进行）
 
 #### 吸引力评估
 - Panel 1（钩子）是否有视觉吸引力？
@@ -436,6 +515,17 @@ Panel 2:
     "passed": true,
     "panel_count": <Panel数量>,
     "all_fields_present": true
+  },
+  "image_prompt_check": {
+    "passed": <true/false>,
+    "issues": [
+      {
+        "panel_id": <Panel编号>,
+        "issue_type": "<scene_not_followed/key_info_missing/text_not_clear/too_short>",
+        "description": "<问题描述>",
+        "suggestion": "<改进建议，给出具体修改后的内容>"
+      }
+    ]
   },
   "overall_score": "<优秀/良好/一般/较差>",
   "dimensions": {
@@ -592,41 +682,128 @@ with open("panel_01.png", "wb") as f:
 **位置规范**: 科普旁白统一渲染在单 Panel 图像**底部居中**位置。
 
 **渲染参数**:
-- 字体大小：36px
-- 文字颜色：白色（#FFFFFF）
-- 背景样式：半透明黑色圆角矩形（70% 不透明度）
-- 描边效果：黑色 1px 描边，增强可读性
 
-**实现方式**（使用 Pillow）:
+| 参数 | 值 | 说明 |
+|-----|-----|------|
+| **字体大小** | 36px | 固定大小，适合 1024x1024 图像 |
+| **文字颜色** | 白色 (#FFFFFF) | RGB(255, 255, 255) |
+| **背景颜色** | 黑色半透明 | RGBA(0, 0, 0, 180)，约70%不透明度 |
+| **背景圆角** | 8px | 圆角矩形更美观 |
+| **描边效果** | 黑色 1px | 增强可读性 |
+| **底部留白** | 60px | 文字距离图像底部 |
+
+**⚠️ 字体路径（跨平台兼容）**:
+
+| 操作系统 | 字体路径 | 备注 |
+|---------|---------|------|
+| **macOS** | `/System/Library/Fonts/PingFang.ttc` | 苹方字体 |
+| **macOS 备选** | `/System/Library/Fonts/STHeiti Light.ttc` | 黑体 |
+| **Windows** | `C:/Windows/Fonts/msyh.ttc` | 微软雅黑 |
+| **Windows 备选** | `C:/Windows/Fonts/simhei.ttf` | 黑体 |
+| **Linux** | `/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf` | Droid Sans |
+| **Linux 备选** | `/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc` | Noto Sans CJK |
+
+**完整实现代码**（使用 Pillow）:
 
 ```python
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 
-def add_caption(image_bytes: bytes, caption: str) -> bytes:
-    """在图像底部居中添加科普旁白"""
+def get_chinese_font(size: int = 36) -> ImageFont.FreeTypeFont:
+    """获取中文字体，支持跨平台"""
+    font_paths = [
+        # macOS
+        "/System/Library/Fonts/PingFang.ttc",
+        "/System/Library/Fonts/STHeiti Light.ttc",
+        # Windows
+        "C:/Windows/Fonts/msyh.ttc",
+        "C:/Windows/Fonts/simhei.ttf",
+        # Linux
+        "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf",
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    ]
+
+    for font_path in font_paths:
+        try:
+            return ImageFont.truetype(font_path, size)
+        except (IOError, OSError):
+            continue
+
+    # 如果所有字体都找不到，使用默认字体
+    return ImageFont.load_default()
+
+def add_caption(image_bytes: bytes, caption: str, font_size: int = 36) -> bytes:
+    """在图像底部居中添加科普旁白
+
+    Args:
+        image_bytes: 原始图像字节数据
+        caption: 科普旁白文字（20字以内）
+        font_size: 字体大小，默认36px
+
+    Returns:
+        添加旁白后的图像字节数据
+    """
     if not caption:
         return image_bytes
 
+    # 打开图像
     image = Image.open(BytesIO(image_bytes))
+    if image.mode != 'RGBA':
+        image = image.convert('RGBA')
+
     draw = ImageDraw.Draw(image)
 
-    # 加载中文字体
-    font = ImageFont.truetype("/System/Library/Fonts/PingFang.ttc", 36)
+    # 获取中文字体
+    font = get_chinese_font(font_size)
 
     # 计算文字位置（底部居中）
     bbox = draw.textbbox((0, 0), caption, font=font)
     text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+
+    # 底部居中位置
     x = (image.width - text_width) // 2
-    y = image.height - 60  # 底部留白
+    y = image.height - 60  # 底部留白 60px
 
-    # 绘制半透明背景 + 文字
-    # ... 详见 scripts/generate_comic.py
+    # 绘制半透明圆角背景
+    padding = 10  # 内边距
+    bg_x1 = x - padding
+    bg_y1 = y - padding
+    bg_x2 = x + text_width + padding
+    bg_y2 = y + text_height + padding
 
+    # 创建半透明背景层
+    overlay = Image.new('RGBA', image.size, (0, 0, 0, 0))
+    overlay_draw = ImageDraw.Draw(overlay)
+    overlay_draw.rounded_rectangle(
+        [bg_x1, bg_y1, bg_x2, bg_y2],
+        radius=8,
+        fill=(0, 0, 0, 180)  # 黑色，70%不透明度
+    )
+    image = Image.alpha_composite(image, overlay)
+
+    # 重新获取 draw 对象
+    draw = ImageDraw.Draw(image)
+
+    # 绘制文字描边（黑色）
+    for adj_x in [-1, 0, 1]:
+        for adj_y in [-1, 0, 1]:
+            if adj_x != 0 or adj_y != 0:
+                draw.text((x + adj_x, y + adj_y), caption, font=font, fill=(0, 0, 0, 255))
+
+    # 绘制主文字（白色）
+    draw.text((x, y), caption, font=font, fill=(255, 255, 255, 255))
+
+    # 输出
     output = BytesIO()
     image.save(output, format='PNG')
     return output.getvalue()
 ```
+
+> ⚠️ **重要**：Agent 在执行渲染时必须：
+> 1. 使用 `get_chinese_font()` 函数获取字体，不要硬编码字体路径
+> 2. 字体大小固定为 **36px**，除非图像尺寸非 1024x1024
+> 3. 确保文字颜色为白色，背景为半透明黑色圆角矩形
 
 > 💡 **注意**: 旁白文字在生成图像**后**通过 Pillow 渲染，不是由图像生成模型直接生成。
 
