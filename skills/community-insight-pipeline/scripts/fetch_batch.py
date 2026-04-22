@@ -11,6 +11,8 @@ Reddit 批量抓取脚本 - 独立可运行版本
   3. 可选：调整 SUBREDDITS、DB_PATH、GLOBAL_POST_LIMIT
 """
 
+import argparse
+import json
 import os
 import sys
 import time
@@ -330,11 +332,26 @@ def run_task(label: str, query: str, mode: str, include_comments: bool,
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Reddit batch fetcher")
+    parser.add_argument(
+        "--tasks-file", metavar="FILE",
+        help="JSON file with task list (overrides built-in TASKS). "
+             'Format: [{"label":...,"query":...,"mode":...,"include_comments":...}]',
+    )
+    args = parser.parse_args()
+
+    if args.tasks_file:
+        with open(args.tasks_file, encoding="utf-8") as f:
+            raw = json.load(f)
+        tasks = [(t["label"], t["query"], t["mode"], t["include_comments"]) for t in raw]
+    else:
+        tasks = TASKS
+
     print(f"Fetch start  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"DB: {DB_PATH}")
     conn = init_db(DB_PATH)
     reddit = load_reddit()
-    for label, query, mode, include_comments in TASKS:
+    for label, query, mode, include_comments in tasks:
         run_task(label, query, mode, include_comments, reddit, conn)
     conn.close()
     print(f"\nAll done  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
