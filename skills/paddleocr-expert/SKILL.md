@@ -54,6 +54,8 @@ Follow this sequence unless the user clearly wants only a narrow answer:
    Read `references/troubleshooting.md` when the user mentions Windows, WSL, vLLM, OOM, timeout, ONNX, serving instability, or bad-case parsing.
 6. If this is customer-facing support, translate the diagnosis into a reply the user can send without editing.
 7. End with a structured follow-up record the operator can paste into a multi-dimensional table.
+8. Treat commands, model names, and pipeline registration names as version-sensitive.
+   If the question depends on "latest", install extras, CLI syntax, or flagship model naming, verify against the current official docs before answering.
 
 ## Default Recommendations
 
@@ -91,6 +93,30 @@ Read only what is needed:
   Use for current issue patterns, version alignment, Windows/WSL caveats, vLLM limits, concurrency expectations, and likely failure modes.
 - `references/customer-followup.md`
   Use when the user wants a direct customer reply, a CRM-style follow-up summary, or a multi-dimensional table row.
+- `references/version-maintenance.md`
+  Use when the answer depends on the latest command syntax, package extras, model naming, pipeline registration names, or when the skill itself needs periodic refresh.
+
+## Version Maintenance
+
+PaddleOCR and PaddleX move quickly. Keep this skill conservative on anything that may drift between minor releases.
+
+Always treat these as version-sensitive:
+
+- package install commands and optional extras
+- CLI subcommands and flags
+- PaddleX pipeline registration names
+- flagship model names such as `PaddleOCR-VL` vs `PaddleOCR-VL-1.5`
+- Windows, CUDA, and backend compatibility notes
+
+Before giving a customer-facing or implementation-facing answer on those topics:
+
+1. Check the current official docs or repo pages.
+2. Prefer the newest official naming over memory.
+3. State when advice is version-sensitive.
+4. If you cannot verify, say so and avoid overstating certainty.
+
+When maintaining this skill, periodically review the reference files for stale commands or renamed models.
+Prefer a monthly review cadence, and also refresh after major PaddleOCR, PaddleX, or PaddleOCR-VL releases.
 
 ## Customer Support Mode
 
