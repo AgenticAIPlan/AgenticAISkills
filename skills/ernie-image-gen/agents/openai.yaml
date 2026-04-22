@@ -1,0 +1,8 @@
+interface:
+  display_name: "ERNIE Image Gen"
+  short_description: "可配置的 ERNIE Image 文生图 Skill"
+  brand_color: "#2563EB"
+  default_prompt: "Use $ernie-image-gen with cloud config first: confirm base_url/auth_token_env/mode, guide the user to finish cloud setup if missing, and switch to local config only when the user explicitly asks for a local model."
+
+policy:
+  allow_implicit_invocation: true
