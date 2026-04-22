@@ -1,0 +1,59 @@
+# ================================
+# ERNIE Image 本地模型配置模板（仅在明确需要本地模型时使用）
+# ================================
+#
+# 使用场景：
+# - 用户明确要求“调用本地模型”
+# - 用户明确要求“使用本地权重 / 本地部署服务”
+# - 你已经在本机或局域网内启动了 ERNIE Image 服务
+#
+# 如果只是普通使用，优先用：
+# - cloud-config.portable.cn.yaml
+#
+# 最简单使用方式：
+#
+# 1) 改 base_url
+# 2) 确认 model_dir / weight_tar_path
+# 3) 可选设置输出目录：
+#    export ERNIE_IMAGE_ARTIFACT_DIR='/你想保存图片的目录'
+# 4) 执行：
+#    python3 scripts/health_check.py --config local-config.portable.cn.yaml
+#    python3 scripts/generate_image.py --config local-config.portable.cn.yaml --prompt '一只可爱的橘猫表情包'
+
+# 本地模型常见两种模式：
+# - openai_compatible：本地服务暴露 OpenAI 兼容接口
+# - native_generate：本地服务暴露原生 /generate 接口
+mode: openai_compatible
+
+# 本地或局域网服务地址
+# 示例：
+# - http://127.0.0.1:8188
+# - http://192.168.1.10:8188
+base_url: http://127.0.0.1:8188
+
+model: ernie-image
+
+# 本地服务通常没有鉴权；如果有鉴权，再改成环境变量名
+auth_token_env: ""
+
+openai_path: /v1/images/generations
+native_path: /generate
+health_path: /health
+
+# 本地部署上下文
+model_dir: ${ERNIE_IMAGE_MODEL_DIR:-/opt/ernie-image/model/ERNIE-Image}
+weight_tar_path: ${ERNIE_IMAGE_WEIGHT_TAR_PATH:-./ERNIE-Image.tar}
+
+request_timeout_sec: 180
+
+defaults:
+  width: 1024
+  height: 1024
+  num_inference_steps: 20
+  guidance_scale: 5.0
+  response_format: b64_json
+
+output:
+  artifact_dir: ${ERNIE_IMAGE_ARTIFACT_DIR:-./achievement}
+  save_metadata: true
+  filename_prefix: ernie-image-local
