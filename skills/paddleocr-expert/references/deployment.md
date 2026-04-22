@@ -54,6 +54,15 @@ python -m pip install "paddleocr[all]"
 - PaddleOCR docs describe the current 3.4.x line as matching PaddleX `>=3.4.0,<3.5.0`.
 - Do not mix arbitrary PaddleOCR, PaddleX, and PaddlePaddle versions when debugging. Check the version trio first.
 
+## Version-Sensitive Commands To Recheck
+
+Re-verify these on every maintenance pass because they are likely to drift:
+
+- install extras such as `paddleocr[doc-parser]`, `paddleocr[ie]`, and `paddleocr[all]`
+- CLI entry points such as `paddleocr doc_parser`
+- PaddleX serving commands and plugin installation flow
+- any example command that names a pipeline directly
+
 ## First Local Validation
 
 Before serving, validate on representative files:
