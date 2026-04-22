@@ -1,0 +1,4 @@
+interface:
+  display_name: "数据集搜索"
+  short_description: "搜索网络上数据集相关信息，包括开源数据集、企业发布、高质量参评等，生成结构化报告"
+  default_prompt: "帮我搜索最新的数据集资源"
