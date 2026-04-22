@@ -621,6 +621,49 @@
 
 ---
 
+## Step 5-7 推荐工具清单
+
+> 以下工具供参考，Agent 应根据用户环境和偏好推荐，不限定于特定平台。
+
+### 视频生成（图片+语音 → 视频）
+
+| 工具 | 官网 | 核心能力 | API | 价格 |
+|------|------|---------|-----|------|
+| **可灵 Kling**（快手） | https://kling.kuaishou.com | 多镜头叙事，多语言口型同步，最长3分钟 | 有 | 免费6次/日；Standard $6.99/月起 |
+| **百度蒸汽机 MuseSteamer** | 千帆平台API | 中文音视频一体化I2V，VBench全球第一 | 有（千帆API） | API 2.5元/秒起 |
+| **即梦 Seedance**（字节） | https://jimeng.jianying.com | 四模态混合输入，导演级可控 | 有限 | ~10次/日免费；会员~30元/月起 |
+| **Vidu**（清华系） | https://vidu.ai | 8K预览/4K导出，角色建模精度高 | 有 | 免费20次/月；$19.99/月起 |
+| **智谱清影** | https://chatglm.cn | CogVideoX架构，4K/60fps | 有（智谱开放平台） | 有免费额度 |
+| **Runway Gen-4.5** | https://runwayml.com | Video Arena #1，专业标杆，4K | 有 | 免费125积分；Standard $12/月起 |
+| **Pika** | https://pika.art | 轻量创意，社媒风格特效 | 有 | 免费80积分；$10/月起 |
+| **Hailuo**（MiniMax） | https://hailuoai.video | 极速生成，性价比高 | 有 | 免费200-500积分；$14.99/月起 |
+
+### AI 音乐/配乐生成
+
+| 工具 | 官网 | 核心能力 | API | 价格 |
+|------|------|---------|-----|------|
+| **Suno** | https://suno.com | V5人声近真人，Personas声线一致性 | 有 | 免费10首/日；Pro $10/月 |
+| **Udio** | https://udio.com | 48kHz立体声，Stem分轨导出，精准编辑 | 有（Enterprise API） | 免费10首/日；Standard $10/月 |
+| **AIVA** | https://aiva.ai | 专业影视配乐 | 有 | 免费；Pro 15欧元/月 |
+
+### 视频剪辑
+
+| 工具 | 官网 | 核心能力 | API | 价格 |
+|------|------|---------|-----|------|
+| **剪映/CapCut** | https://jianying.com | AI字幕/抠像/数字人，模板库最全 | 无公开API | 基础免费；SVIP 799元/年 |
+| **FFmpeg** | https://ffmpeg.org | 命令行标准，转码/剪辑/合并/滤镜，批量自动化 | 有（命令行） | 免费开源 |
+| **DaVinci Resolve** | https://www.blackmagicdesign.com/products/davinciresolve | 好莱坞级调色+剪辑+音频+特效一体 | 有限（脚本） | 免费；Studio $295一次性 |
+
+### 短剧制作工具链推荐
+
+| 环节 | 推荐工具 |
+|------|---------|
+| 视频素材生成（Step 7） | 可灵Kling / 即梦Seedance / 百度蒸汽机MuseSteamer |
+| 音乐/BGM（Step 7.3） | Suno（快速出歌）/ Udio（精细制作） |
+| 视频剪辑（Step 7.4） | 剪映（模板+AI字幕）/ FFmpeg（批量自动化） |
+
+---
+
 ## 短视频结构速览
 
 | 环节 | 开头 | 中间80% | 结尾 |
