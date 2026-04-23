@@ -1,0 +1,219 @@
+sources:
+- id: miit_zc
+  name: 中华人民共和国工业和信息化部
+  url: https://www.miit.gov.cn/zwgk/zcwj/wjfb/tz/
+  encoding: utf-8
+  parser:
+    list_selector: .m-gov-tm-publist ul li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.date::text
+- id: most_kj
+  name: 中华人民共和国科学技术部
+  url: https://www.most.gov.cn/kjbgz/
+  encoding: utf-8
+  parser:
+    list_selector: .news-list ul li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.date::text
+- id: cac_internet
+  name: 国家互联网信息办公室
+  url: https://www.cac.gov.cn/gzzt/ztzl/zt/wxdshm/A0920011118index_1.htm
+  encoding: utf-8
+  parser:
+    list_selector: .news-list li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text
+- id: ndrc_zc
+  name: 国家发展和改革委员会
+  url: https://www.ndrc.gov.cn/xxgk/zcfb/tz/
+  encoding: utf-8
+  parser:
+    list_selector: .news-list ul li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.date::text
+- id: mof_zc
+  name: 中华人民共和国财政部
+  url: https://www.mof.gov.cn/zhengwuxinxi/zhengcefabu/
+  encoding: utf-8
+  parser:
+    list_selector: .list-box ul li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.date::text
+- id: beijing_zc
+  name: 北京市人民政府
+  url: https://www.beijing.gov.cn/zhengce/zhengcefagui/
+  encoding: utf-8
+  parser:
+    list_selector: ul.list li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text
+- id: shanghai_zc
+  name: 上海市人民政府
+  url: https://www.shanghai.gov.cn/nw12344/
+  encoding: utf-8
+  parser:
+    list_selector: ul.news-list li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text
+- id: guangdong_zc
+  name: 广东省人民政府
+  url: https://www.gd.gov.cn/zwgk/wjk/qbwj/
+  encoding: utf-8
+  parser:
+    list_selector: ul.list li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text
+- id: shenzhen_zc
+  name: 深圳市人民政府
+  url: https://www.sz.gov.cn/cn/xxgk/zfxxgj/zcfg/
+  encoding: utf-8
+  parser:
+    list_selector: ul.news-list li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text
+- id: zhejiang_zc
+  name: 浙江省人民政府
+  url: https://www.zj.gov.cn/art/2026/4/8/art_1229268089_2541533.html
+  encoding: utf-8
+  parser:
+    list_selector: .news-list li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text
+- id: jiangsu_zc
+  name: 江苏省人民政府
+  url: http://www.jiangsu.gov.cn/col/col46147/index.html
+  encoding: utf-8
+  parser:
+    list_selector: ul.listbox li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.date::text
+- id: hubei_zc
+  name: 湖北省经济和信息化厅
+  url: http://jxt.hubei.gov.cn/fbjd/zc/zcjd/
+  encoding: utf-8
+  parser:
+    list_selector: .news-list li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.date::text
+- id: sichuan_zc
+  name: 四川省人民政府
+  url: https://www.sc.gov.cn/10462/c103041/newzfwj.shtml
+  encoding: utf-8
+  parser:
+    list_selector: .news-list li, .con-list li, ul li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text, .date::text
+- id: fujian_zc
+  name: 福建省人民政府
+  url: http://www.fujian.gov.cn/zwgk/zxwj/
+  encoding: utf-8
+  parser:
+    list_selector: .news-list li, .list-content li, ul li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text, .date::text
+- id: xiamen_zc
+  name: 厦门市人民政府
+  url: https://www.xm.gov.cn/zwgk/zcwj/zcjd/
+  encoding: utf-8
+  parser:
+    list_selector: ul.newslist li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.time::text
+- id: chongqing_zc
+  name: 重庆市人民政府
+  url: https://www.cq.gov.cn/zwgk/zfxxgkml/zcjd_120614/
+  encoding: utf-8
+  parser:
+    list_selector: .news-list li, .list li, ul li
+    title_selector: a::text
+    link_selector: a::attr(href)
+    date_selector: span.date::text, .time::text
+keywords:
+  ai:
+  - 人工智能
+  - AI
+  - 大模型
+  - 算法
+  - 智能算力
+  - 具身智能
+  - 生成式AI
+  data:
+  - 数据
+  - 数据要素
+  - 数据资产
+  - 数据流通
+  - 数据安全
+  - 数字经济
+  - 数据治理
+targets:
+  feishu:
+    enabled: false
+    webhook: https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_WEBHOOK_ID
+  dingding:
+    enabled: false
+    webhook: https://oapi.dingtalk.com/robot/send?access_token=YOUR_TOKEN
+  email:
+    enabled: false
+    smtp: smtp.example.com
+    port: 465
+    use_ssl: true
+    username: monitor@example.com
+    password: your_password
+    from: 政策追踪 <monitor@example.com>
+    to:
+    - user@example.com
+llm:
+  enabled: false
+  provider: deepseek
+  api_key: ''
+  base_url: https://api.deepseek.com/v1
+  model: deepseek-chat
+  budget_daily: 0.1
+  max_tokens: 200
+collector:
+  timeout_connect: 5
+  timeout_read: 10
+  max_retries: 2
+  max_concurrent: 5
+  retry_backoff: 2
+  user_agents:
+  - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
+    Chrome/120.0.0.0 Safari/537.36
+  - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
+    Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0
+  - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like
+    Gecko) Chrome/120.0.0.0 Safari/537.36
+  - Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0
+  - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like
+    Gecko) Version/17.1 Safari/605.1.15
+logging:
+  level: INFO
+  format: '[%(asctime)s] [%(levelname)s] [%(name)s] - %(message)s'
+  file: logs/policy_tracker.log
+  max_bytes: 10485760
+  backup_count: 5
+feishu_bitable:
+  enabled: true
+  app_id: cli_a962d69cebb85cd1
+  app_secret: YyP8ITeoLqDBlpG8Zp0rPcPxNFIBYJUF
+  base_token: J9Jpb3k23a68gqsoXPXclzyznMe
+  table_id: tblRyxNOrjCjhpjL
+ops:
+  parser_failure_threshold: 3
+  summary_enabled: false
+  summary_webhook: https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_SUMMARY_WEBHOOK

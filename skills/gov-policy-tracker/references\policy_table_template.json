@@ -1,0 +1,120 @@
+{
+  "name": "政策追踪数据表",
+  "fields": [
+    {
+      "name": "抓取日期",
+      "type": "date",
+      "options": {
+        "format": "yyyy-MM-dd HH:mm",
+        "includeTime": true
+      }
+    },
+    {
+      "name": "政策发布日期",
+      "type": "date",
+      "options": {
+        "format": "yyyy-MM-dd"
+      }
+    },
+    {
+      "name": "来源部门",
+      "type": "text"
+    },
+    {
+      "name": "地区",
+      "type": "single_select",
+      "options": {
+        "choices": [
+          {"name": "全国", "color": "blue"},
+          {"name": "北京", "color": "blueLight"},
+          {"name": "上海", "color": "blueLight"},
+          {"name": "广东", "color": "blueLight"},
+          {"name": "深圳", "color": "blueLight"},
+          {"name": "浙江", "color": "blueLight"},
+          {"name": "江苏", "color": "blueLight"},
+          {"name": "山东", "color": "blueLight"},
+          {"name": "其他", "color": "gray"}
+        ]
+      }
+    },
+    {
+      "name": "政策标题",
+      "type": "text"
+    },
+    {
+      "name": "政策摘要",
+      "type": "text"
+    },
+    {
+      "name": "原文链接",
+      "type": "url"
+    },
+    {
+      "name": "文件原名",
+      "type": "text"
+    },
+    {
+      "name": "政策类型",
+      "type": "single_select",
+      "options": {
+        "choices": [
+          {"name": "通知", "color": "red"},
+          {"name": "意见", "color": "orange"},
+          {"name": "办法", "color": "yellow"},
+          {"name": "规定", "color": "green"},
+          {"name": "方案", "color": "blue"},
+          {"name": "指南", "color": "indigo"},
+          {"name": "公告", "color": "purple"},
+          {"name": "其他", "color": "gray"}
+        ]
+      }
+    },
+    {
+      "name": "关键词标签",
+      "type": "multi_select",
+      "options": {
+        "choices": [
+          {"name": "人工智能", "color": "red"},
+          {"name": "AI", "color": "redLight"},
+          {"name": "大模型", "color": "redLight"},
+          {"name": "数据要素", "color": "blue"},
+          {"name": "数据安全", "color": "blueLight"},
+          {"name": "数据流通", "color": "blueLight"},
+          {"name": "算法", "color": "green"},
+          {"name": "数字经济", "color": "purple"}
+        ]
+      }
+    },
+    {
+      "name": "优先级",
+      "type": "single_select",
+      "options": {
+        "choices": [
+          {"name": "高", "color": "red"},
+          {"name": "中", "color": "yellow"},
+          {"name": "低", "color": "green"}
+        ]
+      }
+    },
+    {
+      "name": "处理状态",
+      "type": "single_select",
+      "options": {
+        "choices": [
+          {"name": "待处理", "color": "gray"},
+          {"name": "处理中", "color": "yellow"},
+          {"name": "已完成", "color": "green"}
+        ],
+        "default": "待处理"
+      }
+    },
+    {
+      "name": "相关政策",
+      "type": "text"
+    },
+    {
+      "name": "备注",
+      "type": "text"
+    }
+  ]
+}

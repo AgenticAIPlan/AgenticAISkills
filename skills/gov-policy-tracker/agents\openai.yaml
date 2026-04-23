@@ -1,0 +1,3 @@
+interface:
+  display_name: "政策追踪系统"
+  short_description: "自动追踪政府政策动态，监控AI/数据要素政策，推送到飞书/钉钉"
