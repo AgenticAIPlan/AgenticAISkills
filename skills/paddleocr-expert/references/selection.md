@@ -71,6 +71,14 @@ PaddleOCR 3.x docs state that PaddleOCR uses PaddleX underneath for inference an
 | PaddleOCR-VL | `PaddleOCR-VL` |
 | PaddleOCR-VL-1.5 | `PaddleOCR-VL-1.5` |
 
+## Version-Sensitive Names To Recheck
+
+Re-verify these during maintenance because naming can shift with new releases:
+
+- flagship VLM names such as `PaddleOCR-VL` and `PaddleOCR-VL-1.5`
+- PaddleX registration names used by `paddlex --serve`
+- whether a capability is positioned as a pipeline, model family, or package extra in the latest docs
+
 ## Common Recommendation Patterns
 
 - Existing `/ocr` API, wants table parsing too:
