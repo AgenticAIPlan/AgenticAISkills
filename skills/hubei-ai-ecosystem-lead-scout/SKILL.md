@@ -161,6 +161,92 @@ Recommended command:
 python3 scripts/build_lead_template.py --input raw_enterprises.txt --output-dir ./out
 ```
 
+
+## Sample Input And Output
+
+Use this section to understand the expected script input, generated spreadsheet shape, and analysis output style before first use.
+
+### Sample input: plain text enterprise list
+
+Create a `.txt` file with one enterprise name per line. Duplicate names are removed while preserving the first occurrence.
+
+```text
+武汉示例智能制造有限公司
+湖北示例医药科技集团
+武汉示例智能制造有限公司
+```
+
+Run:
+
+```bash
+python3 scripts/build_lead_template.py \
+  --input sample_enterprises.txt \
+  --output-dir ./out \
+  --source-label 政府重点企业名单 \
+  --status 新增
+```
+
+Generated files:
+- `out/hubei_ai_leads_template.csv`
+- `out/hubei_ai_leads_template.xlsx`
+
+Sample CSV output preview:
+
+```csv
+企业名称,所在城市,行业,核心产品/业务,企业规模,技术/研发情况,近期动态,AI需求判断,潜在应用场景,线索来源,分类结果,跟进建议,当前状态,更新时间
+武汉示例智能制造有限公司,,,,,,,,,政府重点企业名单,,,新增,
+湖北示例医药科技集团,,,,,,,,,政府重点企业名单,,,新增,
+```
+
+Field meaning in this sample:
+- `企业名称`: filled from the raw input list
+- `线索来源`: filled from `--source-label`
+- `当前状态`: filled from `--status`
+- other fields: intentionally left blank for a later research or enrichment agent to complete
+
+### Sample input: CSV enterprise list
+
+The script can read a CSV with a company-name column. Supported column names include `企业名称`, `公司名称`, `名称`, `company`, `company_name`, and `name`.
+
+```csv
+企业名称,所在城市,行业
+武汉示例光电科技股份有限公司,武汉,光电子
+宜昌示例化工集团有限公司,宜昌,先进材料
+```
+
+Run:
+
+```bash
+python3 scripts/build_lead_template.py --input sample_enterprises.csv --output-dir ./out
+```
+
+### Sample output: single enterprise analysis
+
+When an agent enriches one enterprise after public research, use this style. Keep the judgment concise, evidence-based, and decision-oriented.
+
+```markdown
+企业名称：武汉示例光电科技股份有限公司
+所在城市：武汉
+行业：光电子/智能制造
+核心产品/业务：光电器件、检测设备、智能产线相关产品
+技术/研发情况：公开信息显示企业设有研发团队，并持续发布技术升级和产线改造动态
+近期动态：近期企业公众号提到数字化产线升级、工业视觉检测和智能制造示范项目
+AI需求判断：存在潜在 AI 需求，重点在工业视觉、质检和生产数据分析
+潜在应用场景：视觉缺陷检测、设备预测性维护、工艺参数分析、员工 AI 应用培训
+分类结果：生态伙伴
+跟进建议：建议邀请参加 AI+制造技术交流，进一步确认研发团队和具体试点场景
+```
+
+### Sample output: batch screening table
+
+For batch screening, return a compact table and avoid long company profiles.
+
+| 企业名称 | 所在城市 | 行业 | AI需求判断 | 潜在应用场景 | 分类结果 | 跟进建议 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 武汉示例光电科技股份有限公司 | 武汉 | 光电子/智能制造 | 存在潜在需求 | 视觉质检、设备运维、数据分析 | 生态伙伴 | 建议技术交流 |
+| 湖北示例医药科技集团 | 宜昌 | 医药健康 | 待观察 | 研发知识库、文献分析、培训赋能 | 生态伙伴 | 建议先观察交流 |
+| 武汉示例商贸有限公司 | 武汉 | 商贸服务 | 暂未发现明显需求 | 暂无明确场景 | 暂不跟进 | 暂不投入重点资源 |
+
 ## Reusable Prompt Templates
 
 Use these prompts when another agent needs to call this skill with stable output expectations.
