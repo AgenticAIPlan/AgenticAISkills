@@ -1,0 +1,7 @@
+interface:
+  display_name: "AI 硬件生态监测"
+  short_description: "监控AI硬件上下游、模型厂商与算力生态动态"
+  default_prompt: "Use $ai-hardware-ecosystem-monitor to track AI hardware supply-chain news, model-vendor moves, compute infrastructure signals, and ecosystem risks."
+
+policy:
+  allow_implicit_invocation: true
