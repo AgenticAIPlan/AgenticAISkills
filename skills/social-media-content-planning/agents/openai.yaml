@@ -1,0 +1,4 @@
+interface:
+  display_name: "Social Media Content Planning"
+  short_description: "为开发者社交账号生成每日选题、草稿和独立审稿三件套"
+  default_prompt: "请基于现有素材或行业热点，为开发者社交账号生成今天的内容规划，输出选题、草稿和独立审稿建议。"
