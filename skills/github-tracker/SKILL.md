@@ -1,6 +1,6 @@
 ---
 name: github-tracker
-description: 用于观测推理工具技术进展的 GitHub PR 跟踪与分析
+description: 用于观测 vLLM 和 FastDeploy 技术进展的 GitHub PR 跟踪与分析
 ---
 
 # GitHub Tracker
@@ -11,12 +11,12 @@ description: 用于观测推理工具技术进展的 GitHub PR 跟踪与分析
 
 ## 使用场景
 
-观测推理工具技术进展，每天上午10点拉取一次 vllm、fastdeploy 这两个产品的 GitHub 上过去24小时的 PR 记录，生成简明扼要的 PR 分析报告。
+观测 vLLM 和 FastDeploy 的技术进展，每天上午10点拉取一次这两个产品 GitHub 上过去24小时的 PR 记录，生成简明扼要的 PR 分析报告。
 
 ## 输入要求
 
-- 无需用户额外提供输入，基于固定的时间窗口（过去24小时）和固定的产品（vllm、fastdeploy）
-- Agent 自动获取 GitHub PR 数据
+- 无需用户额外提供输入，基于固定的时间窗口（过去24小时）和固定的产品（vLLM、FastDeploy）
+- Agent 自动使用 GitHub CLI 或 GitHub API 获取 PR 数据
 
 ## 执行步骤
 
@@ -27,7 +27,12 @@ description: 用于观测推理工具技术进展的 GitHub PR 跟踪与分析
    - 新模型支持相关 PR
    - 新推理能力相关 PR
    - 其他技术改进 PR
-5. 根据技术价值和可宣传性对 PR 进行排序
+5. 根据技术价值和可宣传性对 PR 进行排序：
+   - 技术价值排序：新模型支持 > 新推理能力 > 技术改进 > 维护性
+   - 可宣传性排序标准：
+     - ⭐⭐⭐（高宣传性）：首个支持、重大突破、1M+ 上下文、全新架构
+     - ⭐⭐（中宣传性）：性能显著提升、支持热门模型、重要优化
+     - ⭐（普通宣传性）：普通优化、一般改进、维护性更新
 6. 生成简明扼要的分析报告
 
 ## 输出要求
@@ -40,4 +45,6 @@ description: 用于观测推理工具技术进展的 GitHub PR 跟踪与分析
 
 ## 参考资料
 
-如需补充上下文（如 GitHub API 使用说明、产品背景信息等），请将资料放在 `references/` 目录，并在此处说明用途。
+- `github-cli-usage.md`: GitHub CLI 使用说明，包含安装、认证和获取 PR 数据的命令示例
+- `vllm-intro.md`: vLLM 项目简介，包含核心特性、支持的模型类别和技术亮点
+- `fastdeploy-intro.md`: FastDeploy 项目简介，包含核心特性、支持的模型类型和推理引擎
