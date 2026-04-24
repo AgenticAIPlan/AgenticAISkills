@@ -133,6 +133,25 @@ def list_pr_files(owner: str, repo: str, pull_number: int, token: str) -> List[D
     return files
 
 
+def list_same_repo_pr_files(payload: Dict[str, Any], token: str) -> List[Dict[str, Any]]:
+    repository = payload.get("repository", {})
+    pull_request = payload.get("pull_request", {})
+
+    owner = repository.get("owner", {}).get("login") or ""
+    repo = repository.get("name") or ""
+    pull_number = pull_request.get("number") or payload.get("number")
+
+    if not owner or not repo or not pull_number:
+        raise RuntimeError("缺少 Pull Request 仓库上下文，无法读取当前 PR 的变更文件。")
+
+    return list_pr_files(owner, repo, int(pull_number), token)
+
+
+def is_diff_graph_error(exc: subprocess.CalledProcessError) -> bool:
+    details = "\n".join(filter(None, [exc.stderr, exc.stdout])).lower()
+    return "no merge base" in details or "bad revision" in details
+
+
 def path_exists_in_repo(owner: str, repo: str, path: str, ref: str, token: str) -> bool:
     encoded_path = urllib_parse.quote(path, safe="/")
     encoded_ref = urllib_parse.quote(ref, safe="")
@@ -443,7 +462,27 @@ def run_pr() -> int:
     except subprocess.CalledProcessError:
         pass
 
-    files = changed_files(f"origin/{base_ref}")
+    try:
+        files = changed_files(f"origin/{base_ref}")
+    except subprocess.CalledProcessError as exc:
+        if not is_diff_graph_error(exc):
+            raise
+
+        token = (os.getenv("GITHUB_TOKEN") or "").strip()
+        if not token:
+            print("PR 校验失败：")
+            print("- Git diff 无法确定 PR 改动，且缺少 `GITHUB_TOKEN` 回退读取当前 PR 文件列表。")
+            return 1
+
+        try:
+            pr_files = list_same_repo_pr_files(payload, token)
+        except RuntimeError as api_exc:
+            print("PR 校验失败：")
+            print(f"- Git diff 无法确定 PR 改动，且回退读取当前 PR 文件列表失败：{api_exc}")
+            return 1
+
+        files = [item.get("filename", "") for item in pr_files if item.get("filename")]
+
     errors: List[str] = []
 
     if base_ref == "dev":
