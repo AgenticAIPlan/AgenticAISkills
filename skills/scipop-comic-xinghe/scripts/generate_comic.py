@@ -31,6 +31,38 @@ except ImportError:
     sys.exit(1)
 
 
+def get_chinese_font(size: int = 36) -> ImageFont.FreeTypeFont:
+    """获取中文字体，支持跨平台
+
+    Args:
+        size: 字体大小
+
+    Returns:
+        Pillow ImageFont 对象
+    """
+    font_paths = [
+        "/System/Library/Fonts/PingFang.ttc",  # macOS
+        "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
+        "C:/Windows/Fonts/msyh.ttc",  # Windows 微软雅黑
+        "C:/Windows/Fonts/simhei.ttf",  # Windows 黑体
+        "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf",  # Linux
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux
+    ]
+
+    for font_path in font_paths:
+        if os.path.exists(font_path):
+            try:
+                return ImageFont.truetype(font_path, size)
+            except Exception:
+                continue
+
+    # 如果没有找到中文字体，尝试使用默认字体
+    try:
+        return ImageFont.truetype("arial.ttf", size)
+    except Exception:
+        return ImageFont.load_default()
+
+
 class SciPopComicGenerator:
     """科普连环画生成器 - 使用 OpenAI SDK"""
 
@@ -133,31 +165,8 @@ class SciPopComicGenerator:
         # 创建绘图对象
         draw = ImageDraw.Draw(image)
 
-        # 尝试加载中文字体，依次尝试常用字体
-        font_size = 36
-        font = None
-        font_paths = [
-            "/System/Library/Fonts/PingFang.ttc",  # macOS
-            "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
-            "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf",  # Linux
-            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux
-            "C:\Windows\Fonts\msyh.ttc",  # Windows 微软雅黑
-        ]
-
-        for font_path in font_paths:
-            if os.path.exists(font_path):
-                try:
-                    font = ImageFont.truetype(font_path, font_size)
-                    break
-                except Exception:
-                    continue
-
-        # 如果没有找到中文字体，使用默认字体
-        if font is None:
-            try:
-                font = ImageFont.truetype("arial.ttf", font_size)
-            except Exception:
-                font = ImageFont.load_default()
+        # 加载中文字体（复用跨平台字体加载函数）
+        font = get_chinese_font(size=36)
 
         # 计算文字尺寸
         bbox = draw.textbbox((0, 0), caption, font=font)
@@ -218,8 +227,19 @@ class SciPopComicGenerator:
 
         return output.getvalue()
 
-    def _generate_image(self, prompt: str, size: str = "1024x1024", max_retries: int = 3) -> bytes:
-        """生成图像，返回图像字节"""
+    def _generate_image(self, prompt: str, size: str = "1024x1024", max_retries: int = 3, negative_prompt: str = None) -> bytes:
+        """生成图像，返回图像字节
+
+        Args:
+            prompt: 图像生成提示词
+            size: 图像尺寸
+            max_retries: 最大重试次数
+            negative_prompt: 负面提示词（避免重复文字、多余肢体等问题）
+        """
+        # 默认负面提示词（避免常见图像生成问题）
+        if negative_prompt is None:
+            negative_prompt = "重复文字，多余的手，第三只手，变形的手指，人体结构错误，比例失调，模糊不清，风格混乱"
+
         for attempt in range(max_retries):
             try:
                 response = self.client.images.generate(
@@ -231,7 +251,8 @@ class SciPopComicGenerator:
                     extra_body={
                         "use_pe": True,
                         "num_inference_steps": 8,
-                        "guidance_scale": 1.0
+                        "guidance_scale": 1.0,
+                        "negative_prompt": negative_prompt  # 负面提示词
                     }
                 )
 
@@ -315,9 +336,125 @@ class SciPopComicGenerator:
 
         return data
 
+    def phase1b_validate_script(self, script: dict) -> dict:
+        """Phase 1b: 脚本内容校验
+
+        对生成的脚本进行质量校验，确保有吸引力、清晰、优质。
+
+        Args:
+            script: Phase 1 生成的脚本数据
+
+        Returns:
+            校验结果字典，包含 is_valid 和 validation_report
+        """
+        print("=" * 50)
+        print("Phase 1b: 脚本内容校验中...")
+
+        panels = script.get('panels', [])
+
+        # 1. 字段完整性校验
+        required_fields = ['id', 'scene', 'caption', 'image_prompt', 'fact_check']
+        missing_fields = []
+
+        for panel in panels:
+            panel_id = panel.get('id', 'unknown')
+            for field in required_fields:
+                if field not in panel or not panel[field]:
+                    missing_fields.append(f"Panel {panel_id} 缺少字段: {field}")
+
+        if missing_fields:
+            print("❌ 字段完整性校验失败:")
+            for msg in missing_fields:
+                print(f"  - {msg}")
+            return {"is_valid": False, "validation_report": {"error": "字段完整性校验失败"}}
+
+        print("✓ 字段完整性校验通过")
+
+        # 2. 调用 API 进行方法论评估
+        validation_prompt = """请对以下连环画脚本进行质量评估，从以下五个维度打分：
+1. 叙事吸引力（25%）：开篇是否抓人？叙事是否有起伏？黄金开篇、悬念留白、情绪起伏、认知反差
+2. 逻辑层次感（25%）：起承转合？因果链条？信息递进？无缝过渡？
+3. 内容准确性（20%）：关键信息保留？科学事实准确？术语正确？
+4. 画面可绘性（20%）：场景明确？主体清晰？动作可绘？
+5. 风格一致性（10%）：画风统一？比例协调？
+
+请输出一个 JSON 对象，包含以下结构：
+{
+  "overall_score": "<优秀/良好/一般/较差>",
+  "dimension_scores": {
+    "narrative_attractiveness": {"score": "<评级>", "issues": ["问题列表"]},
+    "logical_hierarchy": {"score": "<评级>", "issues": ["问题列表"]},
+    "content_accuracy": {"score": "<评级>", "issues": ["问题列表"]},
+    "visual_feasibility": {"score": "<评级>", "issues": ["问题列表"]},
+    "style_consistency": {"score": "<评级>", "issues": ["问题列表"]}
+  },
+  "summary": "整体评价摘要",
+  "improvement_suggestions": ["改进建议列表"]
+}
+
+仅输出原始 JSON，不要使用 markdown 代码块。以下是需要评估的脚本：
+""" + json.dumps(script, ensure_ascii=False, indent=2)
+
+        messages = [
+            {"role": "system", "content": "你是一位专业的连环画脚本质量评估专家。"},
+            {"role": "user", "content": validation_prompt}
+        ]
+
+        result = self._call_chat_api(messages, stream=True)
+        content = result["content"]
+
+        try:
+            if isinstance(content, str):
+                validation = json.loads(content)
+            else:
+                validation = content
+        except json.JSONDecodeError:
+            print("⚠️ 校验结果解析失败，跳过详细校验")
+            return {"is_valid": True, "validation_report": {"summary": "校验跳过"}}
+
+        # 输出校验结果
+        print(f"\n整体评价: {validation.get('overall_score', '未知')}")
+        print(f"摘要: {validation.get('summary', '')}")
+
+        dimension_scores = validation.get('dimension_scores', {})
+        for dim_name, dim_data in dimension_scores.items():
+            score = dim_data.get('score', '未知')
+            issues = dim_data.get('issues', [])
+            print(f"\n{dim_name}: {score}")
+            if issues:
+                for issue in issues:
+                    print(f"  - {issue}")
+
+        suggestions = validation.get('improvement_suggestions', [])
+        if suggestions:
+            print(f"\n改进建议:")
+            for suggestion in suggestions:
+                print(f"  - {suggestion}")
+
+        # 根据评分决定是否通过
+        overall_score = validation.get('overall_score', '')
+        is_valid = overall_score in ['优秀', '良好']
+
+        if is_valid:
+            print("\n✓ 脚本校验通过")
+        else:
+            print("\n⚠️ 脚本质量需要改进（当前为" + overall_score + "）")
+
+        return {
+            "is_valid": is_valid,
+            "validation_report": validation
+        }
+
     def phase2_generate_panel(self, image_prompt: str, style_seed: str, panel_id: int) -> bytes:
-        """Phase 2: 生成单个Panel图像"""
-        full_prompt = f"{image_prompt}，{style_seed}，高质量，连环画"
+        """Phase 2: 生成单个Panel图像
+
+        Args:
+            image_prompt: 图像生成提示词
+            style_seed: 风格种子
+            panel_id: Panel 编号
+        """
+        # 构建完整 prompt（包含质量保障关键词）
+        full_prompt = f"{image_prompt}，{style_seed}，高质量，连环画，画面清晰，人体结构正确"
 
         print(f"  生成 Panel {panel_id}...")
 
@@ -345,8 +482,8 @@ class SciPopComicGenerator:
             caption = panel.get("caption", "")
             fact_check = panel.get("fact_check", "")
 
-            # 构建完整 prompt（包含 style_seed）
-            full_prompt = f"{image_prompt}，{style_seed}，高质量，连环画"
+            # 构建完整 prompt（包含 style_seed 和质量保障关键词）
+            full_prompt = f"{image_prompt}，{style_seed}，高质量，连环画，画面清晰，人体结构正确"
 
             # 保存旁白
             captions[panel_id] = caption
@@ -418,33 +555,11 @@ class SciPopComicGenerator:
         if image.mode != 'RGBA':
             image = image.convert('RGBA')
 
-        # 根据格子大小调整字体
-        # 字体大小约为格子高度的 8%
+        # 根据格子大小调整字体（字体大小约为格子高度的 8%）
         font_size = max(16, min(32, int(cell_height * 0.08)))
 
-        # 加载中文字体
-        font = None
-        font_paths = [
-            "/System/Library/Fonts/PingFang.ttc",  # macOS
-            "/System/Library/Fonts/STHeiti Light.ttc",  # macOS 备选
-            "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf",  # Linux
-            "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",  # Linux
-            "C:\Windows\Fonts\msyh.ttc",  # Windows 微软雅黑
-        ]
-
-        for font_path in font_paths:
-            if os.path.exists(font_path):
-                try:
-                    font = ImageFont.truetype(font_path, font_size)
-                    break
-                except Exception:
-                    continue
-
-        if font is None:
-            try:
-                font = ImageFont.truetype("arial.ttf", font_size)
-            except Exception:
-                font = ImageFont.load_default()
+        # 加载中文字体（复用跨平台字体加载函数）
+        font = get_chinese_font(size=font_size)
 
         # 创建绘图对象
         draw = ImageDraw.Draw(image)
@@ -516,13 +631,67 @@ class SciPopComicGenerator:
 
         return output.getvalue()
 
-    def phase3_generate_global(self, style_seed: str, final_prompts: dict, captions: dict, layout: str, output_dir: Path) -> str:
-        """Phase 3: 生成全局大图
+    @staticmethod
+    def create_comic_grid(panel_paths: list, layout: str, border_width: int = 4) -> Image.Image:
+        """使用 Pillow 拼接 Panel 图像为连环画大图
 
         Args:
-            style_seed: 风格种子
-            final_prompts: Panel ID -> 最终 image_prompt 的映射（来自 Phase 2 迭代后的满意结果）
-            captions: Panel ID -> 旁白文字 的映射
+            panel_paths: Panel 图像路径列表（按 panel_id 排序）
+            layout: 布局（如 "2x2", "2x3"）
+            border_width: 边框宽度，默认 4px
+
+        Returns:
+            拼接后的图像
+        """
+        # 解析布局
+        rows, cols = map(int, layout.lower().split('x'))
+
+        # 按 panel_id 排序（确保面板按顺序排列）
+        sorted_paths = sorted(panel_paths, key=lambda p: int(Path(p).stem.split('_')[-1]))
+
+        # 加载所有图像
+        images = [Image.open(p) for p in sorted_paths]
+
+        # 假设所有图像尺寸相同（均为 1024x1024）
+        img_size = images[0].size  # (width, height)
+
+        # 计算总尺寸（包括边框）
+        total_width = cols * img_size[0] + (cols + 1) * border_width
+        total_height = rows * img_size[1] + (rows + 1) * border_width
+
+        # 创建新画布（白色背景）
+        canvas = Image.new('RGB', (total_width, total_height), color='white')
+
+        # 绘制黑色边框（整个画布边缘）
+        draw = ImageDraw.Draw(canvas)
+        draw.rectangle([(0, 0), (total_width - 1, total_height - 1)], outline='black', width=border_width)
+
+        # 依次粘贴图像
+        for idx, img in enumerate(images):
+            row = idx // cols
+            col = idx % cols
+
+            # 计算粘贴位置（包含边框）
+            x = border_width + col * (img_size[0] + border_width)
+            y = border_width + row * (img_size[1] + border_width)
+
+            canvas.paste(img, (x, y))
+
+            # 绘制格子边框（右侧和下侧）
+            if col < cols - 1:  # 右侧边框
+                border_x = x + img_size[0]
+                draw.rectangle([(border_x, y), (border_x + border_width - 1, y + img_size[1] - 1)], fill='black')
+            if row < rows - 1:  # 下侧边框
+                border_y = y + img_size[1]
+                draw.rectangle([(x, border_y), (x + img_size[0] - 1, border_y + border_width - 1)], fill='black')
+
+        return canvas
+
+    def phase3_generate_global(self, panel_paths: list, layout: str, output_dir: Path) -> str:
+        """Phase 3: 生成全局大图（使用 Pillow 拼接）
+
+        Args:
+            panel_paths: Panel 图像路径列表
             layout: 布局（如 2x2, 2x3）
             output_dir: 输出目录
 
@@ -530,33 +699,18 @@ class SciPopComicGenerator:
             全局大图路径
         """
         print("=" * 50)
-        print("Phase 3: 生成全局大图...")
+        print("Phase 3: 生成全局大图（拼接Panel图像）...")
 
-        num_panels = len(final_prompts)
+        num_panels = len(panel_paths)
 
-        # 使用 Phase 2 迭代后的最终 Prompt 构建全局 Prompt
-        panel_descriptions = "\n".join([
-            f"第{panel_id}格：{final_prompts[panel_id]}"
-            for panel_id in sorted(final_prompts.keys())
-        ])
+        print(f"  使用 {num_panels} 个 Panel 拼接生成全局图...")
 
-        global_prompt = f"""{layout} 格连环画，共 {num_panels} 格，{style_seed}，
-每格之间用粗黑边框清晰分隔，按阅读顺序排列：
-{panel_descriptions}"""
-
-        print(f"  使用 {num_panels} 个最终 Prompt 合并生成全局图...")
-
-        # 注意：ernie-image-turbo 最大支持 1376x768，这里用最大的横向尺寸
-        image_bytes = self._generate_image(global_prompt, size="1376x768")
-
-        # 在全局大图的每个格子底部居中添加科普旁白
-        if captions:
-            print(f"  为 {len(captions)} 个格子添加旁白...")
-            image_bytes = self._add_captions_to_global_comic(image_bytes, captions, layout)
+        # 使用拼接函数生成全局大图
+        global_image = self.create_comic_grid(panel_paths, layout, border_width=4)
 
         # 保存大图
         global_path = output_dir / "global_comic.png"
-        global_path.write_bytes(image_bytes)
+        global_image.save(global_path)
         print(f"已保存全局大图: {global_path}")
 
         return str(global_path)
@@ -568,6 +722,8 @@ def main():
     parser.add_argument("--output", "-o", default="./output/", help="输出目录")
     parser.add_argument("--layout", "-l", default=None, help="布局（如 2x2, 2x3）")
     parser.add_argument("--phase1-only", action="store_true", help="仅执行Phase 1")
+    parser.add_argument("--skip-validation", action="store_true", help="跳过Phase 1b校验")
+    parser.add_argument("--max-validation-retries", type=int, default=2, help="校验不通过时的最大重试次数")
 
     args = parser.parse_args()
 
@@ -603,6 +759,21 @@ def main():
         print("\n仅执行Phase 1模式，完成。")
         return
 
+    # Phase 1b: 脚本内容校验
+    if not args.skip_validation:
+        validation_result = generator.phase1b_validate_script(phase1_result)
+
+        # 保存校验结果
+        validation_path = output_dir / "phase1b_validation.json"
+        validation_path.write_text(json.dumps(validation_result.get('validation_report', {}), ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"Phase 1b 校验结果已保存: {validation_path}")
+
+        # 如果校验不通过，询问用户是否继续
+        if not validation_result.get('is_valid', True):
+            print("\n⚠️ 脚本校验未通过，建议优化脚本后重新生成。")
+            print("当前脚本已保存，如需继续生成，请使用 --skip-validation 参数。")
+            return
+
     # 推荐布局
     num_panels = phase1_result["recommended_panels"]
     layout_recommendations = {
@@ -616,9 +787,8 @@ def main():
     # Phase 2: 生成所有 Panel，返回图像路径、最终 prompts 和旁白
     panel_paths, final_prompts, captions = generator.phase2_generate_all(phase1_result, output_dir)
 
-    # Phase 3: 使用最终 prompts 和旁白生成全局大图
-    style_seed = phase1_result["style_seed"]
-    global_path = generator.phase3_generate_global(style_seed, final_prompts, captions, layout, output_dir)
+    # Phase 3: 使用 Panel 图像拼接生成全局大图（不再使用模型生成）
+    global_path = generator.phase3_generate_global(panel_paths, layout, output_dir)
 
     print("\n" + "=" * 50)
     print("✅ 连环画生成完成!")
