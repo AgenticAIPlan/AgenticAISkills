@@ -72,7 +72,7 @@ description: 监控 AI 相关多硬件生态新闻、产业动态与风险信号
 - **社交与视频平台**：微博、小红书、B站、抖音、X、LinkedIn
 - **资本与政策信息源**：财报摘要、监管公告、政策网站、行业协会与研究机构
 
-优先复用这些采集能力：
+以下采集能力属于**可选前置 Skill / 工具**，不是硬依赖：
 
 - `web-research`：行业媒体、论坛、官网、伙伴页面调研
 - `chrome-devtools`、`playwright-mcp`：复杂页面、动态页面、价格页、评论页抓取
@@ -81,7 +81,72 @@ description: 监控 AI 相关多硬件生态新闻、产业动态与风险信号
 - `xiaohongshu`：消费级硬件与装机内容搜索
 - `arxiv-search`：论文、研究资料、技术趋势检索
 
+如果部分 Skill / 工具不可用，按以下顺序降级：
+
+1. **优先保留核心来源**：先覆盖行业媒体、官网 / 公告页、社区、模型厂商 / 云厂商公告四类来源。
+2. **用可访问来源替代不可访问来源**：例如抓不到社交平台时，改用官网、媒体复盘、财报、政策站点和开发者社区补位。
+3. **允许用户直接提供样本文件**：如果用户已经有 JSON / JSONL / CSV，跳过采集，直接进入分析。
+4. **在报告中披露缺口**：明确写出哪些 Skill / 平台不可用、缺失了哪些来源、可能带来的偏差。
+
 重大风险样本必须尽量保留原始链接、发布时间、作者、机构、关键引用和二次来源链路。
+
+### 步骤 3.5：把采集结果整理成结构化样本
+
+采集完成后，不要直接把网页摘录塞给脚本。先把所有样本统一整理成结构化文件，再进入分析步骤。
+
+推荐落盘路径：
+
+- 优先：`./tmp/ai_hardware_ecosystem_records.jsonl`
+- 备选：`./tmp/ai_hardware_ecosystem_records.json`
+- 也支持：`./tmp/ai_hardware_ecosystem_records.csv`
+
+推荐使用 **JSONL**，因为更适合边采集边追加。每行一个 JSON 对象，字段遵循 `references/data_schema.md`。
+
+最小字段集：
+
+- `platform`
+- `title`
+- `content`
+- `published_at`
+
+建议尽量补充：
+
+- `author`
+- `url`
+- `source_type`
+- `entity_layer`
+- `company_type`
+- `component_type`
+- `brand`
+- `product`
+- `model_vendor`
+- `region`
+
+JSONL 单条样例：
+
+```json
+{"platform":"official_sites","title":"OpenAI expands infrastructure partnership","content":"OpenAI announces deeper infrastructure cooperation with cloud partners for large-scale training and inference.","author":"OpenAI","url":"https://example.com/openai-post","published_at":"2026-04-20T11:00:00+08:00","source_type":"official","entity_layer":"model_vendor","company_type":"model_vendor","component_type":"compute_service","brand":"OpenAI","product":"","model_vendor":"OpenAI","region":"global"}
+```
+
+如果使用 `.json`，脚本支持两种结构：
+
+```json
+[
+  {"platform":"news","title":"...","content":"...","published_at":"2026-04-20 09:30:00"}
+]
+```
+
+或：
+
+```json
+{
+  "records": [
+    {"platform":"news","title":"...","content":"...","published_at":"2026-04-20 09:30:00"}
+  ]
+}
+```
+
+整理完成后，再把该文件作为 `--input` 传给分析脚本。
 
 ### 步骤 4：生成监测计划或加载样本
 
@@ -98,10 +163,10 @@ python3 scripts/ai_hardware_ecosystem_monitor.py       --brand "NVIDIA"       --
 
 ### 步骤 5：运行分析脚本
 
-当你已经有结构化样本时，优先执行：
+当你已经把采集结果整理成结构化样本文件后，优先执行：
 
 ```bash
-python3 scripts/ai_hardware_ecosystem_monitor.py       --input records.json       --brand "NVIDIA"       --products "B200,GB200,HGX"       --competitors "AMD,Intel,Google"       --model-vendors "OpenAI,Anthropic,DeepSeek"       --start 2026-04-01       --end 2026-04-07       --module all       --risk-level high       --alert       --output report.md
+python3 scripts/ai_hardware_ecosystem_monitor.py       --input ./tmp/ai_hardware_ecosystem_records.jsonl       --brand "NVIDIA"       --products "B200,GB200,HGX"       --competitors "AMD,Intel,Google"       --model-vendors "OpenAI,Anthropic,DeepSeek"       --start 2026-04-01       --end 2026-04-07       --module all       --risk-level high       --alert       --output report.md
 ```
 
 脚本支持：
@@ -160,6 +225,8 @@ python3 scripts/ai_hardware_ecosystem_monitor.py       --input records.json     
 使用 `assets/report_template.md` 作为结构模板。
 
 ## 可复用能力
+
+以下能力均为**可选增强项**。如果当前环境没有对应 Skill / 工具，不要阻塞任务，直接用可访问来源采集并在报告中披露覆盖缺口。
 
 | 能力 | 典型用途 |
 |------|----------|
