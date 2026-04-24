@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import sys
 from pathlib import Path
@@ -38,6 +39,8 @@ COMPANY_KEYS = [
     "company_name",
     "name",
 ]
+
+COMPANY_KEYS_LOWER = {key.lower() for key in COMPANY_KEYS}
 
 
 def parse_args() -> argparse.Namespace:
@@ -90,28 +93,42 @@ def detect_company_key(row: dict) -> str | None:
     return None
 
 
+def row_looks_like_header(first_row: list[str], sample_text: str) -> bool:
+    normalized = [cell.strip().lower() for cell in first_row if cell.strip()]
+    if any(cell in COMPANY_KEYS_LOWER for cell in normalized):
+        return True
+    try:
+        return csv.Sniffer().has_header(sample_text)
+    except csv.Error:
+        return False
+
+
 def load_names(path: Path) -> list[str]:
     suffix = path.suffix.lower()
     if suffix == ".txt":
         return dedupe_keep_order(path.read_text(encoding="utf-8").splitlines())
     if suffix in {".csv", ".tsv"}:
         delimiter = "," if suffix == ".csv" else "\t"
-        with path.open("r", encoding="utf-8-sig", newline="") as handle:
-            reader = csv.DictReader(handle, delimiter=delimiter)
-            if reader.fieldnames:
-                names = []
-                for row in reader:
-                    key = detect_company_key(row)
-                    if key is None and reader.fieldnames:
-                        first_key = reader.fieldnames[0]
-                        value = row.get(first_key, "")
-                    else:
-                        value = row.get(key or "", "")
-                    names.append(value)
-                return dedupe_keep_order(names)
-        with path.open("r", encoding="utf-8-sig", newline="") as handle:
-            reader = csv.reader(handle, delimiter=delimiter)
-            return dedupe_keep_order(row[0] for row in reader if row)
+        raw_text = path.read_text(encoding="utf-8-sig")
+        rows = list(csv.reader(io.StringIO(raw_text), delimiter=delimiter))
+        non_empty_rows = [row for row in rows if row]
+        if not non_empty_rows:
+            return []
+
+        if row_looks_like_header(non_empty_rows[0], raw_text):
+            reader = csv.DictReader(io.StringIO(raw_text), delimiter=delimiter)
+            names = []
+            for row in reader:
+                key = detect_company_key(row)
+                if key is None and reader.fieldnames:
+                    first_key = reader.fieldnames[0]
+                    value = row.get(first_key, "")
+                else:
+                    value = row.get(key or "", "")
+                names.append(value)
+            return dedupe_keep_order(names)
+
+        return dedupe_keep_order(row[0] for row in non_empty_rows if row)
     if suffix == ".json":
         data = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(data, list):
