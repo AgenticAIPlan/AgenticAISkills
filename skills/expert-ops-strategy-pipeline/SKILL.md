@@ -1,6 +1,6 @@
 ---
 name: expert-ops-strategy-pipeline
-description: Build and maintain an end-to-end expert-operations content collection and strategy synthesis pipeline. Use this skill whenever the user wants to search the web for expert/community/private-domain/operator experience posts, score and tier sources, write results into Feishu Base, extract strategy cards from articles, merge duplicate strategies, or turn high-value strategies into a dated strategy note. Use it even if the user only says things like "搜集专家运营文章", "做策略库", "给内容打分", "沉淀到飞书多维表格", "提炼运营策略", or "生成专家运营策略笔记".
+description: Build and maintain an end-to-end expert-operations content collection and strategy synthesis pipeline. Use this skill when the user clearly wants the full workflow, or a substantial subset of it: building or maintaining a Feishu Base for expert-ops sources, collecting multi-source expert-ops content, scoring and tiering sources, extracting strategy cards, merging duplicate strategies, or publishing a dated strategy note from the resulting strategy library. Do not trigger this skill for lightweight requests such as only summarizing a few articles, only polishing a document, or only brainstorming strategy ideas with no database / scoring / extraction workflow.
 ---
 
 # Expert Ops Strategy Pipeline
@@ -25,6 +25,13 @@ description: Build and maintain an end-to-end expert-operations content collecti
 - 要把相似策略去重整合
 - 要把高分策略输出成策略笔记、研究报告、操作 SOP
 
+下面这些更轻的任务通常不要触发本 skill，除非用户同时明确要求表格沉淀、评分分层或策略库建设：
+
+- 只总结几篇文章
+- 只润色一篇笔记
+- 只头脑风暴策略方向
+- 只问“专家运营有哪些思路”
+
 ## Default Deliverables
 
 默认交付物有四层：
@@ -35,6 +42,28 @@ description: Build and maintain an end-to-end expert-operations content collecti
 4. `专家运营备选策略笔记-yyyymmdd`
 
 如果用户只要其中一层，也可以只执行到对应阶段，不必强行跑完整流水线。
+
+## Compatibility
+
+### Hard requirements by task type
+
+- `lark-base`：只要任务涉及建 Base、建表、读写记录、字段设计、公式字段，就把它视为硬依赖。
+- `web-research` 或同等联网检索能力：只要任务涉及“近三年”“最新”“全网搜索”“采集文章”，就把联网研究视为硬依赖。
+- `lark-doc`：只有当用户明确要求发布飞书文档时，才是硬依赖。
+
+### Optional but preferred dependencies
+
+- `firecrawl`：当用户要更深的页面抓取、整站抽取或网页交互时优先使用；如果不可用，不要阻塞全流程，改用浏览器检索和页面阅读。
+- `assess`：优先用来执行 0-100 分评分；如果不可用，仍然按本 skill 的评分口径手动完成评分。
+- `research-synthesis`：优先用来组织整合策略的主题、洞察和机会；如果不可用，直接按本 skill 里的默认策略笔记结构输出。
+- `writing-documentation-with-diataxis`：优先用来约束最终文档写成 How-to Guide；如果不可用，仍然按“可执行优先”的原则输出，不要停止任务。
+
+### Fallback rules
+
+- 缺少联网能力：明确说明无法验证“近三年 / 最新”范围，只能基于已提供资料或本地上下文给出非联网版本。
+- 缺少 `lark-base`：先输出建议表结构、字段定义和待写入内容，不要假装已经写进 Base。
+- 缺少 `lark-doc`：先输出 Markdown 成品，并明确“尚未发布到飞书文档”。
+- 缺少 `firecrawl` / `assess` / `research-synthesis` / `writing-documentation-with-diataxis`：降级执行，不中断主流程。
 
 ## Tool Selection
 
@@ -138,6 +167,35 @@ description: Build and maintain an end-to-end expert-operations content collecti
 - `内容分层`
 - `参考分值`
 - `入库状态`
+
+##### 字段归属 contract
+
+把字段归属写清楚，避免 agent 同时写自动列和手工列：
+
+- **公式字段 / 自动字段（formula-owned，agent 不写）**
+  - `参考总分(自动)`
+  - `内容分层(自动)`
+  - `是否值得参考(自动)`
+- **评分输入字段（agent-owned，agent 应写）**
+  - `专业可信度分`
+  - `方法可复用分`
+  - `证据完整度分`
+  - `业务匹配度分`
+  - `落地可操作分`
+  - `时效性分`
+  - `风险透明度分`
+  - `评分依据`
+  - `入库状态`
+- **兼容字段 / 手工镜像字段（default: do not write）**
+  - `内容分层`
+  - `参考分值`
+
+默认 contract：
+
+1. agent 只写评分输入字段，不写任何 `(...自动)` 字段。
+2. 如果表里同时存在 `内容分层` / `参考分值` 和它们的自动版本，默认把自动列视为唯一真值来源。
+3. 只有用户明确要求维护手工镜像列时，才同步写 `内容分层` / `参考分值`。
+4. 当手工列与自动列冲突时，不回写自动列；以自动列为准，并在结果里说明冲突。
 
 #### 专家运营策略拆解库
 
