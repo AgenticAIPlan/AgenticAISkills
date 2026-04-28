@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AICA 第十期 · 头像生成器</title>
+<style>
+  :root {
+    --blue-dark: #0A2C8C;
+    --blue-mid:  #1565C0;
+    --blue-light:#1E88E5;
+    --bg:        #F0F4FF;
+    --card:      #FFFFFF;
+    --text:      #1a2340;
+    --muted:     #6b7a99;
+    --radius:    16px;
+    --shadow:    0 8px 32px rgba(21,101,192,.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  header {
+    width: 100%;
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+    padding: 28px 0 24px; text-align: center; color: white;
+    box-shadow: 0 4px 20px rgba(10,44,140,.3); position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,.08) 0%, transparent 60%);
+  }
+  header h1 { font-size: 26px; font-weight: 800; letter-spacing: 3px; position: relative; }
+  header p  { font-size: 13px; opacity: .8; margin-top: 6px; letter-spacing: 1px; position: relative; }
+
+  main {
+    width: 100%; max-width: 900px;
+    padding: 36px 20px 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;
+  }
+  @media (max-width: 640px) { main { grid-template-columns: 1fr; padding: 24px 16px 48px; } }
+
+  .card {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 24px 28px 28px;
+  }
+  .card h2 {
+    font-size: 15px; font-weight: 700; color: var(--blue-mid);
+    margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+  }
+  .card h2 .badge {
+    background: var(--blue-mid); color: white; border-radius: 50%;
+    width: 22px; height: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+
+  /* ── Tab bar ── */
+  .tab-bar {
+    display: flex; gap: 8px; margin-bottom: 22px;
+    border-bottom: 2px solid #e0e8f7; padding-bottom: 0;
+  }
+  .tab {
+    padding: 8px 18px; border: none; background: transparent;
+    font-size: 14px; font-weight: 600; color: var(--muted);
+    cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px;
+    transition: color .2s, border-color .2s;
+  }
+  .tab.active { color: var(--blue-mid); border-bottom-color: var(--blue-mid); }
+  .tab:hover  { color: var(--blue-mid); }
+
+  /* ── Upload zone ── */
+  .upload-zone {
+    border: 2px dashed #c2d0ee; border-radius: 12px;
+    padding: 36px 20px; text-align: center; cursor: pointer;
+    transition: all .2s; background: #f7f9ff; position: relative;
+  }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--blue-mid); background: #eef2ff; }
+  .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-icon { font-size: 40px; margin-bottom: 12px; }
+  .upload-zone p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .upload-zone strong { color: var(--blue-mid); }
+
+  /* ── Upload zone sm (reference image) ── */
+  .upload-zone-sm {
+    border: 2px dashed #c2d0ee; border-radius: 10px;
+    padding: 16px; text-align: center; cursor: pointer;
+    background: #f7f9ff; position: relative; transition: all .2s;
+    font-size: 13px; color: var(--muted);
+  }
+  .upload-zone-sm:hover { border-color: var(--blue-mid); background: #eef2ff; }
+  .upload-zone-sm input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .ref-preview {
+    width: 80px; height: 80px; object-fit: cover; border-radius: 8px;
+    border: 2px solid #c2d0ee; display: block; margin: 8px auto 0;
+  }
+
+  /* ── Controls ── */
+  .control-group { margin-top: 18px; }
+  .control-group label {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--muted); margin-bottom: 8px;
+  }
+  .control-group label span { font-weight: 600; color: var(--text); }
+  input[type=range] {
+    width: 100%; height: 6px; border-radius: 3px;
+    -webkit-appearance: none; appearance: none;
+    background: linear-gradient(to right, var(--blue-mid) 0%, var(--blue-mid) 50%, #dde4f5 50%);
+    outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px;
+    border-radius: 50%; background: var(--blue-mid);
+    border: 3px solid white; box-shadow: 0 2px 6px rgba(21,101,192,.35); cursor: pointer;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+    color: white; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 700; letter-spacing: 1px;
+    cursor: pointer; margin-top: 14px;
+    transition: opacity .2s, transform .15s;
+    box-shadow: 0 4px 14px rgba(21,101,192,.35);
+  }
+  .btn:hover  { opacity: .92; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  .btn-outline {
+    background: transparent; border: 2px solid var(--blue-mid); color: var(--blue-mid); box-shadow: none;
+  }
+  .btn-outline:hover { background: #eef2ff; }
+  .btn-sm {
+    padding: 9px 16px; font-size: 13px; font-weight: 600;
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+    color: white; border: none; border-radius: 8px; cursor: pointer;
+    margin-top: 10px; width: 100%;
+    box-shadow: 0 3px 10px rgba(21,101,192,.3);
+    transition: opacity .2s, transform .15s;
+  }
+  .btn-sm:hover { opacity: .9; transform: translateY(-1px); }
+  .btn-sm:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+  /* ── AI panel specific ── */
+  .field-label { font-size: 13px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+  .api-key-row { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; }
+  .api-key-row input {
+    flex: 1; padding: 9px 12px; border: 1.5px solid #c2d0ee; border-radius: 8px;
+    font-size: 13px; color: var(--text); outline: none; transition: border-color .2s;
+  }
+  .api-key-row input:focus { border-color: var(--blue-mid); }
+  .save-key-btn {
+    padding: 9px 14px; background: var(--blue-mid); color: white;
+    border: none; border-radius: 8px; font-size: 13px; cursor: pointer; white-space: nowrap;
+  }
+  .save-key-btn:hover { opacity: .9; }
+
+  .mode-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+  .mode-btn {
+    flex: 1; padding: 9px; border: 1.5px solid #c2d0ee; border-radius: 8px;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    background: white; cursor: pointer; transition: all .2s;
+  }
+  .mode-btn.active { border-color: var(--blue-mid); color: var(--blue-mid); background: #eef2ff; }
+
+  textarea#promptInput {
+    width: 100%; padding: 10px 12px;
+    border: 1.5px solid #c2d0ee; border-radius: 8px;
+    font-size: 13px; color: var(--text); font-family: inherit;
+    resize: vertical; min-height: 90px; outline: none; transition: border-color .2s;
+    background: #f7f9ff;
+  }
+  textarea#promptInput:focus { border-color: var(--blue-mid); background: white; }
+
+  /* Prompt versions */
+  .prompt-versions { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .prompt-card {
+    border: 1.5px solid #c2d0ee; border-radius: 8px; padding: 10px 12px;
+    cursor: pointer; transition: all .2s; background: white;
+  }
+  .prompt-card:hover  { border-color: var(--blue-mid); background: #f0f5ff; }
+  .prompt-card.selected { border-color: var(--blue-mid); background: #eef2ff; }
+  .prompt-card .ver-label {
+    font-size: 11px; font-weight: 700; color: var(--blue-mid);
+    letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .prompt-card .ver-text { font-size: 12px; color: var(--text); line-height: 1.5; }
+
+  /* Loading */
+  .loading-bar {
+    display: none; margin-top: 14px; padding: 12px;
+    background: #eef2ff; border-radius: 8px;
+    font-size: 13px; color: var(--blue-mid); text-align: center;
+  }
+  .loading-bar.show { display: block; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+  .loading-bar.show { animation: pulse 1.2s ease-in-out infinite; }
+
+  /* Error */
+  .error-msg {
+    display: none; margin-top: 10px; padding: 10px 12px;
+    background: #fff0f0; border-left: 3px solid #e53935;
+    border-radius: 0 8px 8px 0; font-size: 12px; color: #c62828; line-height: 1.5;
+  }
+  .error-msg.show { display: block; }
+
+  /* Preview */
+  .preview-wrap {
+    position: relative; display: flex;
+    justify-content: center; align-items: center; min-height: 300px;
+  }
+  #canvas {
+    border-radius: 50%; width: 100%; max-width: 320px;
+    box-shadow: 0 8px 32px rgba(21,101,192,.2); display: block;
+  }
+  .placeholder {
+    width: 280px; height: 280px; border-radius: 50%;
+    background: linear-gradient(135deg, #e8eeff, #d0dcf8);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px; text-align: center;
+    border: 2px dashed #c2d0ee; gap: 10px;
+  }
+  .placeholder span { font-size: 48px; }
+
+  .tip {
+    background: #eef2ff; border-left: 3px solid var(--blue-mid);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px; font-size: 13px; color: var(--muted);
+    margin-top: 16px; line-height: 1.6;
+  }
+  .tip strong { color: var(--blue-mid); }
+  .credit {
+    background: #f7f9ff; border-radius: 10px;
+    padding: 14px 16px; font-size: 13px; margin-top: 16px;
+    color: var(--muted); line-height: 1.7;
+  }
+  .credit strong { color: var(--blue-mid); }
+
+  footer {
+    width: 100%; text-align: center;
+    padding: 20px; color: var(--muted); font-size: 12px;
+    border-top: 1px solid #e0e8f7;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AICA 第十期 · 头像生成器</h1>
+  <p>上传照片 或 AI 图生图，一键合成专属头像</p>
+</header>
+
+<main>
+  <!-- ══ 左：操作区 ══ -->
+  <div class="card">
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab active" id="tabUpload">📷 上传照片</button>
+      <button class="tab"        id="tabAI">✨ AI 生成</button>
+    </div>
+
+    <!-- ─ Panel 1: 上传照片 ─ -->
+    <div id="panelUpload">
+      <h2><span class="badge">1</span>上传照片</h2>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept="image/*"/>
+        <div class="upload-icon">📷</div>
+        <p><strong>点击选择</strong> 或拖拽图片到此处</p>
+        <p style="margin-top:6px;font-size:12px;">支持 JPG / PNG / WEBP，建议正方形人像</p>
+      </div>
+
+      <div class="control-group" style="margin-top:22px;">
+        <h2 style="margin-bottom:14px;"><span class="badge">2</span>调整照片</h2>
+        <label>缩放 <span id="scaleVal">100%</span></label>
+        <input type="range" id="scaleRange" min="50" max="200" value="100"/>
+        <label style="margin-top:14px;">水平位置 <span id="xVal">0</span></label>
+        <input type="range" id="xRange" min="-150" max="150" value="0"/>
+        <label style="margin-top:14px;">垂直位置 <span id="yVal">0</span></label>
+        <input type="range" id="yRange" min="-150" max="150" value="0"/>
+      </div>
+
+      <button class="btn" id="downloadBtn" disabled>⬇ 下载头像</button>
+      <button class="btn btn-outline" id="resetBtn" style="margin-top:10px;">重置</button>
+      <div class="tip"><strong>💡 小提示：</strong>建议使用正方形人像照片效果最佳。下载后可直接设置为微信、企业微信头像。</div>
+    </div>
+
+    <!-- ─ Panel 2: AI 生成 ─ -->
+    <div id="panelAI" style="display:none;">
+      <h2 style="margin-bottom:14px;"><span class="badge" style="background:#7c3aed;">AI</span>AI 图生图</h2>
+
+      <!-- API Key -->
+      <p class="field-label">星河社区 API Key</p>
+      <div class="api-key-row">
+        <input type="password" id="apiKeyInput" placeholder="粘贴你的 AISTUDIO_API_KEY"/>
+        <button class="save-key-btn" id="saveKeyBtn">保存</button>
+      </div>
+
+      <!-- Mode toggle -->
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="modeText">✍️ 文生图</button>
+        <button class="mode-btn"        id="modeImg2Img">🖼️ 图生图</button>
+      </div>
+
+      <!-- 图生图：参考图上传 -->
+      <div id="refSection" style="display:none;">
+        <p class="field-label">上传参考图（AI 自动分析风格）</p>
+        <div class="upload-zone-sm" id="refUploadZone">
+          <input type="file" id="refFileInput" accept="image/*"/>
+          <span>📎 点击上传参考图</span>
+          <img id="refPreview" class="ref-preview" style="display:none;"/>
+        </div>
+        <button class="btn-sm" id="analyzeBtn" disabled>🔍 分析图片，生成提示词</button>
+        <!-- 三版提示词 -->
+        <div id="promptVersions" class="prompt-versions" style="display:none;"></div>
+      </div>
+
+      <!-- 提示词输入框 -->
+      <p class="field-label" style="margin-top:14px;">提示词</p>
+      <textarea id="promptInput" placeholder="描述你想要的头像风格，例如：日系动漫风格，正面人像，柔和自然光，简洁白色背景，清晰面部细节"></textarea>
+
+      <!-- 生成按钮 -->
+      <button class="btn" id="generateBtn" style="background:linear-gradient(135deg,#4c1d95,#7c3aed);" disabled>✨ AI 生成照片</button>
+
+      <!-- Loading / Error -->
+      <div class="loading-bar" id="loadingBar">⏳ 正在生成，请稍候...</div>
+      <div class="error-msg"  id="errorMsg"></div>
+
+      <div class="tip" style="margin-top:16px;">
+        <strong>💡 图生图步骤：</strong>上传参考图 → 分析生成提示词 → 选择/编辑版本 → 生成 → 自动加载到头像框
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 右：预览区 ══ -->
+  <div class="card">
+    <h2><span class="badge">3</span>预览效果</h2>
+    <div class="preview-wrap" id="previewWrap">
+      <div class="placeholder" id="placeholder">
+        <span>🖼️</span>
+        <div>上传照片 或<br/>AI 生成后预览</div>
+      </div>
+      <canvas id="canvas" width="500" height="500" style="display:none;"></canvas>
+    </div>
+
+    <div class="credit">
+      🎨 <strong>关于头像框</strong><br/>
+      本头像框由 <strong>ERNIE-Image</strong> 创作生成，专为 AICA 第十期定制设计。
+    </div>
+  </div>
+</main>
+
+<footer>AICA 第十期 · 头像生成器 &nbsp;|&nbsp; 纯前端运行，照片不会上传到任何服务器 &nbsp;|&nbsp; 头像框由 ERNIE-Image 创作</footer>
+
+<script>
+// ─── 配置 ──────────────────────────────────────────────────────────────────
+const FRAME_URL     = 'frame/frame.png';
+const OUTPUT_SIZE   = 500;
+const INNER_R_RATIO = 0.36;
+const BG_TOLERANCE  = 45;
+
+// ERNIE API
+const VL_API  = 'https://aistudio.baidu.com/llm/lmapi/v3/chat/completions';
+const IMG_API = 'https://aistudio.baidu.com/llm/lmapi/v3/images/generations';
+
+// 视觉分析提示词（内嵌，供浏览器直接调用）
+const ANALYSIS_PROMPT = `你是专业的视觉分析师和文生图提示词工程师。请对这张图片进行深度视觉分析：
+
+从以下 8 个维度分别描述：主体内容、艺术风格、构图视角、色彩基调、光影效果、氛围情绪、文字内容（如有）、纹理质感。
+
+分析完成后，严格按以下格式输出三个版本的 ERNIE-Image 提示词（标题需完整保留）：
+
+【版本A·精准复现版】
+[完整提示词，涵盖所有维度，150-300字]
+
+【版本B·创意改编版】
+[保留核心风格的创意提示词，80-150字]
+
+【版本C·精简核心版】
+[主体+风格关键词，30-80字]`;
+// ──────────────────────────────────────────────────────────────────────────
+
+const canvas      = document.getElementById('canvas');
+const ctx         = canvas.getContext('2d');
+const placeholder = document.getElementById('placeholder');
+const downloadBtn = document.getElementById('downloadBtn');
+const resetBtn    = document.getElementById('resetBtn');
+const scaleRange  = document.getElementById('scaleRange');
+const xRange      = document.getElementById('xRange');
+const yRange      = document.getElementById('yRange');
+const scaleVal    = document.getElementById('scaleVal');
+const xVal        = document.getElementById('xVal');
+const yVal        = document.getElementById('yVal');
+
+let userImage      = null;
+let processedFrame = null;
+
+// ─── 泛洪填充去背景 ────────────────────────────────────────────────────────
+function buildProcessedFrame(img) {
+  const S = OUTPUT_SIZE;
+  const off = document.createElement('canvas');
+  off.width = off.height = S;
+  const octx = off.getContext('2d');
+  octx.drawImage(img, 0, 0, S, S);
+  const imageData = octx.getImageData(0, 0, S, S);
+  const data = imageData.data;
+
+  function flood(seeds, refPi, tol) {
+    const rR = data[refPi], rG = data[refPi+1], rB = data[refPi+2];
+    const dist = pi => Math.abs(data[pi]-rR)+Math.abs(data[pi+1]-rG)+Math.abs(data[pi+2]-rB);
+    const visited = new Uint8Array(S * S);
+    const stack = [];
+    for (const i of seeds) { if (!visited[i] && dist(i*4)<tol) { visited[i]=1; stack.push(i); } }
+    while (stack.length > 0) {
+      const idx = stack.pop();
+      data[idx*4+3] = 0;
+      const x = idx%S, y = (idx/S)|0;
+      for (const ni of [idx-1, idx+1, idx-S, idx+S]) {
+        if (ni<0||ni>=S*S) continue;
+        if (Math.abs((ni%S)-x)+Math.abs(((ni/S)|0)-y)!==1) continue;
+        if (!visited[ni]&&dist(ni*4)<tol) { visited[ni]=1; stack.push(ni); }
+      }
+    }
+  }
+
+  const edgeSeeds = [];
+  for (let x=0;x<S;x++) { edgeSeeds.push(x,(S-1)*S+x); }
+  for (let y=1;y<S-1;y++) { edgeSeeds.push(y*S,y*S+S-1); }
+  flood(edgeSeeds, 0, BG_TOLERANCE);
+
+  const cx=(S/2)|0, cy=(S/2)|0, ci=cy*S+cx;
+  flood([ci,ci-20,ci+20,ci-S*20,ci+S*20], ci*4, BG_TOLERANCE+15);
+
+  octx.putImageData(imageData, 0, 0);
+  return off;
+}
+
+const frameImg = new Image();
+frameImg.onload  = () => { processedFrame = buildProcessedFrame(frameImg); renderIfReady(); };
+frameImg.onerror = () => console.warn('头像框加载失败');
+frameImg.src = FRAME_URL;
+
+// ─── Tab 切换 ─────────────────────────────────────────────────────────────
+document.getElementById('tabUpload').addEventListener('click', () => switchTab('upload'));
+document.getElementById('tabAI').addEventListener('click',     () => switchTab('ai'));
+
+function switchTab(tab) {
+  document.getElementById('tabUpload').classList.toggle('active', tab === 'upload');
+  document.getElementById('tabAI').classList.toggle('active',     tab === 'ai');
+  document.getElementById('panelUpload').style.display = tab === 'upload' ? '' : 'none';
+  document.getElementById('panelAI').style.display     = tab === 'ai'     ? '' : 'none';
+}
+
+// ─── 文件上传（照片模式）────────────────────────────────────────────────────
+const fileInput  = document.getElementById('fileInput');
+const uploadZone = document.getElementById('uploadZone');
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+uploadZone.addEventListener('dragover',  e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault(); uploadZone.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f && f.type.startsWith('image/')) loadFile(f);
+});
+
+function loadFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = new Image();
+    img.onload = () => { userImage = img; showCanvas(); renderIfReady(); };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ─── 滑块 ─────────────────────────────────────────────────────────────────
+function updateSliderBg(el) {
+  const pct = ((+el.value - +el.min) / (+el.max - +el.min)) * 100;
+  el.style.background = `linear-gradient(to right,#1565C0 0%,#1565C0 ${pct}%,#dde4f5 ${pct}%)`;
+}
+[scaleRange, xRange, yRange].forEach(el => {
+  el.addEventListener('input', () => { syncLabels(); renderIfReady(); updateSliderBg(el); });
+  updateSliderBg(el);
+});
+function syncLabels() {
+  scaleVal.textContent = scaleRange.value + '%';
+  xVal.textContent     = xRange.value;
+  yVal.textContent     = yRange.value;
+}
+
+// ─── 渲染 ─────────────────────────────────────────────────────────────────
+function renderIfReady() {
+  if (!userImage) return;
+  const S = OUTPUT_SIZE, cx = S/2, cy = S/2, R = S * INNER_R_RATIO;
+  const scale = +scaleRange.value / 100;
+  const dx = +xRange.value, dy = +yRange.value;
+  ctx.clearRect(0, 0, S, S);
+
+  ctx.save();
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.clip();
+  const asp = userImage.naturalWidth / userImage.naturalHeight;
+  const ds  = R * 2 * scale;
+  const dw  = asp >= 1 ? ds * asp : ds;
+  const dh  = asp >= 1 ? ds       : ds / asp;
+  ctx.drawImage(userImage, cx - dw/2 + dx, cy - dh/2 + dy, dw, dh);
+  ctx.restore();
+
+  if (processedFrame) ctx.drawImage(processedFrame, 0, 0);
+}
+
+function showCanvas() {
+  placeholder.style.display = 'none';
+  canvas.style.display      = 'block';
+  downloadBtn.disabled      = false;
+}
+
+downloadBtn.addEventListener('click', () => {
+  renderIfReady();
+  const a = document.createElement('a');
+  a.download = 'AICA10_avatar.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+});
+
+resetBtn.addEventListener('click', () => {
+  userImage = null; fileInput.value = '';
+  scaleRange.value = 100; xRange.value = 0; yRange.value = 0;
+  syncLabels(); [scaleRange, xRange, yRange].forEach(updateSliderBg);
+  canvas.style.display = 'none'; placeholder.style.display = 'flex';
+  downloadBtn.disabled = true; ctx.clearRect(0, 0, OUTPUT_SIZE, OUTPUT_SIZE);
+});
+
+// ─── AI 生成模块 ──────────────────────────────────────────────────────────
+
+// API Key 存取
+const apiKeyInput = document.getElementById('apiKeyInput');
+apiKeyInput.value = localStorage.getItem('aistudio_api_key') || '';
+document.getElementById('saveKeyBtn').addEventListener('click', () => {
+  localStorage.setItem('aistudio_api_key', apiKeyInput.value.trim());
+  updateGenerateBtn();
+  const btn = document.getElementById('saveKeyBtn');
+  btn.textContent = '已保存 ✓'; btn.style.background = '#388e3c';
+  setTimeout(() => { btn.textContent = '保存'; btn.style.background = ''; }, 1500);
+});
+apiKeyInput.addEventListener('input', updateGenerateBtn);
+
+function getApiKey() { return apiKeyInput.value.trim() || localStorage.getItem('aistudio_api_key') || ''; }
+
+// Mode toggle
+document.getElementById('modeText').addEventListener('click', () => switchMode('text'));
+document.getElementById('modeImg2Img').addEventListener('click', () => switchMode('img2img'));
+let currentMode = 'text';
+
+function switchMode(mode) {
+  currentMode = mode;
+  document.getElementById('modeText').classList.toggle('active', mode === 'text');
+  document.getElementById('modeImg2Img').classList.toggle('active', mode === 'img2img');
+  document.getElementById('refSection').style.display = mode === 'img2img' ? '' : 'none';
+  updateGenerateBtn();
+}
+
+function updateGenerateBtn() {
+  const hasKey = !!getApiKey();
+  document.getElementById('generateBtn').disabled = !hasKey;
+}
+updateGenerateBtn();
+
+// 参考图上传
+let refImageBase64 = null, refImageMime = null;
+const refFileInput  = document.getElementById('refFileInput');
+const refUploadZone = document.getElementById('refUploadZone');
+const analyzeBtn    = document.getElementById('analyzeBtn');
+const refPreview    = document.getElementById('refPreview');
+
+refFileInput.addEventListener('change', e => loadRefFile(e.target.files[0]));
+refUploadZone.addEventListener('dragover',  e => { e.preventDefault(); refUploadZone.classList.add('drag-over'); });
+refUploadZone.addEventListener('dragleave', () => refUploadZone.classList.remove('drag-over'));
+refUploadZone.addEventListener('drop', e => {
+  e.preventDefault(); refUploadZone.classList.remove('drag-over');
+  const f = e.dataTransfer.files[0];
+  if (f && f.type.startsWith('image/')) loadRefFile(f);
+});
+
+function loadRefFile(file) {
+  if (!file) return;
+  refImageMime = file.type;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const dataUrl = ev.target.result;
+    refImageBase64 = dataUrl.split(',')[1];
+    refPreview.src = dataUrl; refPreview.style.display = 'block';
+    analyzeBtn.disabled = false;
+    document.getElementById('promptVersions').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+// 分析图片
+analyzeBtn.addEventListener('click', async () => {
+  if (!refImageBase64) return;
+  const key = getApiKey();
+  if (!key) { showError('请先填写并保存星河社区 API Key'); return; }
+
+  setLoading(true, '🔍 正在分析图片风格...');
+  hideError();
+
+  try {
+    const res = await fetch(VL_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `bearer ${key}` },
+      body: JSON.stringify({
+        model: 'ernie-4.5-turbo-vl-32k',
+        messages: [{ role: 'user', content: [
+          { type: 'image_url', image_url: { url: `data:${refImageMime};base64,${refImageBase64}` } },
+          { type: 'text', text: ANALYSIS_PROMPT }
+        ]}],
+        temperature: 0.3, max_tokens: 4096
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error?.message || data.error || `HTTP ${res.status}`);
+
+    const content = data.choices?.[0]?.message?.content || '';
+    renderPromptVersions(content);
+  } catch (e) {
+    showError('分析失败：' + e.message);
+  } finally {
+    setLoading(false);
+  }
+});
+
+// 解析三版提示词
+function renderPromptVersions(text) {
+  const versions = [
+    { key: 'A', label: '版本A · 精准复现版', re: /【版本A[··][^】]*】\s*([\s\S]*?)(?=【版本B|$)/ },
+    { key: 'B', label: '版本B · 创意改编版', re: /【版本B[··][^】]*】\s*([\s\S]*?)(?=【版本C|$)/ },
+    { key: 'C', label: '版本C · 精简核心版', re: /【版本C[··][^】]*】\s*([\s\S]*?)$/ },
+  ];
+  const container = document.getElementById('promptVersions');
+  container.innerHTML = '';
+
+  let found = false;
+  for (const v of versions) {
+    const m = text.match(v.re);
+    if (!m) continue;
+    found = true;
+    const content = m[1].trim().replace(/^\[|\]$/g, '');
+    const card = document.createElement('div');
+    card.className = 'prompt-card';
+    card.innerHTML = `<div class="ver-label">${v.label}</div><div class="ver-text">${content}</div>`;
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.prompt-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      document.getElementById('promptInput').value = content;
+    });
+    container.appendChild(card);
+  }
+
+  if (!found) {
+    // 模型没有严格按格式输出，直接把全文放到提示词框
+    document.getElementById('promptInput').value = text.trim();
+  }
+
+  container.style.display = found ? '' : 'none';
+}
+
+// 生成图片
+document.getElementById('generateBtn').addEventListener('click', async () => {
+  const key    = getApiKey();
+  const prompt = document.getElementById('promptInput').value.trim();
+  if (!key)    { showError('请先填写并保存星河社区 API Key'); return; }
+  if (!prompt) { showError('请输入提示词后再生成'); return; }
+
+  setLoading(true, '✨ 正在生成 AI 头像照片...');
+  hideError();
+
+  try {
+    const res = await fetch(IMG_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `bearer ${key}` },
+      body: JSON.stringify({
+        model: 'Ernie-image-turbo', prompt, n: 1,
+        response_format: 'b64_json', size: '1024x1024', seed: -1
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error?.message || data.error || `HTTP ${res.status}`);
+
+    const b64 = data.data?.[0]?.b64_json;
+    if (!b64) throw new Error('响应中无图片数据');
+
+    // 加载生成的图片到 canvas
+    const img = new Image();
+    img.onload = () => {
+      userImage = img;
+      switchTab('upload');        // 自动切回照片模式
+      showCanvas();
+      renderIfReady();
+    };
+    img.src = `data:image/png;base64,${b64}`;
+  } catch (e) {
+    showError('生成失败：' + e.message + '（请检查 API Key 是否正确，或稍后重试）');
+  } finally {
+    setLoading(false);
+  }
+});
+
+function setLoading(show, msg) {
+  const bar = document.getElementById('loadingBar');
+  bar.textContent = msg || '';
+  bar.classList.toggle('show', show);
+  document.getElementById('generateBtn').disabled = show;
+  if (show) document.getElementById('analyzeBtn').disabled = true;
+  else      document.getElementById('analyzeBtn').disabled = !refImageBase64;
+}
+function showError(msg) { const el = document.getElementById('errorMsg'); el.textContent = msg; el.classList.add('show'); }
+function hideError()    { document.getElementById('errorMsg').classList.remove('show'); }
+</script>
+</body>
+</html>
