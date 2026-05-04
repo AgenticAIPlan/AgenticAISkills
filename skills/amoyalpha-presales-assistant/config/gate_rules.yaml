@@ -1,0 +1,74 @@
+# 质量门禁检查规则
+# gate_check.py 读取本文件执行程序化检查
+
+gates:
+  # 门禁1：占位符残留检查
+  placeholder_check:
+    description: "检查方案中是否存在未填写的占位符"
+    patterns:
+      - "【待补充】"
+      - "【待核实】"
+      - "【待填】"
+      - "【需确认】"
+      - "XXX"
+      - "TBD"
+      - "TODO"
+    severity: warning  # warning=输出清单但不阻断; error=阻断
+    output_field: "placeholders_remaining"
+
+  # 门禁2：禁止编造数字
+  fabricated_data_check:
+    description: "检测可能被编造的数字（无单位/来源的绝对数字）"
+    suspicious_patterns:
+      - pattern: "\\d+%的客户"
+      - pattern: "超过\\d+家企业"
+      - pattern: "节省\\d+万"
+      - pattern: "提升\\d+倍"
+    requirement: "所有数字必须附带来源标注或【待核实】占位符"
+    severity: warning
+    output_field: "suspicious_numbers"
+
+  # 门禁3：需求响应完整性
+  requirement_coverage:
+    description: "检查方案是否响应了客户提出的所有需求点"
+    check_method: "由LLM执行交叉比对，输出未覆盖需求列表"
+    severity: error
+    output_field: "uncovered_requirements"
+
+  # 门禁4：Action Title 规范性
+  action_title_check:
+    description: "检查PPT每页标题是否符合Action Title规范"
+    rules:
+      - "标题应包含主语+谓语+宾语"
+      - "禁止纯名词标题（如'产品架构介绍'）"
+      - "禁止问句标题"
+      - "建议包含具体数字或因果关系"
+    severity: warning
+    output_field: "non_action_titles"
+
+  # 门禁5：竞品点名检查
+  competitor_naming:
+    description: "检查方案中是否直接贬低竞争对手"
+    forbidden_patterns:
+      - "比X差"
+      - "X不如我们"
+      - "X有严重问题"
+    requirement: "竞品对比应客观，只说差异不做价值判断"
+    severity: error
+    output_field: "competitor_violations"
+
+  # 门禁6：敏感信息检查
+  sensitive_info:
+    description: "检查是否泄露其他客户的敏感信息"
+    patterns:
+      - "合同金额"
+      - "报价单"
+      - "内部价"
+    severity: error
+    output_field: "sensitive_leaks"
+
+# 门禁通过标准
+pass_criteria:
+  no_errors: true          # 无任何 error 级别问题
+  max_warnings: 5          # warning 数量不超过5个
+  placeholder_awareness: true  # 用户已知晓剩余占位符清单
