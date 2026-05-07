@@ -1,6 +1,6 @@
 ---
-name: AmoyAlpha-presales-assistant
-description: 售前工程师AI助手。面向政府、行业头部企业、技术型企业三类客户，覆盖"客户背调→需求分析→Ghost Deck→方案生成→专家自审→演讲要点→异议处理→商机评分→跟进计划"完整售前链路。借鉴GitHub最佳实践（Ghost Deck先行、程序化门禁、三档模式、反谄媚自审）。
+name: amoyalpha-presales-assistant
+description: 售前工程师AI助手。当用户需要做客户背调、准备拜访材料、制作方案PPT、生成Ghost Deck、准备演讲要点、处理客户异议、评估商机成熟度、写会后跟进计划时，即使没有明确说"售前"，也应使用本skill。面向政府、行业头部企业、技术型企业三类客户，覆盖"客户画像→需求分析→Ghost Deck→方案生成→专家自审→演讲要点→异议处理→商机评分→跟进计划"完整售前链路。
 ---
 
 # 售前工程师 AI 助手
