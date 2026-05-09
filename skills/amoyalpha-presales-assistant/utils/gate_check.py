@@ -95,27 +95,36 @@ def run_gate_check(proposal_text: str) -> dict:
     }
 
     # 检查1：占位符残留
-    placeholder_patterns = rules["gates"]["placeholder_check"]["patterns"]
-    placeholders = check_placeholders(proposal_text, placeholder_patterns)
+    placeholder_rule = rules["gates"]["placeholder_check"]
+    placeholders = check_placeholders(proposal_text, placeholder_rule["patterns"])
     result["summary"]["placeholders_remaining"] = placeholders
     if placeholders:
-        result["warnings"].append({
+        entry = {
             "gate": "placeholder_check",
             "count": len(placeholders),
             "items": placeholders,
             "message": f"发现 {len(placeholders)} 处占位符未填写，请在提交前逐一核实补充",
-        })
+        }
+        if placeholder_rule.get("severity") == "error":
+            result["errors"].append(entry)
+        else:
+            result["warnings"].append(entry)
 
     # 检查2：可疑数字
+    fabricated_rule = rules["gates"]["fabricated_data_check"]
     suspicious = check_suspicious_numbers(proposal_text)
     result["summary"]["suspicious_numbers"] = suspicious
     if suspicious:
-        result["warnings"].append({
+        entry = {
             "gate": "fabricated_data_check",
             "count": len(suspicious),
             "items": suspicious,
             "message": f"发现 {len(suspicious)} 处数字缺乏来源标注",
-        })
+        }
+        if fabricated_rule.get("severity") == "error":
+            result["errors"].append(entry)
+        else:
+            result["warnings"].append(entry)
 
     # 检查3：竞品点名
     violations = check_competitor_violations(proposal_text)
