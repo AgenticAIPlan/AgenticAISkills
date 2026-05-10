@@ -1,0 +1,47 @@
+# 痛点 → 方案章节映射表
+# 根据客户输入的痛点关键词，动态决定方案中需要插入的章节
+
+government:
+  compliance:
+    keywords: ["信创", "国产化", "等保", "合规", "自主可控", "安全审计", "数据安全"]
+    inject_sections: ["policy_alignment", "security_cert", "infosec_architecture", "data_localization"]
+  budget:
+    keywords: ["预算", "经费", "采购", "招标", "投标", "价格", "成本"]
+    inject_sections: ["tco_analysis", "phased_implementation", "budget_source_suggestion", "roi_government"]
+  political:
+    keywords: ["政绩", "示范", "标杆", "对标", "汇报", "领导", "考核", "评比"]
+    inject_sections: ["peer_benchmark_cases", "executive_summary_gov", "measurable_outcomes"]
+  efficiency:
+    keywords: ["效率", "人工", "流程", "审批", "窗口", "服务", "智慧"]
+    inject_sections: ["workflow_automation", "service_improvement", "staff_training"]
+
+enterprise:
+  roi:
+    keywords: ["ROI", "回报", "降本", "增效", "成本", "利润", "收益", "价值"]
+    inject_sections: ["roi_calculation", "kpi_framework", "quick_win_cases", "financial_model"]
+  integration:
+    keywords: ["集成", "对接", "ERP", "MES", "CRM", "接口", "API", "数据孤岛", "打通"]
+    inject_sections: ["integration_architecture", "api_spec", "migration_plan", "data_governance"]
+  competition:
+    keywords: ["竞争", "对手", "差距", "领先", "落后", "追赶", "市场"]
+    inject_sections: ["competitive_analysis", "differentiation_matrix", "industry_trend"]
+  vendor_lock:
+    keywords: ["自建", "锁定", "依赖", "自主", "控制", "内部团队"]
+    inject_sections: ["openness_strategy", "data_portability", "hybrid_approach"]
+
+tech:
+  performance:
+    keywords: ["性能", "精度", "准确率", "延迟", "吞吐", "速度", "指标", "benchmark"]
+    inject_sections: ["benchmark_data", "poc_plan", "technical_spec", "performance_comparison"]
+  migration:
+    keywords: ["PyTorch", "TensorFlow", "迁移", "转换", "兼容", "替换", "切换"]
+    inject_sections: ["compatibility_guide", "migration_support", "migration_cost_analysis"]
+  cost:
+    keywords: ["算力", "GPU", "训练成本", "推理成本", "API费用", "tokens"]
+    inject_sections: ["cost_optimization", "inference_efficiency", "cloud_vs_private"]
+  compliance:
+    keywords: ["出境", "数据合规", "隐私", "私有化部署", "本地化"]
+    inject_sections: ["data_compliance", "private_deployment_arch", "security_cert_tech"]
+  ecosystem:
+    keywords: ["开源", "社区", "文档", "支持", "生态", "插件", "扩展"]
+    inject_sections: ["ecosystem_overview", "developer_support", "open_source_strategy"]

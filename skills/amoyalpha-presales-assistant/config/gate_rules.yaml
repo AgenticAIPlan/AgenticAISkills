@@ -1,0 +1,81 @@
+# 质量门禁检查规则
+# gate_check.py 读取本文件执行程序化检查
+
+gates:
+  # 门禁1：占位符残留检查
+  # 发送前必须无占位符，否则阻断（客户案例/benchmark/成本数字若无来源需保留占位，不得删除）
+  placeholder_check:
+    description: "检查方案中是否存在未填写的占位符"
+    patterns:
+      - "【待补充】"
+      - "【待核实】"
+      - "【待填】"
+      - "【需确认】"
+      - "XXX"
+      - "TBD"
+      - "TODO"
+    severity: error  # error=阻断；发送方案前必须填写或确认每一处占位符
+    output_field: "placeholders_remaining"
+    block_reason: "方案中存在未填写占位符，请逐项填写真实数据或确认后再发送"
+
+  # 门禁2：禁止编造数字（无来源的强断言）
+  fabricated_data_check:
+    description: "检测可能被编造的数字（无来源标注的绝对数字断言）"
+    suspicious_patterns:
+      - pattern: "\\d+%的客户"
+      - pattern: "超过\\d+家企业"
+      - pattern: "节省\\d+万"
+      - pattern: "提升\\d+倍"
+      - pattern: "成本降低\\d+%"
+      - pattern: "效率提升\\d+%"
+      - pattern: "\\d+小时内"
+    requirement: "所有数字必须附带明确来源标注，否则替换为【待核实：数字来源】"
+    severity: error  # 改为 error：客户案例/benchmark/成本断言无来源视为编造，必须阻断
+    output_field: "suspicious_numbers"
+    block_reason: "检测到无来源的数字断言，请补充数据来源或替换为【待核实】占位符"
+
+  # 门禁3：需求响应完整性
+  requirement_coverage:
+    description: "检查方案是否响应了客户提出的所有需求点"
+    check_method: "由LLM执行交叉比对，输出未覆盖需求列表"
+    severity: error
+    output_field: "uncovered_requirements"
+
+  # 门禁4：Action Title 规范性
+  action_title_check:
+    description: "检查PPT每页标题是否符合Action Title规范"
+    rules:
+      - "标题应包含主语+谓语+宾语"
+      - "禁止纯名词标题（如'产品架构介绍'）"
+      - "禁止问句标题"
+      - "建议包含具体数字或因果关系"
+    severity: warning
+    output_field: "non_action_titles"
+
+  # 门禁5：竞品点名检查
+  competitor_naming:
+    description: "检查方案中是否直接贬低竞争对手"
+    forbidden_patterns:
+      - "比X差"
+      - "X不如我们"
+      - "X有严重问题"
+    requirement: "竞品对比应客观，只说差异不做价值判断"
+    severity: error
+    output_field: "competitor_violations"
+
+  # 门禁6：敏感信息检查
+  sensitive_info:
+    description: "检查是否泄露其他客户的敏感信息"
+    patterns:
+      - "合同金额"
+      - "报价单"
+      - "内部价"
+    severity: error
+    output_field: "sensitive_leaks"
+
+# 门禁通过标准
+pass_criteria:
+  no_errors: true          # 无任何 error 级别问题（含占位符残留、无来源数字）
+  max_warnings: 3          # warning 数量不超过3个（由3降低）
+  placeholder_awareness: true  # 用户已知晓并确认了每处占位符的处理方式
+  note: "门禁由程序判断，不口头宣布通过。fabricated_data 和 placeholder 均为 error 级，任意一项触发即阻断。"
