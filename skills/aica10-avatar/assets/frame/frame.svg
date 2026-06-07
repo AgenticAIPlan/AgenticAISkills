@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <!-- 商务渐变蓝 -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#0A2C8C"/>
+      <stop offset="50%"  stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#1E88E5"/>
+    </linearGradient>
+    <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#1E88E5"/>
+      <stop offset="100%" stop-color="#0A2C8C"/>
+    </linearGradient>
+    <!-- 外圈发光 -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- 遮罩：让中心照片区域透明 -->
+    <mask id="frameMask">
+      <rect width="500" height="500" fill="white"/>
+      <circle cx="250" cy="250" r="196" fill="black"/>
+    </mask>
+  </defs>
+
+  <!-- 外圈装饰细环 -->
+  <circle cx="250" cy="250" r="246" fill="none" stroke="url(#ringGrad)" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- 主圆环 -->
+  <circle cx="250" cy="250" r="240" fill="url(#ringGrad)" mask="url(#frameMask)" filter="url(#glow)"/>
+
+  <!-- 内圈高光细线 -->
+  <circle cx="250" cy="250" r="197" fill="none" stroke="white" stroke-width="1.5" opacity="0.55"/>
+
+  <!-- 四方装饰点 -->
+  <circle cx="250" cy="11"  r="5" fill="white" opacity="0.85"/>
+  <circle cx="489" cy="250" r="5" fill="white" opacity="0.85"/>
+  <circle cx="250" cy="489" r="5" fill="white" opacity="0.85"/>
+  <circle cx="11"  cy="250" r="5" fill="white" opacity="0.85"/>
+  <!-- 斜45°装饰点 -->
+  <circle cx="421" cy="79"  r="3.5" fill="#1E88E5" opacity="0.75"/>
+  <circle cx="421" cy="421" r="3.5" fill="#1565C0" opacity="0.75"/>
+  <circle cx="79"  cy="421" r="3.5" fill="#1565C0" opacity="0.75"/>
+  <circle cx="79"  cy="79"  r="3.5" fill="#1E88E5" opacity="0.75"/>
+
+  <!-- 底部品牌标签 -->
+  <rect x="140" y="412" width="220" height="40" rx="20" fill="url(#ringGrad)" opacity="0.96"/>
+  <text x="250" y="438" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="18" font-weight="800" fill="white" letter-spacing="4">
+    AICA · 10
+  </text>
+
+  <!-- 顶部小徽标 -->
+  <rect x="200" y="16" width="100" height="26" rx="13" fill="url(#ringGrad)" opacity="0.92"/>
+  <text x="250" y="33.5" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="12" font-weight="700" fill="white" letter-spacing="2.5">
+    AICA 10
+  </text>
+
+  <!-- 右侧竖排期号 -->
+  <text x="474" y="260" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="10" font-weight="600" fill="#1565C0" letter-spacing="1.5" opacity="0.85"
+        transform="rotate(90, 474, 250)">第十期</text>
+</svg>
